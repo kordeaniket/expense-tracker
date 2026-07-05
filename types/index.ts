@@ -15,7 +15,16 @@ export interface Income {
   amount: number;
   category: string;
   note?: string;
+  mode?: string;
   date: string;
+}
+
+export interface Asset {
+  _id: string;
+  name: string;
+  type: "Savings" | "Stocks" | "Mutual Funds" | "FD" | "Gold" | "Other";
+  amount: number;
+  note?: string;
 }
 
 export interface Category {

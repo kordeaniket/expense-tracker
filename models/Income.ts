@@ -5,6 +5,7 @@ export interface IIncome extends Document {
   amount: number;
   category: string;
   note?: string;
+  mode?: string;
   date: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -16,6 +17,7 @@ const IncomeSchema = new Schema<IIncome>(
     amount: { type: Number, required: true },
     category: { type: String, required: true },
     note: { type: String },
+    mode: { type: String, default: "Bank" },
     date: { type: Date, required: true, default: Date.now },
   },
   { timestamps: true }

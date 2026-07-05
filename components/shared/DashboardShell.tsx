@@ -24,6 +24,7 @@ import {
   X,
   Gem,
   Tag,
+  Wallet,
 } from "lucide-react";
 
 interface SidebarItem {
@@ -42,10 +43,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   const generalItems: SidebarItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { label: "All Expenses", href: "/expenses", icon: TrendingUp },
-    // { label: "Bill & Subscription", href: "/budgets", icon: CalendarDays },
-    // { label: "Investment", href: "/income", icon: PiggyBank },
-    // { label: "Card", href: "/reports", icon: CreditCard },
-    // { label: "Goals", href: "/goals", icon: Target },
+    { label: "Income Tracker", href: "/income", icon: PiggyBank },
+    { label: "Asset Portfolio", href: "/assets", icon: Wallet },
   ];
 
   const masterItems: SidebarItem[] = [
