@@ -23,7 +23,14 @@ interface ExpenseData {
   subCategory?: string;
   note?: string;
   date: string;
-  mode: "UPI" | "Card" | "Cash" | "Bank" | "Other";
+  mode: string;
+}
+
+interface PaymentModeData {
+  _id: string;
+  name: string;
+  type: string;
+  color: string;
 }
 
 const FALLBACK_CATEGORIES: CategoryData[] = [
@@ -38,6 +45,7 @@ const FALLBACK_CATEGORIES: CategoryData[] = [
 export default function ExpensesPage() {
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
   const [categories, setCategories] = useState<CategoryData[]>(FALLBACK_CATEGORIES);
+  const [paymentModes, setPaymentModes] = useState<PaymentModeData[]>([]);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,7 +57,7 @@ export default function ExpensesPage() {
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [note, setNote] = useState("");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-  const [mode, setMode] = useState<"UPI" | "Card" | "Cash" | "Bank" | "Other">("UPI");
+  const [mode, setMode] = useState("");
 
   // Filtering states
   const [filterCategory, setFilterCategory] = useState("all");
@@ -57,14 +65,16 @@ export default function ExpensesPage() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      // Fetch categories & expenses in parallel
-      const [catRes, expRes] = await Promise.all([
+      // Fetch categories, expenses, and payment modes in parallel
+      const [catRes, expRes, payRes] = await Promise.all([
         fetch("/api/categories"),
         fetch("/api/expenses"),
+        fetch("/api/payment-modes"),
       ]);
 
       const catData = await catRes.json();
       const expData = await expRes.json();
+      const payData = await payRes.json();
 
       if (catRes.ok && catData.categories) {
         // Only load expense-type categories for expense logging
@@ -74,6 +84,13 @@ export default function ExpensesPage() {
 
       if (expRes.ok && expData.expenses) {
         setExpenses(expData.expenses);
+      }
+
+      if (payRes.ok && payData.paymentModes) {
+        setPaymentModes(payData.paymentModes);
+        if (payData.paymentModes.length > 0) {
+          setMode((prev) => prev || payData.paymentModes[0].name);
+        }
       }
     } catch (error) {
       toast.error("Failed to load dashboard data.");
@@ -136,7 +153,11 @@ export default function ExpensesPage() {
       setSelectedSubCategory("");
       setNote("");
       setDate(new Date().toISOString().split("T")[0]);
-      setMode("UPI");
+      if (paymentModes.length > 0) {
+        setMode(paymentModes[0].name);
+      } else {
+        setMode("");
+      }
 
       // Reload log
       fetchData();
@@ -277,13 +298,22 @@ export default function ExpensesPage() {
                         </td>
                         <td className="py-3.5 font-extrabold text-foreground text-sm">₹{exp.amount.toFixed(2)}</td>
                         <td className="py-3.5 font-bold">
-                          <span className={`inline-flex px-2 py-0.5 rounded-md text-[10px] tracking-wide uppercase ${exp.mode === "UPI" ? "bg-primary-50 text-primary border border-primary/10" :
-                              exp.mode === "Bank" ? "bg-info/10 text-info border border-info/10" :
-                                exp.mode === "Card" ? "bg-warning/10 text-warning border border-warning/10" :
-                                  "bg-slate-100 text-muted-foreground"
-                            }`}>
-                            {exp.mode}
-                          </span>
+                          {(() => {
+                            const matchedMode = paymentModes.find((pm) => pm.name.toLowerCase() === exp.mode.toLowerCase());
+                            const color = matchedMode?.color || "#8A8D9F";
+                            return (
+                              <span 
+                                className="inline-flex px-2 py-0.5 rounded-md text-[10px] tracking-wide uppercase border font-semibold"
+                                style={{
+                                  backgroundColor: `${color}12`,
+                                  color: color,
+                                  borderColor: `${color}25`,
+                                }}
+                              >
+                                {exp.mode}
+                              </span>
+                            );
+                          })()}
                         </td>
                         <td className="py-3.5 text-muted-foreground font-medium max-w-[150px] truncate" title={exp.note}>
                           {exp.note || <span className="opacity-55 italic">None</span>}
@@ -394,13 +424,16 @@ export default function ExpensesPage() {
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Payment Mode</label>
                     <Select
                       value={mode}
-                      onChange={(e) => setMode(e.target.value as any)}
+                      onChange={(e) => setMode(e.target.value)}
                     >
-                      <option value="UPI" className="bg-card text-foreground">UPI</option>
-                      <option value="Card" className="bg-card text-foreground">Card</option>
-                      <option value="Cash" className="bg-card text-foreground">Cash</option>
-                      <option value="Bank" className="bg-card text-foreground">Bank Transfer</option>
-                      <option value="Other" className="bg-card text-foreground">Other</option>
+                      {paymentModes.map((pm) => (
+                        <option key={pm._id} value={pm.name} className="bg-card text-foreground">
+                          {pm.name}
+                        </option>
+                      ))}
+                      {paymentModes.length === 0 && (
+                        <option value="" className="bg-card text-foreground">No modes configured</option>
+                      )}
                     </Select>
                   </div>
 

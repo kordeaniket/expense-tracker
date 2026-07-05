@@ -23,6 +23,7 @@ import {
   Menu,
   X,
   Gem,
+  List,
 } from "lucide-react";
 
 interface SidebarItem {
@@ -41,21 +42,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const generalItems: SidebarItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { label: "All Expenses", href: "/expenses", icon: TrendingUp },
-    { label: "Bill & Subscription", href: "/budgets", icon: CalendarDays },
-    { label: "Investment", href: "/income", icon: PiggyBank },
-    { label: "Card", href: "/reports", icon: CreditCard },
-    { label: "Goals", href: "/goals", icon: Target },
+    // { label: "Bill & Subscription", href: "/budgets", icon: CalendarDays },
+    // { label: "Investment", href: "/income", icon: PiggyBank },
+    // { label: "Card", href: "/reports", icon: CreditCard },
+    // { label: "Goals", href: "/goals", icon: Target },
   ];
 
   const toolsItems: SidebarItem[] = [
-    { label: "Insight", href: "/insight", icon: Lightbulb },
-    { label: "Analytics", href: "/analytics", icon: BarChart3 },
+    // { label: "Insight", href: "/insight", icon: Lightbulb },
+    // { label: "Analytics", href: "/analytics", icon: BarChart3 },
   ];
 
+  const masterItems: SidebarItem[] = [
+    { label: "Categories", href: "/categories", icon: List },
+    // { label: "Sub-Categories", href: "/sub-categories", icon: List },
+    { label: "Payment Modes", href: "/payment-modes", icon: List },
+  ]
+
   const otherItems: SidebarItem[] = [
-    { label: "Setting", href: "/settings", icon: Settings },
-    { label: "Help Center", href: "/help", icon: HelpCircle },
-    { label: "Support", href: "/support", icon: Headphones },
+    // { label: "Setting", href: "/settings", icon: Settings },
+    // { label: "Help Center", href: "/help", icon: HelpCircle },
+    // { label: "Support", href: "/support", icon: Headphones },
   ];
 
   const renderSidebarLinks = (items: SidebarItem[]) => {
@@ -114,6 +121,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               Tools
             </h4>
             <nav className="space-y-1 mt-2">{renderSidebarLinks(toolsItems)}</nav>
+          </div>
+
+          {/* Master Section */}
+          <div className="space-y-1">
+            <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+              Master
+            </h4>
+            <nav className="space-y-1 mt-2">{renderSidebarLinks(masterItems)}</nav>
           </div>
 
           {/* Other Section */}

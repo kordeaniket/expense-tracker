@@ -7,7 +7,7 @@ export interface IExpense extends Document {
   subCategory?: string;
   note?: string;
   date: Date;
-  mode: "UPI" | "Card" | "Cash" | "Bank" | "Other";
+  mode: string;
   receiptUrl?: string;
   isRecurring: boolean;
   recurrenceInterval?: "daily" | "weekly" | "monthly" | "yearly";
@@ -23,7 +23,7 @@ const ExpenseSchema = new Schema<IExpense>(
     subCategory: { type: String },
     note: { type: String },
     date: { type: Date, required: true, default: Date.now },
-    mode: { type: String, enum: ["UPI", "Card", "Cash", "Bank", "Other"], default: "UPI" },
+    mode: { type: String, default: "UPI" },
     receiptUrl: { type: String },
     isRecurring: { type: Boolean, default: false },
     recurrenceInterval: {

@@ -5,7 +5,7 @@ export interface Expense {
   subCategory?: string;
   note?: string;
   date: string;
-  mode: "UPI" | "Card" | "Cash" | "Bank" | "Other";
+  mode: string;
   receiptUrl?: string;
   isRecurring: boolean;
 }

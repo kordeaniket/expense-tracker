@@ -23,6 +23,7 @@ import {
   Menu,
   X,
   Gem,
+  Tag,
 } from "lucide-react";
 
 interface SidebarItem {
@@ -41,21 +42,26 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   const generalItems: SidebarItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { label: "All Expenses", href: "/expenses", icon: TrendingUp },
-    { label: "Bill & Subscription", href: "/budgets", icon: CalendarDays },
-    { label: "Investment", href: "/income", icon: PiggyBank },
-    { label: "Card", href: "/reports", icon: CreditCard },
-    { label: "Goals", href: "/goals", icon: Target },
+    // { label: "Bill & Subscription", href: "/budgets", icon: CalendarDays },
+    // { label: "Investment", href: "/income", icon: PiggyBank },
+    // { label: "Card", href: "/reports", icon: CreditCard },
+    // { label: "Goals", href: "/goals", icon: Target },
+  ];
+
+  const masterItems: SidebarItem[] = [
+    { label: "Categories", href: "/categories", icon: Tag },
+    { label: "Payment Modes", href: "/payment-modes", icon: CreditCard },
   ];
 
   const toolsItems: SidebarItem[] = [
-    { label: "Insight", href: "/insight", icon: Lightbulb },
-    { label: "Analytics", href: "/analytics", icon: BarChart3 },
+    // { label: "Insight", href: "/insight", icon: Lightbulb },
+    // { label: "Analytics", href: "/analytics", icon: BarChart3 },
   ];
 
   const otherItems: SidebarItem[] = [
-    { label: "Setting", href: "/settings", icon: Settings },
-    { label: "Help Center", href: "/help", icon: HelpCircle },
-    { label: "Support", href: "/support", icon: Headphones },
+    // { label: "Setting", href: "/settings", icon: Settings },
+    // { label: "Help Center", href: "/help", icon: HelpCircle },
+    // { label: "Support", href: "/support", icon: Headphones },
   ];
 
   const renderSidebarLinks = (items: SidebarItem[]) => {
@@ -66,11 +72,10 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           key={item.label}
           href={item.href}
           onClick={() => setIsMobileSidebarOpen(false)}
-          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-            isActive
+          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive
               ? "bg-primary text-white shadow-soft font-semibold"
               : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-          }`}
+            }`}
         >
           <item.icon className="h-4.5 w-4.5" />
           <span>{item.label}</span>
@@ -107,6 +112,14 @@ export default function DashboardShell({ children }: { children: React.ReactNode
               General
             </h4>
             <nav className="space-y-1 mt-2">{renderSidebarLinks(generalItems)}</nav>
+          </div>
+
+          {/* Master Section */}
+          <div className="space-y-1">
+            <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+              Master Menu
+            </h4>
+            <nav className="space-y-1 mt-2">{renderSidebarLinks(masterItems)}</nav>
           </div>
 
           {/* Tools Section */}
@@ -180,6 +193,13 @@ export default function DashboardShell({ children }: { children: React.ReactNode
 
               <div className="space-y-1">
                 <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                  Master Menu
+                </h4>
+                <nav className="space-y-1 mt-2">{renderSidebarLinks(masterItems)}</nav>
+              </div>
+
+              <div className="space-y-1">
+                <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
                   Tools
                 </h4>
                 <nav className="space-y-1 mt-2">{renderSidebarLinks(toolsItems)}</nav>
@@ -212,7 +232,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       <div className="flex-1 lg:pl-64 flex flex-col">
         {/* TOP HEADER */}
         <header className="sticky top-0 z-40 bg-slate-50/80 dark:bg-[#08070d]/80 backdrop-blur-md border-b border-border/50 px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          
+
           {/* Greeting */}
           <div className="flex items-center gap-3">
             <button
@@ -288,35 +308,35 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
           {children}
         </main>
-      {showLogoutConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200">
-            <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-danger/10 text-danger mb-4">
-                <LogOut className="h-6 w-6" />
-              </div>
-              <h3 className="text-lg font-bold text-foreground">Confirm Logout</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Are you sure you want to log out of your account?
-              </p>
-              <div className="mt-6 flex w-full gap-3">
-                <button
-                  onClick={() => setShowLogoutConfirm(false)}
-                  className="flex-1 py-2.5 rounded-xl border border-border bg-card text-sm font-semibold hover:bg-secondary text-muted-foreground transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="flex-1 py-2.5 rounded-xl bg-danger text-white text-sm font-semibold hover:bg-danger-600 transition-all shadow-soft active:scale-[0.98]"
-                >
-                  Log Out
-                </button>
+        {showLogoutConfirm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200">
+              <div className="flex flex-col items-center text-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-danger/10 text-danger mb-4">
+                  <LogOut className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">Confirm Logout</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Are you sure you want to log out of your account?
+                </p>
+                <div className="mt-6 flex w-full gap-3">
+                  <button
+                    onClick={() => setShowLogoutConfirm(false)}
+                    className="flex-1 py-2.5 rounded-xl border border-border bg-card text-sm font-semibold hover:bg-secondary text-muted-foreground transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="flex-1 py-2.5 rounded-xl bg-danger text-white text-sm font-semibold hover:bg-danger-600 transition-all shadow-soft active:scale-[0.98]"
+                  >
+                    Log Out
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );
