@@ -11,6 +11,7 @@ import {
   PiggyBank,
   CreditCard,
   Target,
+  CheckSquare,
   Lightbulb,
   BarChart3,
   Settings,
@@ -74,6 +75,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
     { label: "Asset Portfolio", href: "/assets", icon: Wallet },
     { label: "Savings Goals", href: "/goals", icon: Target },
     { label: "Bills & Subs", href: "/subscriptions", icon: CalendarDays },
+    { label: "Daily Plans", href: "/daily-plans", icon: CheckSquare },
   ];
 
   const masterItems: SidebarItem[] = [

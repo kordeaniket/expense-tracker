@@ -84,3 +84,15 @@ export interface Subscription {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface DailyPlan {
+  _id: string;
+  title: string;
+  description?: string;
+  frequency: "daily" | "once";
+  date?: string;
+  time?: string;
+  completions: string[];
+  createdAt?: string;
+  updatedAt?: string;
+}
