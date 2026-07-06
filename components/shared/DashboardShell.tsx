@@ -73,6 +73,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
     { label: "Income Tracker", href: "/income", icon: PiggyBank },
     { label: "Asset Portfolio", href: "/assets", icon: Wallet },
     { label: "Savings Goals", href: "/goals", icon: Target },
+    { label: "Bills & Subs", href: "/subscriptions", icon: CalendarDays },
   ];
 
   const masterItems: SidebarItem[] = [

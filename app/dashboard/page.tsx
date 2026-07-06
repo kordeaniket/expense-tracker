@@ -58,23 +58,37 @@ interface GoalData {
   icon?: string;
 }
 
+interface SubscriptionData {
+  _id: string;
+  name: string;
+  amount: number;
+  category: string;
+  billingCycle: string;
+  nextDueDate: string;
+  paymentMode: string;
+  status: string;
+  note?: string;
+}
+
 export default function DashboardPage() {
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
   const [incomes, setIncomes] = useState<IncomeData[]>([]);
   const [assets, setAssets] = useState<AssetData[]>([]);
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [goals, setGoals] = useState<GoalData[]>([]);
+  const [subscriptions, setSubscriptions] = useState<SubscriptionData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [expRes, incRes, astRes, catRes, goalRes] = await Promise.all([
+        const [expRes, incRes, astRes, catRes, goalRes, subRes] = await Promise.all([
           fetch("/api/expenses"),
           fetch("/api/income"),
           fetch("/api/assets"),
           fetch("/api/categories"),
           fetch("/api/goals"),
+          fetch("/api/subscriptions"),
         ]);
 
         const expData = await expRes.json();
@@ -82,12 +96,14 @@ export default function DashboardPage() {
         const astData = await astRes.json();
         const catData = await catRes.json();
         const goalData = await goalRes.json();
+        const subData = await subRes.json();
 
         if (expRes.ok && expData.expenses) setExpenses(expData.expenses);
         if (incRes.ok && incData.incomes) setIncomes(incData.incomes);
         if (astRes.ok && astData.assets) setAssets(astData.assets);
         if (catRes.ok && catData.categories) setCategories(catData.categories);
         if (goalRes.ok && goalData.goals) setGoals(goalData.goals);
+        if (subRes.ok && subData.subscriptions) setSubscriptions(subData.subscriptions);
       } catch (error) {
         console.error("Dashboard fetch error:", error);
       } finally {
@@ -210,25 +226,24 @@ export default function DashboardPage() {
   }));
 
   // Recurring Subscriptions
-  const subscriptionBills = expenses
-    .filter((e) => e.isRecurring)
+  const subscriptionBills = subscriptions
+    .filter((s) => s.status === "active")
     .slice(0, 5)
-    .map((e) => {
-      const firstLetter = e.note ? e.note.charAt(0).toUpperCase() : e.category.charAt(0).toUpperCase();
+    .map((s) => {
+      const firstLetter = s.name ? s.name.charAt(0).toUpperCase() : s.category.charAt(0).toUpperCase();
       const colors = ["bg-red-500", "bg-green-500", "bg-blue-500", "bg-orange-500", "bg-purple-500", "bg-pink-500"];
       const charCodeSum = firstLetter.charCodeAt(0) || 0;
       const logoColor = colors[charCodeSum % colors.length];
-
       return {
-        name: e.note || e.category,
-        date: new Date(e.date).toLocaleDateString("en-IN", {
+        name: s.name,
+        amount: `₹${s.amount.toLocaleString("en-IN")}`,
+        date: `Due: ${new Date(s.nextDueDate).toLocaleDateString("en-IN", {
           day: "numeric",
           month: "short",
           year: "numeric",
-        }),
-        amount: `₹${e.amount.toFixed(2)}`,
-        logoColor,
+        })}`,
         logoText: firstLetter,
+        logoColor,
       };
     });
 

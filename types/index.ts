@@ -70,3 +70,17 @@ export interface DashboardSummary {
   categoryBreakdown: { category: string; total: number; color: string }[];
   monthlyTrend: { month: string; amount: number }[];
 }
+
+export interface Subscription {
+  _id: string;
+  name: string;
+  amount: number;
+  category: string;
+  billingCycle: "weekly" | "monthly" | "quarterly" | "yearly";
+  nextDueDate: string;
+  paymentMode: string;
+  status: "active" | "paused" | "cancelled";
+  note?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
