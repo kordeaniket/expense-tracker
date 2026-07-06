@@ -44,6 +44,12 @@ export interface Budget {
   alertThreshold: number;
 }
 
+export interface GoalContribution {
+  amount: number;
+  date: string;
+  note?: string;
+}
+
 export interface Goal {
   _id: string;
   title: string;
@@ -51,6 +57,9 @@ export interface Goal {
   savedAmount: number;
   targetDate?: string;
   icon?: string;
+  contributions?: GoalContribution[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface DashboardSummary {

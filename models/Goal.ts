@@ -1,5 +1,11 @@
 import { Schema, model, models, type Document, type Types } from "mongoose";
 
+export interface IContribution {
+  amount: number;
+  date: Date;
+  note?: string;
+}
+
 export interface IGoal extends Document {
   user: Types.ObjectId;
   title: string;
@@ -7,9 +13,16 @@ export interface IGoal extends Document {
   savedAmount: number;
   targetDate?: Date;
   icon?: string;
+  contributions: IContribution[];
   createdAt: Date;
   updatedAt: Date;
 }
+
+const ContributionSchema = new Schema<IContribution>({
+  amount: { type: Number, required: true },
+  date: { type: Date, required: true, default: Date.now },
+  note: { type: String },
+});
 
 const GoalSchema = new Schema<IGoal>(
   {
@@ -19,6 +32,7 @@ const GoalSchema = new Schema<IGoal>(
     savedAmount: { type: Number, default: 0 },
     targetDate: { type: Date },
     icon: { type: String },
+    contributions: { type: [ContributionSchema], default: [] },
   },
   { timestamps: true }
 );

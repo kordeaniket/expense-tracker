@@ -49,32 +49,45 @@ interface CategoryData {
   color: string;
 }
 
+interface GoalData {
+  _id: string;
+  title: string;
+  targetAmount: number;
+  savedAmount: number;
+  targetDate?: string;
+  icon?: string;
+}
+
 export default function DashboardPage() {
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
   const [incomes, setIncomes] = useState<IncomeData[]>([]);
   const [assets, setAssets] = useState<AssetData[]>([]);
   const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [goals, setGoals] = useState<GoalData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [expRes, incRes, astRes, catRes] = await Promise.all([
+        const [expRes, incRes, astRes, catRes, goalRes] = await Promise.all([
           fetch("/api/expenses"),
           fetch("/api/income"),
           fetch("/api/assets"),
           fetch("/api/categories"),
+          fetch("/api/goals"),
         ]);
 
         const expData = await expRes.json();
         const incData = await incRes.json();
         const astData = await astRes.json();
         const catData = await catRes.json();
+        const goalData = await goalRes.json();
 
         if (expRes.ok && expData.expenses) setExpenses(expData.expenses);
         if (incRes.ok && incData.incomes) setIncomes(incData.incomes);
         if (astRes.ok && astData.assets) setAssets(astData.assets);
         if (catRes.ok && catData.categories) setCategories(catData.categories);
+        if (goalRes.ok && goalData.goals) setGoals(goalData.goals);
       } catch (error) {
         console.error("Dashboard fetch error:", error);
       } finally {
@@ -140,8 +153,14 @@ export default function DashboardPage() {
   const totalSavingsAndFD = assets
     .filter((a) => a.type === "Savings" || a.type === "FD")
     .reduce((sum, a) => sum + a.amount, 0);
-  const goalTarget = 500000;
-  const progressPercent = Math.min((totalSavingsAndFD / goalTarget) * 100, 100);
+  
+  // Dynamic Goals resolution
+  const hasDynamicGoals = goals.length > 0;
+  const primaryGoal = hasDynamicGoals ? goals[0] : null;
+  const goalTitle = primaryGoal ? primaryGoal.title : "Emergency Fund";
+  const goalTarget = primaryGoal ? primaryGoal.targetAmount : 500000;
+  const goalSaved = primaryGoal ? primaryGoal.savedAmount : totalSavingsAndFD;
+  const progressPercent = goalTarget > 0 ? Math.min((goalSaved / goalTarget) * 100, 100) : 0;
 
   // Last 6 Months Expenses trend
   const monthlyTrendData = [];
@@ -329,20 +348,20 @@ export default function DashboardPage() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
                 <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
-                  Emergency Goal
+                  {hasDynamicGoals ? "Savings Goal" : "Emergency Goal"}
                 </p>
                 <button className="text-muted-foreground hover:text-foreground">
                   <MoreVertical className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <h4 className="mt-1 text-[13px] font-bold text-foreground truncate">
-                Emergency Fund
+              <h4 className="mt-1 text-[13px] font-bold text-foreground truncate" title={goalTitle}>
+                {goalTitle}
               </h4>
               <p className="text-[10px] text-muted-foreground font-medium mt-0.5">
                 Target: ₹{goalTarget.toLocaleString("en-IN")}
               </p>
               <p className="text-[10px] text-muted-foreground font-medium">
-                Saved: ₹{totalSavingsAndFD.toLocaleString("en-IN")} ({progressPercent.toFixed(0)}%)
+                Saved: ₹{goalSaved.toLocaleString("en-IN")} ({progressPercent.toFixed(0)}%)
               </p>
             </div>
           </div>
