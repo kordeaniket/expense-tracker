@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -39,6 +39,33 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   const { data: session } = useSession();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [timeStr, setTimeStr] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+
+      const timeOptions: Intl.DateTimeFormatOptions = {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      };
+      const formattedTime = now.toLocaleTimeString("en-IN", timeOptions);
+
+      const dateOptions: Intl.DateTimeFormatOptions = {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      };
+      const formattedDate = now.toLocaleDateString("en-IN", dateOptions);
+
+      setTimeStr(`${formattedTime} | ${formattedDate} | IN`);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const generalItems: SidebarItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -73,8 +100,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           href={item.href}
           onClick={() => setIsMobileSidebarOpen(false)}
           className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive
-              ? "bg-primary text-white shadow-soft font-semibold"
-              : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+            ? "bg-primary text-white shadow-soft font-semibold"
+            : "text-muted-foreground hover:bg-secondary hover:text-foreground"
             }`}
         >
           <item.icon className="h-4.5 w-4.5" />
@@ -254,9 +281,9 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           {/* Middle & Right Header Actions */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1 sm:justify-end max-w-3xl">
             {/* Clock */}
-            <div className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-card border border-border text-xs text-muted-foreground font-medium shrink-0">
+            <div className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-card border border-border text-xs text-muted-foreground font-medium shrink-0" title="Current Local Time">
               <Clock className="h-3.5 w-3.5 text-primary" />
-              <span>11:11 PM | 31 June 2025 | IN</span>
+              <span>{timeStr || "Loading clock..."}</span>
             </div>
 
             {/* Search Input */}
