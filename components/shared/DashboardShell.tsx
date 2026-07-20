@@ -123,9 +123,9 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   return (
     <div className="min-h-screen bg-slate-50/50 dark:bg-[#08070d] text-foreground flex">
       {/* SIDEBAR FOR DESKTOP */}
-      <aside className="hidden lg:flex flex-col w-64 bg-card border-r border-border p-6 fixed h-screen overflow-y-auto">
+      <aside className="hidden lg:flex flex-col w-64 bg-card border-r border-border p-6 fixed h-screen">
         {/* Logo */}
-        <div className="flex items-center gap-2 mb-8">
+        <div className="flex items-center gap-2 mb-8 shrink-0">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-primary to-accentPink flex items-center justify-center text-white font-bold text-lg">
             N
           </div>
@@ -134,61 +134,64 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           </span>
         </div>
 
-        {/* Navigation Categories */}
-        <div className="flex-1 space-y-6">
-          {/* General Section */}
-          <div className="space-y-1">
-            <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
-              General
-            </h4>
-            <nav className="space-y-1 mt-2">{renderSidebarLinks(generalItems)}</nav>
+        {/* Scrollable Container */}
+        <div className="flex-1 overflow-y-auto pr-2 pb-4 flex flex-col scrollbar-thin">
+          {/* Navigation Categories */}
+          <div className="flex-1 space-y-6">
+            {/* General Section */}
+            <div className="space-y-1">
+              <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                General
+              </h4>
+              <nav className="space-y-1 mt-2">{renderSidebarLinks(generalItems)}</nav>
+            </div>
+
+            {/* Master Section */}
+            <div className="space-y-1">
+              <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                Master Menu
+              </h4>
+              <nav className="space-y-1 mt-2">{renderSidebarLinks(masterItems)}</nav>
+            </div>
+
+            {/* Tools Section */}
+            <div className="space-y-1">
+              <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                Tools
+              </h4>
+              <nav className="space-y-1 mt-2">{renderSidebarLinks(toolsItems)}</nav>
+            </div>
+
+            {/* Other Section */}
+            <div className="space-y-1">
+              <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                Other
+              </h4>
+              <nav className="space-y-1 mt-2">
+                {renderSidebarLinks(otherItems)}
+                <button
+                  onClick={() => setShowLogoutConfirm(true)}
+                  className="flex w-full items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-danger hover:bg-danger/10"
+                >
+                  <LogOut className="h-4.5 w-4.5" />
+                  <span>Logout</span>
+                </button>
+              </nav>
+            </div>
           </div>
 
-          {/* Master Section */}
-          <div className="space-y-1">
-            <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
-              Master Menu
-            </h4>
-            <nav className="space-y-1 mt-2">{renderSidebarLinks(masterItems)}</nav>
+          {/* Upgrade Card */}
+          <div className="mt-8 shrink-0 p-4 rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-primary/10 flex flex-col items-center text-center relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/10 blur-xl" />
+            <Gem className="h-6 w-6 text-primary mb-2" />
+            <h5 className="font-bold text-sm text-foreground">Upgrade to PRO</h5>
+            <p className="text-[11px] text-muted-foreground mt-1 max-w-[150px]">
+              Upgrade to premium plan + Get 1 month free
+            </p>
+            <button className="mt-3 w-full py-2 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98]">
+              Upgrade
+            </button>
           </div>
-
-          {/* Tools Section */}
-          <div className="space-y-1">
-            <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
-              Tools
-            </h4>
-            <nav className="space-y-1 mt-2">{renderSidebarLinks(toolsItems)}</nav>
-          </div>
-
-          {/* Other Section */}
-          <div className="space-y-1">
-            <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
-              Other
-            </h4>
-            <nav className="space-y-1 mt-2">
-              {renderSidebarLinks(otherItems)}
-              <button
-                onClick={() => setShowLogoutConfirm(true)}
-                className="flex w-full items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-danger hover:bg-danger/10"
-              >
-                <LogOut className="h-4.5 w-4.5" />
-                <span>Logout</span>
-              </button>
-            </nav>
-          </div>
-        </div>
-
-        {/* Upgrade Card */}
-        <div className="mt-8 p-4 rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-primary/10 flex flex-col items-center text-center relative overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/10 blur-xl" />
-          <Gem className="h-6 w-6 text-primary mb-2" />
-          <h5 className="font-bold text-sm text-foreground">Upgrade to PRO</h5>
-          <p className="text-[11px] text-muted-foreground mt-1 max-w-[150px]">
-            Upgrade to premium plan + Get 1 month free
-          </p>
-          <button className="mt-3 w-full py-2 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98]">
-            Upgrade
-          </button>
         </div>
       </aside>
 
