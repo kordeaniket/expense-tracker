@@ -26,6 +26,7 @@ import {
   Gem,
   Tag,
   Wallet,
+  MapPin,
 } from "lucide-react";
 
 interface SidebarItem {
@@ -76,6 +77,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
     { label: "Savings Goals", href: "/goals", icon: Target },
     { label: "Bills & Subs", href: "/subscriptions", icon: CalendarDays },
     { label: "Daily Plans", href: "/daily-plans", icon: CheckSquare },
+    { label: "Visited Places", href: "/visited-places", icon: MapPin },
   ];
 
   const masterItems: SidebarItem[] = [
