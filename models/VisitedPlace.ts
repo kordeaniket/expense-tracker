@@ -18,6 +18,7 @@ const visitedPlaceSchema = new Schema<IVisitedPlace>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      index: true,
     },
     name: {
       type: String,
@@ -52,6 +53,8 @@ const visitedPlaceSchema = new Schema<IVisitedPlace>(
     timestamps: true,
   }
 );
+
+visitedPlaceSchema.index({ userId: 1, dateVisited: -1, createdAt: -1 });
 
 export const VisitedPlace: Model<IVisitedPlace> =
   mongoose.models.VisitedPlace || mongoose.model<IVisitedPlace>("VisitedPlace", visitedPlaceSchema);

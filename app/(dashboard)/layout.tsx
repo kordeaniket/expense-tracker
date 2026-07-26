@@ -24,6 +24,8 @@ import {
   X,
   Gem,
   List,
+  BookOpen,
+  MapPin,
 } from "lucide-react";
 
 interface SidebarItem {
@@ -42,6 +44,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const generalItems: SidebarItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { label: "All Expenses", href: "/expenses", icon: TrendingUp },
+    { label: "Visited Places", href: "/visited-places", icon: MapPin },
+    { label: "Books Library", href: "/books", icon: BookOpen },
     // { label: "Bill & Subscription", href: "/budgets", icon: CalendarDays },
     // { label: "Investment", href: "/income", icon: PiggyBank },
     // { label: "Card", href: "/reports", icon: CreditCard },

@@ -16,7 +16,7 @@ declare global {
   var mongooseCache: MongooseCache | undefined;
 }
 
-const cached: MongooseCache = global.mongooseCache ?? { conn: null, promise: null };
+const cached = (global.mongooseCache || (global.mongooseCache = { conn: null, promise: null })) as MongooseCache;
 
 export async function connectDB() {
   if (cached.conn) return cached.conn;
@@ -25,10 +25,15 @@ export async function connectDB() {
     cached.promise = mongoose.connect(MONGODB_URI, {
       bufferCommands: false,
       family: 4, // Force IPv4 resolution to prevent Windows IPv6 Atlas lookup errors
-    });
+    }).then((m) => m);
   }
 
-  cached.conn = await cached.promise;
-  global.mongooseCache = cached;
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null; // Clear failing promise so subsequent calls can retry
+    throw e;
+  }
+
   return cached.conn;
 }
