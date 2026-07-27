@@ -68,9 +68,14 @@ const ICON_MAP: Record<string, React.ComponentType<any>> = {
   Savings: PiggyBank,
 };
 
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export default function GoalsPage() {
-  const [goals, setGoals] = useState<GoalData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading, mutate } = useSWR("/api/goals", fetcher);
+  const goals: GoalData[] = data?.goals || [];
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Modals toggle
@@ -93,27 +98,6 @@ export default function GoalsPage() {
   // Contribution Form states
   const [contributeAmount, setContributeAmount] = useState("");
   const [contributeNote, setContributeNote] = useState("");
-
-  const fetchGoals = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/goals");
-      const data = await response.json();
-      if (response.ok && data.goals) {
-        setGoals(data.goals);
-      } else {
-        throw new Error(data.error || "Failed to load goals.");
-      }
-    } catch (error: any) {
-      toast.error(error.message || "Failed to fetch goals.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchGoals();
-  }, []);
 
   const handleOpenAddModal = () => {
     setEditingGoal(null);
@@ -174,7 +158,7 @@ export default function GoalsPage() {
 
       toast.success(editingGoal ? "Savings goal updated!" : "Savings goal created!");
       setShowGoalModal(false);
-      fetchGoals();
+      mutate();
     } catch (error: any) {
       toast.error(error.message || "Something went wrong.");
     } finally {
@@ -211,7 +195,7 @@ export default function GoalsPage() {
 
       toast.success(contributionType === "deposit" ? "Deposit credited!" : "Funds withdrawn!");
       setShowContributeModal(false);
-      fetchGoals();
+      mutate();
     } catch (error: any) {
       toast.error(error.message || "Something went wrong.");
     } finally {
@@ -234,7 +218,7 @@ export default function GoalsPage() {
       }
 
       toast.success("Goal deleted successfully.");
-      fetchGoals();
+      mutate();
     } catch (error: any) {
       toast.error(error.message || "Failed to delete savings goal.");
     }

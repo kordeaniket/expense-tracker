@@ -38,9 +38,14 @@ const PRESET_COLORS = [
   "#2d3436", // Dark Slate
 ];
 
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState<CategoryData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading, mutate } = useSWR("/api/categories", fetcher);
+  const categories: CategoryData[] = data?.categories || [];
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState<CategoryData | null>(null);
@@ -55,27 +60,6 @@ export default function CategoriesPage() {
   const [newSubcatName, setNewSubcatName] = useState("");
   const [editingSubcatIdx, setEditingSubcatIdx] = useState<number | null>(null);
   const [editingSubcatVal, setEditingSubcatVal] = useState("");
-
-  const fetchCategories = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/categories");
-      const data = await response.json();
-      if (response.ok && data.categories) {
-        setCategories(data.categories);
-      } else {
-        throw new Error(data.error || "Failed to load categories.");
-      }
-    } catch (error: any) {
-      toast.error(error.message || "Failed to fetch categories.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const handleOpenAddModal = () => {
     setEditingCategory(null);
@@ -170,7 +154,7 @@ export default function CategoriesPage() {
 
       toast.success(editingCategory ? "Category updated!" : "Category created!");
       setShowModal(false);
-      fetchCategories();
+      mutate();
     } catch (error: any) {
       toast.error(error.message || "Something went wrong.");
     } finally {
@@ -193,7 +177,7 @@ export default function CategoriesPage() {
       }
 
       toast.success("Category deleted successfully.");
-      fetchCategories();
+      mutate();
     } catch (error: any) {
       toast.error(error.message || "Failed to delete category.");
     }

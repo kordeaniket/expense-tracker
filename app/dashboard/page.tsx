@@ -70,48 +70,35 @@ interface SubscriptionData {
   note?: string;
 }
 
+import useSWR from "swr";
+
+const fetcher = async (urls: string[]) => {
+  const f = (u: string) => fetch(u).then((r) => r.json());
+  return Promise.all(urls.map(f));
+};
+
 export default function DashboardPage() {
-  const [expenses, setExpenses] = useState<ExpenseData[]>([]);
-  const [incomes, setIncomes] = useState<IncomeData[]>([]);
-  const [assets, setAssets] = useState<AssetData[]>([]);
-  const [categories, setCategories] = useState<CategoryData[]>([]);
-  const [goals, setGoals] = useState<GoalData[]>([]);
-  const [subscriptions, setSubscriptions] = useState<SubscriptionData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading } = useSWR(
+    [
+      "/api/expenses",
+      "/api/income",
+      "/api/assets",
+      "/api/categories",
+      "/api/goals",
+      "/api/subscriptions",
+    ],
+    fetcher,
+    {
+      revalidateOnFocus: false, // Prevents excessive refetching on tab switch
+    }
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [expRes, incRes, astRes, catRes, goalRes, subRes] = await Promise.all([
-          fetch("/api/expenses"),
-          fetch("/api/income"),
-          fetch("/api/assets"),
-          fetch("/api/categories"),
-          fetch("/api/goals"),
-          fetch("/api/subscriptions"),
-        ]);
-
-        const expData = await expRes.json();
-        const incData = await incRes.json();
-        const astData = await astRes.json();
-        const catData = await catRes.json();
-        const goalData = await goalRes.json();
-        const subData = await subRes.json();
-
-        if (expRes.ok && expData.expenses) setExpenses(expData.expenses);
-        if (incRes.ok && incData.incomes) setIncomes(incData.incomes);
-        if (astRes.ok && astData.assets) setAssets(astData.assets);
-        if (catRes.ok && catData.categories) setCategories(catData.categories);
-        if (goalRes.ok && goalData.goals) setGoals(goalData.goals);
-        if (subRes.ok && subData.subscriptions) setSubscriptions(subData.subscriptions);
-      } catch (error) {
-        console.error("Dashboard fetch error:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const expenses: ExpenseData[] = data?.[0]?.expenses || [];
+  const incomes: IncomeData[] = data?.[1]?.incomes || [];
+  const assets: AssetData[] = data?.[2]?.assets || [];
+  const categories: CategoryData[] = data?.[3]?.categories || [];
+  const goals: GoalData[] = data?.[4]?.goals || [];
+  const subscriptions: SubscriptionData[] = data?.[5]?.subscriptions || [];
 
   if (isLoading) {
     return (
