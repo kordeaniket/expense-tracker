@@ -44,7 +44,17 @@ export async function middleware(request: NextRequest) {
   ].some((prefix) => path.startsWith(prefix));
 
   if (isProtectedPath) {
-    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+    let token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+
+    // Fallback for Vercel production: sometimes NEXTAUTH_URL isn't explicitly set to https://
+    // which causes getToken to look for the non-secure cookie, but NextAuth sets the secure one.
+    if (!token && process.env.NODE_ENV === "production") {
+      token = await getToken({
+        req: request,
+        secret: process.env.NEXTAUTH_SECRET,
+        secureCookie: true,
+      });
+    }
 
     if (!token) {
       if (path.startsWith("/api/")) {
