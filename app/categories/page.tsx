@@ -227,12 +227,11 @@ export default function CategoriesPage() {
             No categories available. Click &quot;Add Category&quot; above to create one.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-2">
             {categories.map((cat) => (
               <div
                 key={cat._id}
-                className="group relative rounded-2xl border border-border bg-card p-4 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
-                style={{ borderTop: `4px solid ${cat.color || "#6C5CE7"}` }}
+                className="group relative rounded-xl border border-border bg-card p-2.5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 flex items-center justify-between overflow-hidden"
               >
                 {/* Visual Accent Background */}
                 <div 
@@ -240,69 +239,70 @@ export default function CategoriesPage() {
                   style={{ backgroundColor: cat.color }}
                 />
 
-                {/* Card Header */}
-                <div>
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <h3 className="font-bold text-foreground text-sm tracking-tight">{cat.name}</h3>
-                      <span className={`mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
+                <div className="flex items-center gap-3 z-10 w-full min-w-0">
+                  {/* Color strip */}
+                  <div 
+                    className="shrink-0 h-10 w-1.5 rounded-full" 
+                    style={{ backgroundColor: cat.color || "#6C5CE7" }} 
+                  />
+                  
+                  <div className="flex flex-col gap-1 min-w-0 flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                      <h3 className="font-bold text-foreground text-xs tracking-tight truncate max-w-[200px]">{cat.name}</h3>
+                      <span className={`inline-flex w-fit items-center gap-0.5 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider ${
                         cat.type === "income" 
-                          ? "bg-success/10 text-success border border-success/20" 
-                          : "bg-danger-light text-danger border border-danger/10"
+                          ? "bg-success/10 text-success" 
+                          : "bg-danger-light text-danger"
                       }`}>
                         {cat.type === "income" ? (
-                          <ArrowUpRight className="h-3 w-3" />
+                          <ArrowUpRight className="h-2.5 w-2.5" />
                         ) : (
-                          <ArrowDownRight className="h-3 w-3" />
+                          <ArrowDownRight className="h-2.5 w-2.5" />
                         )}
-                        <span className="capitalize">{cat.type}</span>
+                        <span>{cat.type}</span>
                       </span>
                     </div>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
-                      <button
-                        onClick={() => handleOpenEditModal(cat)}
-                        className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all cursor-pointer"
-                        title="Edit Category"
-                      >
-                        <Edit2 className="h-3.5 w-3.5" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteCategory(cat._id, cat.name)}
-                        className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all cursor-pointer"
-                        title="Delete Category"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
+                    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar mask-gradient-right pb-0.5">
+                      {cat.subcategories && cat.subcategories.length > 0 ? (
+                        <>
+                          <span className="shrink-0 text-[9px] text-muted-foreground font-semibold flex items-center gap-1">
+                            <FolderOpen className="h-3 w-3" /> {cat.subcategories.length}
+                          </span>
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            {cat.subcategories.map((sub, idx) => (
+                              <span
+                                key={idx}
+                                className="inline-flex shrink-0 items-center gap-1 px-1.5 py-0.5 rounded bg-slate-50 dark:bg-slate-900/35 border border-border text-[9px] font-medium text-muted-foreground whitespace-nowrap"
+                              >
+                                {sub}
+                              </span>
+                            ))}
+                          </div>
+                        </>
+                      ) : (
+                        <span className="text-[9px] text-muted-foreground/60 italic font-medium">No subcategories</span>
+                      )}
                     </div>
                   </div>
+                </div>
 
-                  {/* Divider */}
-                  <div className="my-3 border-b border-border/50" />
-
-                  {/* Subcategories */}
-                  <div className="space-y-2">
-                    <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
-                      <FolderOpen className="h-3 w-3 text-primary/70" />
-                      Subcategories ({cat.subcategories?.length || 0})
-                    </h4>
-                    {cat.subcategories && cat.subcategories.length > 0 ? (
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {cat.subcategories.map((sub, idx) => (
-                          <span
-                            key={idx}
-                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-slate-50 dark:bg-slate-900/35 border border-border text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
-                          >
-                            <Tag className="h-2.5 w-2.5 text-muted-foreground/60" />
-                            {sub}
-                          </span>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-[11px] text-muted-foreground/60 italic font-medium">No subcategories defined.</p>
-                    )}
-                  </div>
+                {/* Actions */}
+                <div className="flex items-center gap-1 shrink-0 ml-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => handleOpenEditModal(cat)}
+                    className="p-1.5 rounded-md hover:bg-secondary text-muted-foreground hover:text-primary transition-all cursor-pointer"
+                    title="Edit Category"
+                  >
+                    <Edit2 className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteCategory(cat._id, cat.name)}
+                    className="p-1.5 rounded-md hover:bg-danger/10 text-muted-foreground hover:text-danger transition-all cursor-pointer"
+                    title="Delete Category"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
                 </div>
               </div>
             ))}

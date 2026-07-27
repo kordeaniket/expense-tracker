@@ -283,7 +283,7 @@ export default function DailyPlansPage() {
 
   // Previous month padding cells
   for (let i = 0; i < firstDayIndex; i++) {
-    calendarCells.push(<div key={`pad-${i}`} className="h-14 border border-border/30 bg-slate-50/30 dark:bg-slate-900/5 rounded-lg opacity-40" />);
+    calendarCells.push(<div key={`pad-${i}`} className="h-9 border border-border/30 bg-slate-50/30 dark:bg-slate-900/5 rounded-md opacity-40" />);
   }
 
   // Active month cells
@@ -305,14 +305,14 @@ export default function DailyPlansPage() {
       <button
         key={`day-${day}`}
         onClick={() => setSelectedDate(cellDate)}
-        className={`h-12 p-1 border border-border/40 rounded-lg flex flex-col justify-between items-start transition-all relative hover:bg-secondary cursor-pointer ${isSelected
-            ? "ring-2 ring-primary bg-primary/5 border-primary"
-            : isToday
-              ? "border-primary/50 bg-secondary/30"
-              : "bg-card"
+        className={`h-9 p-1 border border-border/40 rounded-md flex flex-col justify-between items-start transition-all relative hover:bg-secondary cursor-pointer ${isSelected
+          ? "ring-1 ring-primary bg-primary/5 border-primary"
+          : isToday
+            ? "border-primary/50 bg-secondary/30"
+            : "bg-card"
           }`}
       >
-        <span className={`text-[10px] font-bold ${isToday ? "text-primary bg-primary/10 px-1 rounded" : "text-muted-foreground"
+        <span className={`text-[9px] font-bold ${isToday ? "text-primary bg-primary/10 px-1 rounded-sm" : "text-muted-foreground"
           }`}>
           {day}
         </span>
@@ -323,7 +323,7 @@ export default function DailyPlansPage() {
             {completionsForThisDate.length > 0 ? (
               <div className="w-full flex items-center gap-0.5">
                 {completionsForThisDate.map((_, idx) => (
-                  <span key={idx} className="h-1.5 w-1.5 rounded-full bg-success shrink-0" />
+                  <span key={idx} className="h-1 w-1 rounded-full bg-success shrink-0" />
                 ))}
                 {/* Remaining uncompleted indicators */}
                 {Array.from({ length: plansForThisDate.length - completionsForThisDate.length }).map((_, idx) => (
@@ -331,7 +331,7 @@ export default function DailyPlansPage() {
                 ))}
               </div>
             ) : (
-              <span className="text-[8px] text-muted-foreground/45 font-medium leading-none truncate">{plansForThisDate.length} tasks</span>
+              <span className="text-[7px] text-muted-foreground/45 font-medium leading-none truncate">{plansForThisDate.length}</span>
             )}
           </div>
         )}
@@ -359,83 +359,78 @@ export default function DailyPlansPage() {
         </div>
 
         {/* Statistics Metric cards */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {/* Today Progress */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden flex flex-col justify-between">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Today&apos;s Checklist Progress</span>
-              <span className="text-[10px] font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10">
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm relative overflow-hidden flex flex-col justify-center">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Today&apos;s Checklist Progress</span>
+              <span className="text-[9px] font-bold text-primary px-1.5 py-0.5 rounded border border-primary/10 bg-primary/10">
                 {todayCompletedCount} / {todayPlans.length} done
               </span>
             </div>
-            <div className="mt-4 space-y-2">
-              <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-primary to-accentTeal transition-all duration-300"
-                  style={{ width: `${todayProgressPercent}%` }}
-                />
-              </div>
-              <p className="text-[10px] text-muted-foreground font-semibold">Track goals completion rate for running daily routines.</p>
+            <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-primary to-accentTeal transition-all duration-300"
+                style={{ width: `${todayProgressPercent}%` }}
+              />
             </div>
           </div>
 
           {/* Habit Streaks */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
-              <Award className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-warning/10 text-warning">
+              <Award className="h-4 w-4" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Consecutive Streaks</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">{currentStreak} <span className="text-muted-foreground text-xs font-normal">days streak</span></h3>
+            <div>
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Consecutive Streaks</p>
+              <h3 className="text-sm font-bold text-foreground leading-tight">{currentStreak} <span className="text-muted-foreground text-[10px] font-normal">days streak</span></h3>
             </div>
-            <p className="text-[10px] text-muted-foreground/60 font-semibold mt-1">Days with at least 1 ritual checked in sequence.</p>
           </div>
 
           {/* Lifetime Completions */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
-              <CheckCircle2 className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-success/10 text-success">
+              <CheckCircle2 className="h-4 w-4" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Life-time accomplishments</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">{lifetimeCompletions} <span className="text-muted-foreground text-xs font-normal">checks logged</span></h3>
+            <div>
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Life-time accomplishments</p>
+              <h3 className="text-sm font-bold text-foreground leading-tight">{lifetimeCompletions} <span className="text-muted-foreground text-[10px] font-normal">checks logged</span></h3>
             </div>
-            <p className="text-[10px] text-muted-foreground/60 font-semibold mt-1">Aggregate checkmarks across all logged plans.</p>
           </div>
         </div>
 
         {/* Dashboard Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
 
           {/* Calendar Segment (Left/8 Columns) */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-7 flex flex-col justify-between">
-            <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
-                <Calendar className="h-4.5 w-4.5 text-primary" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card lg:col-span-7 flex flex-col justify-between">
+            <div className="flex items-center justify-between border-b border-border/50 pb-2 mb-3">
+              <h3 className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                <Calendar className="h-4 w-4 text-primary" />
                 <span>Monthly Calendar</span>
               </h3>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <button
                   onClick={prevMonth}
-                  className="p-1 rounded-lg border border-border hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
+                  className="p-1 rounded bg-secondary/50 hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
                 >
-                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeft className="h-3.5 w-3.5" />
                 </button>
-                <span className="text-xs font-bold text-foreground">
+                <span className="text-[10px] font-bold text-foreground uppercase tracking-wider w-20 text-center">
                   {monthName} {yearNum}
                 </span>
                 <button
                   onClick={nextMonth}
-                  className="p-1 rounded-lg border border-border hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
+                  className="p-1 rounded bg-secondary/50 hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>
 
             {/* Days of week header */}
-            <div className="grid grid-cols-7 gap-2 mb-2 text-center text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+            <div className="grid grid-cols-7 gap-1.5 mb-1.5 text-center text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
               <span>Sun</span>
               <span>Mon</span>
               <span>Tue</span>
@@ -446,41 +441,41 @@ export default function DailyPlansPage() {
             </div>
 
             {/* Calendar Cells Grid */}
-            <div className="grid grid-cols-7 gap-2">
+            <div className="grid grid-cols-7 gap-1.5">
               {calendarCells}
             </div>
           </div>
 
           {/* Focused Day Checklist Inspector (Right/5 Columns) */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-5 flex flex-col justify-between">
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card lg:col-span-5 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
+              <div className="flex items-center justify-between border-b border-border/50 pb-2 mb-3">
                 <div>
-                  <h3 className="text-sm font-bold text-foreground">Day Agenda</h3>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">
+                  <h3 className="text-xs font-bold text-foreground">Day Agenda</h3>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">
                     {selectedDate.toLocaleDateString("en-IN", {
                       day: "numeric",
-                      month: "long",
+                      month: "short",
                       year: "numeric",
                     })}
                   </p>
                 </div>
-                <span className="text-[9px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-md border border-primary/10">
+                <span className="text-[9px] font-bold bg-primary/10 text-primary px-1.5 py-0.5 rounded-md border border-primary/10">
                   {completedPlansForSelectedDate.length} / {activePlansForSelectedDate.length} checked
                 </span>
               </div>
 
               {/* Checklist list */}
               {isLoading ? (
-                <div className="flex h-48 items-center justify-center">
-                  <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                <div className="flex h-40 items-center justify-center">
+                  <Loader2 className="h-5 w-5 animate-spin text-primary" />
                 </div>
               ) : activePlansForSelectedDate.length === 0 ? (
-                <div className="text-center py-12 text-xs text-muted-foreground font-medium italic border border-border/40 rounded-xl bg-slate-50/20 dark:bg-slate-900/5">
+                <div className="text-center py-8 text-[10px] text-muted-foreground font-medium italic border border-border/40 rounded-lg bg-slate-50/20 dark:bg-slate-900/5">
                   No plans scheduled for this date.
                 </div>
               ) : (
-                <div className="space-y-3 overflow-y-auto max-h-[300px] pr-1">
+                <div className="space-y-1.5 overflow-y-auto max-h-[250px] pr-1">
                   {activePlansForSelectedDate.map((plan) => {
                     const isCompleted = plan.completions.includes(selectedDateStr);
 
@@ -488,46 +483,50 @@ export default function DailyPlansPage() {
                       <div
                         key={plan._id}
                         onClick={() => handleToggleCompletion(plan)}
-                        className={`flex items-start justify-between p-2 border rounded-xl hover:bg-slate-50/60 dark:hover:bg-slate-900/10 transition-all cursor-pointer ${isCompleted
-                            ? "border-success/30 bg-success/[0.02]"
-                            : "border-border bg-card"
+                        className={`group flex items-center justify-between p-1.5 border rounded-lg hover:bg-slate-50/60 dark:hover:bg-slate-900/10 transition-all cursor-pointer ${isCompleted
+                          ? "border-success/30 bg-success/[0.02]"
+                          : "border-border bg-card"
                           }`}
                       >
-                        <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-1 min-w-0">
                           <input
                             type="checkbox"
                             checked={isCompleted}
                             onChange={() => { }} // toggling handled by click of row container
-                            className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer shrink-0"
+                            className="h-3.5 w-3.5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer shrink-0"
                           />
-                          <div className="min-w-0 flex-1">
-                            <h4 className={`text-xs font-bold text-foreground truncate ${isCompleted ? "line-through text-muted-foreground" : ""}`}>
+                          <div className="flex flex-col justify-center min-w-0 flex-1">
+                            <h4 className={`text-[11px] font-bold text-foreground truncate ${isCompleted ? "line-through text-muted-foreground/50" : ""}`}>
                               {plan.title}
                             </h4>
-                            {plan.description && (
-                              <p className="text-[10px] text-muted-foreground mt-0.5 truncate">{plan.description}</p>
-                            )}
-                            {plan.time && (
-                              <div className="flex items-center gap-1 mt-1 text-[9px] text-muted-foreground/80 font-semibold">
-                                <Clock className="h-3 w-3" />
-                                <span>{plan.time}</span>
-                              </div>
-                            )}
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              {plan.description && (
+                                <span className={`text-[9px] truncate max-w-[120px] ${isCompleted ? "text-muted-foreground/40 line-through" : "text-muted-foreground/80"}`}>
+                                  {plan.description}
+                                </span>
+                              )}
+                              {plan.time && (
+                                <span className={`flex items-center gap-0.5 text-[8px] font-semibold truncate bg-secondary px-1 py-0.5 rounded ${isCompleted ? "text-muted-foreground/40" : "text-muted-foreground/70"}`}>
+                                  <Clock className="h-2.5 w-2.5 shrink-0" />
+                                  {plan.time}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
 
                         {/* Edit/Delete control icons */}
-                        <div className="flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity ml-2 shrink-0">
+                        <div className="flex items-center gap-0.5 opacity-70 md:opacity-0 group-hover:opacity-100 transition-opacity ml-1 shrink-0">
                           <button
                             onClick={(e) => handleOpenEditModal(plan, e)}
-                            className="p-1 rounded hover:bg-secondary text-muted-foreground hover:text-primary transition-all cursor-pointer"
+                            className="p-1 rounded text-muted-foreground hover:bg-secondary hover:text-primary transition-all cursor-pointer"
                             title="Edit plan"
                           >
                             <Edit2 className="h-3 w-3" />
                           </button>
                           <button
                             onClick={(e) => handleDelete(plan._id, plan.title, e)}
-                            className="p-1 rounded hover:bg-danger-light text-muted-foreground hover:text-danger transition-all cursor-pointer"
+                            className="p-1 rounded text-muted-foreground hover:bg-danger/10 hover:text-danger transition-all cursor-pointer"
                             title="Delete plan"
                           >
                             <Trash2 className="h-3 w-3" />

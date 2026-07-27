@@ -183,76 +183,60 @@ export default function PaymentModesPage() {
             No payment modes available. Click &quot;Add Payment Mode&quot; above to create one.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-2">
             {paymentModes.map((mode) => {
               const Icon = TYPE_ICONS[mode.type] || Wallet;
               return (
                 <div
                   key={mode._id}
-                  className="group relative rounded-2xl border border-border bg-card p-4 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[160px]"
+                  className="group relative rounded-xl border border-border bg-card p-2.5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 flex items-center justify-between overflow-hidden"
                 >
-                  {/* Decorative Card Stripe */}
-                  <div 
-                    className="absolute top-0 left-0 right-0 h-1.5 transition-all"
-                    style={{ backgroundColor: mode.color || "#6C5CE7" }}
-                  />
+                  <div className="flex items-center gap-3 z-10 min-w-0">
+                    <div 
+                      className="shrink-0 h-10 w-1.5 rounded-full" 
+                      style={{ backgroundColor: mode.color || "#6C5CE7" }} 
+                    />
+                    <div 
+                      className="shrink-0 h-8 w-8 rounded-lg flex items-center justify-center text-white"
+                      style={{ backgroundColor: mode.color || "#6C5CE7" }}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-bold text-foreground text-xs tracking-tight truncate max-w-[200px]">{mode.name}</h3>
+                      <span className="text-[9px] text-muted-foreground font-bold tracking-wider uppercase">{mode.type}</span>
+                    </div>
+                  </div>
 
                   {/* Visual Glow */}
                   <div 
-                    className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full blur-3xl opacity-10 transition-all group-hover:scale-110 pointer-events-none"
+                    className="absolute right-10 top-1/2 -translate-y-1/2 w-24 h-24 rounded-full blur-2xl opacity-10 transition-all group-hover:scale-110 pointer-events-none"
                     style={{ backgroundColor: mode.color }}
                   />
 
-                  {/* Card content */}
-                  <div className="space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-2.5">
-                        <div 
-                          className="h-10 w-10 rounded-xl flex items-center justify-center text-white"
-                          style={{ backgroundColor: mode.color || "#6C5CE7" }}
-                        >
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-foreground text-sm tracking-tight">{mode.name}</h3>
-                          <span className="text-[10px] text-muted-foreground font-bold tracking-wider uppercase">{mode.type}</span>
-                        </div>
-                      </div>
-
-                      {/* Action buttons */}
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button
-                          onClick={() => handleOpenEditModal(mode)}
-                          className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"
-                          title="Edit Payment Mode"
-                        >
-                          <Edit2 className="h-3.5 w-3.5" />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteMode(mode._id, mode.name)}
-                          className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all cursor-pointer"
-                          title="Delete Payment Mode"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
+                  {/* Actions & Chip */}
+                  <div className="flex items-center gap-4 shrink-0 ml-4 z-10">
+                    <div className="hidden sm:flex items-center gap-1 opacity-50 dark:opacity-40">
+                      <div className="h-3 w-4 rounded bg-slate-400 dark:bg-slate-500" />
+                      <div className="h-3.5 w-2.5 rounded bg-slate-400 dark:bg-slate-500" />
+                    </div>
+                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => handleOpenEditModal(mode)}
+                        className="p-1.5 rounded-md hover:bg-secondary text-muted-foreground hover:text-primary transition-all cursor-pointer"
+                        title="Edit Payment Mode"
+                      >
+                        <Edit2 className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteMode(mode._id, mode.name)}
+                        className="p-1.5 rounded-md hover:bg-danger/10 text-muted-foreground hover:text-danger transition-all cursor-pointer"
+                        title="Delete Payment Mode"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                   </div>
-
-                  {/* Card Footer resembling chip or stylized branding */}
-                  <div className="flex justify-between items-end mt-6">
-                    <div className="flex gap-1">
-                      <div className="h-4 w-6 rounded bg-slate-100 dark:bg-slate-800 opacity-60" />
-                      <div className="h-4.5 w-4 rounded bg-slate-100 dark:bg-slate-800 opacity-60" />
-                    </div>
-                    <span 
-                      className="text-[9px] font-bold tracking-widest opacity-35 dark:opacity-20 uppercase select-none"
-                      style={{ color: mode.color }}
-                    >
-                      Expensify Master
-                    </span>
-                  </div>
-
                 </div>
               );
             })}

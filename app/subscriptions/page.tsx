@@ -402,7 +402,7 @@ export default function SubscriptionsPage() {
             No active subscription profiles registered. Click &quot;Add Subscription&quot; to log your first bill.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-2">
             {subscriptions.map((sub) => {
               const dueInfo = getDaysRemainingText(sub.nextDueDate);
               const progressLetter = sub.name.charAt(0).toUpperCase() || "?";
@@ -413,130 +413,115 @@ export default function SubscriptionsPage() {
               return (
                 <div
                   key={sub._id}
-                  className={`group relative rounded-2xl border bg-card p-4 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+                  className={`group relative rounded-lg border bg-card p-3 shadow-sm hover:shadow transition-all duration-300 flex flex-col ${
                     sub.status !== "active" ? "border-slate-200 dark:border-slate-800 opacity-75" : "border-border"
                   }`}
                 >
-                  <div>
-                    {/* Header */}
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className={`h-10 w-10 rounded-xl text-white font-bold flex items-center justify-center text-sm ${avatarBg}`}>
-                          {progressLetter}
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-foreground text-sm tracking-tight">{sub.name}</h3>
-                          <div className="flex items-center gap-2 mt-0.5">
-                            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-secondary text-muted-foreground">
-                              {sub.billingCycle}
-                            </span>
-                            <span className="text-[10px] text-muted-foreground/80 font-medium flex items-center gap-0.5">
-                              <Tag className="h-3 w-3" />
-                              {sub.category}
-                            </span>
-                          </div>
-                        </div>
+                  <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4 w-full min-w-0">
+                    
+                    {/* Header: Icon, Title, Billing Cycle & Category */}
+                    <div className="flex items-center gap-3 md:w-1/4 shrink-0 min-w-0">
+                      <div className={`h-10 w-10 shrink-0 rounded-md text-white font-bold flex items-center justify-center text-sm ${avatarBg}`}>
+                        {progressLetter}
                       </div>
-
-                      {/* Control buttons */}
-                      <div className="flex items-center gap-1 opacity-75 group-hover:opacity-100 transition-opacity">
-                        <button
-                          onClick={() => handleStatusToggle(sub)}
-                          className={`p-1.5 rounded-lg border border-border hover:bg-secondary transition-all cursor-pointer ${
-                            sub.status === "active" ? "text-warning" : "text-success"
-                          }`}
-                          title={sub.status === "active" ? "Pause Subscription" : "Resume Subscription"}
-                        >
-                          {sub.status === "active" ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
-                        </button>
-                        <button
-                          onClick={() => handleOpenEditModal(sub)}
-                          className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"
-                          title="Edit"
-                        >
-                          <Edit2 className="h-3.5 w-3.5" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(sub._id, sub.name)}
-                          className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all cursor-pointer"
-                          title="Delete"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Cost Metrics */}
-                    <div className="mt-5 flex items-baseline justify-between border-b border-border/40 pb-3">
-                      <div>
-                        <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Billing cost</span>
-                        <p className="font-black text-foreground mt-0.5 text-base">
-                          ₹{sub.amount.toLocaleString("en-IN")}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Status</span>
-                        <div className="mt-1">
-                          <span className={`inline-flex px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wide border ${
-                            sub.status === "active"
-                              ? "bg-success/10 text-success border-success/20"
-                              : sub.status === "paused"
-                                ? "bg-warning/10 text-warning border-warning/20"
-                                : "bg-slate-100 dark:bg-slate-800 text-muted-foreground border-border"
-                          }`}>
-                            {sub.status}
+                      <div className="flex flex-col justify-center min-w-0 flex-1">
+                        <h3 className="font-semibold text-foreground text-xs truncate">{sub.name}</h3>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="inline-flex items-center gap-0.5 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-secondary text-muted-foreground">
+                            {sub.billingCycle}
+                          </span>
+                          <span className="text-[9px] text-muted-foreground/80 font-medium flex items-center gap-0.5 truncate">
+                            <Tag className="h-2.5 w-2.5 shrink-0" />
+                            {sub.category}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Timeline due banners */}
-                    {sub.status === "active" ? (
-                      <div className={`mt-4 p-3 rounded-xl border flex items-center justify-between ${
-                        dueInfo.status === "overdue"
-                          ? "bg-danger/5 border-danger/10 text-danger animate-pulse"
-                          : dueInfo.status === "today"
-                            ? "bg-warning/5 border-warning/10 text-warning"
-                            : "bg-slate-50 dark:bg-slate-900/30 border-border text-muted-foreground"
-                      }`}>
-                        <div className="flex items-center gap-2">
-                          <Calendar className={`h-4 w-4 shrink-0 ${
-                            dueInfo.status === "overdue" ? "text-danger" : "text-muted-foreground"
-                          }`} />
-                          <div>
-                            <p className="text-[10px] font-bold text-foreground">{dueInfo.text}</p>
-                            <p className="text-[9px] text-muted-foreground mt-0.5">
-                              Due: {new Date(sub.nextDueDate).toLocaleDateString("en-IN")}
-                            </p>
-                          </div>
+                    {/* Due Date & Cost */}
+                    <div className="flex-1 flex items-center justify-between min-w-0">
+                      <div className="flex flex-col justify-center">
+                        <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Amount</span>
+                        <p className="font-bold text-foreground text-xs truncate">
+                          ₹{sub.amount.toLocaleString("en-IN")}
+                        </p>
+                      </div>
+                      
+                      {sub.status === "active" ? (
+                        <div className="flex flex-col items-end text-right">
+                          <span className={`text-[9px] font-bold ${
+                            dueInfo.status === "overdue" ? "text-danger animate-pulse" : dueInfo.status === "today" ? "text-warning" : "text-primary"
+                          }`}>
+                            {dueInfo.text}
+                          </span>
+                          <span className="text-[9px] text-muted-foreground truncate">
+                            Due: {new Date(sub.nextDueDate).toLocaleDateString("en-IN")}
+                          </span>
                         </div>
+                      ) : (
+                        <div className="flex flex-col items-end text-right">
+                          <span className={`inline-flex px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wide border ${
+                            sub.status === "paused" ? "bg-warning/10 text-warning border-warning/20" : "bg-slate-100 dark:bg-slate-800 text-muted-foreground border-border"
+                          }`}>
+                            {sub.status}
+                          </span>
+                        </div>
+                      )}
+                    </div>
 
-                        {/* Mark as Paid Action */}
+                    {/* Status & Actions */}
+                    <div className="flex items-center justify-between md:justify-end gap-3 shrink-0 mt-2 md:mt-0">
+                      
+                      {sub.status === "active" && (
                         <button
                           onClick={() => handleMarkAsPaid(sub)}
-                          className="px-2.5 py-1 text-[9px] font-bold uppercase text-white bg-primary hover:bg-primary-600 rounded-md transition-all active:scale-[0.98] cursor-pointer"
+                          className="px-2 py-1 text-[9px] font-bold uppercase text-white bg-primary hover:bg-primary-600 rounded flex items-center transition-all active:scale-[0.98] cursor-pointer"
                           title="Click to pay and advance due date cycle"
                         >
                           Mark Paid
                         </button>
-                      </div>
-                    ) : (
-                      <div className="mt-4 p-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 text-muted-foreground/60 text-center text-[10px] font-semibold">
-                        Subscription is currently {sub.status}. Turn on status to track due dates.
-                      </div>
-                    )}
-
-                    {/* Info log */}
-                    <div className="mt-4 text-[10px] text-muted-foreground/80 flex items-center gap-1.5 bg-slate-50/50 dark:bg-slate-900/10 p-2 rounded-lg">
-                      <CreditCard className="h-3.5 w-3.5 text-primary shrink-0" />
-                      <span className="font-semibold text-foreground truncate">{sub.paymentMode}</span>
-                      {sub.note && (
-                        <span className="text-[9px] italic border-l border-border/50 pl-1.5 truncate max-w-[120px]" title={sub.note}>
-                          &quot;{sub.note}&quot;
-                        </span>
                       )}
-                    </div>
 
+                      <div className="flex items-center gap-1 xl:opacity-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex-wrap justify-end">
+                        <button
+                          onClick={() => handleStatusToggle(sub)}
+                          className={`p-1.5 rounded transition-all cursor-pointer ${
+                            sub.status === "active" ? "text-warning hover:bg-warning/10" : "text-success hover:bg-success/10"
+                          }`}
+                          title={sub.status === "active" ? "Pause Subscription" : "Resume Subscription"}
+                        >
+                          {sub.status === "active" ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+                        </button>
+                        
+                        <div className="hidden md:block h-4 w-px bg-border mx-1" />
+
+                        <button
+                          onClick={() => handleOpenEditModal(sub)}
+                          className="p-1.5 rounded text-muted-foreground hover:bg-secondary hover:text-primary transition-all cursor-pointer"
+                          title="Edit"
+                        >
+                          <Edit2 className="h-3 w-3" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(sub._id, sub.name)}
+                          className="p-1.5 rounded text-muted-foreground hover:bg-danger/10 hover:text-danger transition-all cursor-pointer"
+                          title="Delete"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Info log */}
+                  <div className="mt-2 text-[9px] text-muted-foreground/80 flex items-center gap-1.5 p-1 rounded-md">
+                    <CreditCard className="h-3 w-3 text-primary shrink-0" />
+                    <span className="font-medium text-foreground truncate">{sub.paymentMode}</span>
+                    {sub.note && (
+                      <span className="italic border-l border-border/50 pl-1.5 truncate max-w-[200px]" title={sub.note}>
+                        "{sub.note}"
+                      </span>
+                    )}
                   </div>
                 </div>
               );

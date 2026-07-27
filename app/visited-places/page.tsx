@@ -224,33 +224,33 @@ export default function VisitedPlacesPage() {
         </div>
 
         {/* Global Progress metric cards */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {/* Total Places */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <Globe className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary z-10">
+              <Globe className="h-4 w-4" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Total Places Visited</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">{places.length}</h3>
+            <div className="z-10">
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Total Places Visited</p>
+              <h3 className="text-sm font-bold text-foreground leading-tight">{places.length}</h3>
             </div>
             <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/5 blur-xl" />
           </div>
 
           {/* Average Rating */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
-              <Star className="h-5 w-5 fill-current" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-warning/10 text-warning z-10">
+              <Star className="h-4 w-4 fill-current" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Average Rating</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">
+            <div className="z-10">
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Average Rating</p>
+              <h3 className="text-sm font-bold text-foreground leading-tight">
                 {places.length > 0
                   ? (places.reduce((acc, p) => acc + p.rating, 0) / places.length).toFixed(1)
-                  : "0.0"} <span className="text-sm font-medium text-muted-foreground">/ 5</span>
+                  : "0.0"} <span className="text-[10px] font-medium text-muted-foreground">/ 5</span>
               </h3>
             </div>
-            <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-warning/5 blur-xl" />
+            <div className="absolute -bottom-10 -right-10 w-24 h-24 rounded-full bg-warning/5 blur-xl" />
           </div>
         </div>
 

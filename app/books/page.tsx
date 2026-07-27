@@ -241,41 +241,41 @@ export default function BooksPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-3 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
-            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-              <BookOpen className="h-5 w-5" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="p-3 rounded-xl border border-border bg-card shadow-sm flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+              <BookOpen className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground font-medium">Total Books</p>
-              <h3 className="text-lg font-bold text-foreground mt-0.5">{stats.total}</h3>
+              <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Total Books</p>
+              <h3 className="text-sm font-bold text-foreground leading-tight">{stats.total}</h3>
             </div>
           </div>
-          <div className="p-3 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
-            <div className="h-10 w-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0">
-              <Clock className="h-5 w-5" />
+          <div className="p-3 rounded-xl border border-border bg-card shadow-sm flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0">
+              <Clock className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground font-medium">Reading</p>
-              <h3 className="text-lg font-bold text-foreground mt-0.5">{stats.reading}</h3>
+              <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Reading</p>
+              <h3 className="text-sm font-bold text-foreground leading-tight">{stats.reading}</h3>
             </div>
           </div>
-          <div className="p-3 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
-            <div className="h-10 w-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">
-              <CheckCircle className="h-5 w-5" />
+          <div className="p-3 rounded-xl border border-border bg-card shadow-sm flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">
+              <CheckCircle className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground font-medium">Completed</p>
-              <h3 className="text-lg font-bold text-foreground mt-0.5">{stats.completed}</h3>
+              <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Completed</p>
+              <h3 className="text-sm font-bold text-foreground leading-tight">{stats.completed}</h3>
             </div>
           </div>
-          <div className="p-3 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
-            <div className="h-10 w-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0">
-              <Bookmark className="h-5 w-5" />
+          <div className="p-3 rounded-xl border border-border bg-card shadow-sm flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0">
+              <Bookmark className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground font-medium">Want to Read</p>
-              <h3 className="text-lg font-bold text-foreground mt-0.5">{stats.toRead}</h3>
+              <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Want to Read</p>
+              <h3 className="text-sm font-bold text-foreground leading-tight">{stats.toRead}</h3>
             </div>
           </div>
         </div>
@@ -324,88 +324,67 @@ export default function BooksPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-2">
             {filteredBooks.map((book) => (
               <div
                 key={book._id}
                 onClick={() => handleOpenDetailModal(book)}
-                className="group cursor-pointer flex flex-col justify-between p-4 rounded-2xl border border-border bg-card shadow-soft hover:shadow-md hover:border-primary/30 transition-all duration-200 relative overflow-hidden"
+                className="group cursor-pointer flex items-center justify-between p-2.5 rounded-xl border border-border bg-card hover:bg-secondary/40 hover:border-primary/30 transition-all duration-200"
               >
-                {/* Status indicator bar */}
-                <div
-                  className={`absolute top-0 left-0 right-0 h-1 ${
-                    book.status === "completed"
-                      ? "bg-emerald-500"
-                      : book.status === "reading"
-                      ? "bg-amber-500"
-                      : "bg-indigo-400"
-                  }`}
-                />
-
-                <div className="space-y-3">
-                  <div className="flex justify-between items-start gap-2">
-                    <span
-                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                        book.status === "completed"
-                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                          : book.status === "reading"
-                          ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                          : "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
-                      }`}
-                    >
-                      {book.status === "to-read" ? "want to read" : book.status}
-                    </span>
-                    <div className="flex items-center gap-1">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-3 w-3 ${
-                            i < book.rating
-                              ? "text-amber-500 fill-amber-500"
-                              : "text-muted-foreground/30"
-                          }`}
-                        />
-                      ))}
+                <div className="flex items-center gap-3 min-w-0">
+                  <div
+                    className={`shrink-0 h-10 w-1 rounded-full ${
+                      book.status === "completed"
+                        ? "bg-emerald-500"
+                        : book.status === "reading"
+                        ? "bg-amber-500"
+                        : "bg-indigo-400"
+                    }`}
+                  />
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-bold text-foreground text-xs group-hover:text-primary transition-colors truncate">
+                        {book.title}
+                      </h3>
+                      <span className="text-[9px] text-muted-foreground truncate hidden sm:inline-block">
+                        by {book.author}
+                      </span>
                     </div>
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-foreground group-hover:text-primary transition-colors text-base line-clamp-1">
-                      {book.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-0.5 font-medium">by {book.author}</p>
-                  </div>
-
-                  {book.notes && (
-                    <p className="text-xs text-muted-foreground/80 line-clamp-2 italic bg-secondary/30 p-2.5 rounded-lg border border-border/40">
-                      "{book.notes}"
-                    </p>
-                  )}
-
-                  {book.keyPoints && book.keyPoints.length > 0 && (
-                    <div className="space-y-1 pt-1">
-                      <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider flex items-center gap-1">
-                        <Sparkles className="h-3 w-3 text-primary" /> Key Takeaways ({book.keyPoints.length})
-                      </p>
-                      <ul className="text-xs text-muted-foreground space-y-1 pl-1">
-                        {book.keyPoints.slice(0, 2).map((point, index) => (
-                          <li key={index} className="flex items-start gap-1 line-clamp-1">
-                            <span className="text-primary font-bold">•</span>
-                            <span>{point}</span>
-                          </li>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span
+                        className={`px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider ${
+                          book.status === "completed"
+                            ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                            : book.status === "reading"
+                            ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                            : "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
+                        }`}
+                      >
+                        {book.status === "to-read" ? "want to read" : book.status}
+                      </span>
+                      <div className="flex items-center gap-0.5">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-2.5 w-2.5 ${
+                              i < book.rating
+                                ? "text-amber-500 fill-amber-500"
+                                : "text-muted-foreground/30"
+                            }`}
+                          />
                         ))}
-                        {book.keyPoints.length > 2 && (
-                          <li className="text-[10px] text-primary font-semibold flex items-center mt-1">
-                            Show {book.keyPoints.length - 2} more key points <ChevronRight className="h-3 w-3" />
-                          </li>
-                        )}
-                      </ul>
+                      </div>
+                      {book.keyPoints && book.keyPoints.length > 0 && (
+                         <span className="text-[9px] text-muted-foreground font-semibold items-center gap-1 hidden md:flex ml-2">
+                           <Sparkles className="h-3 w-3 text-primary" /> {book.keyPoints.length} takeaways
+                         </span>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
 
-                <div className="flex items-center justify-between border-t border-border mt-4 pt-3 text-[11px] text-muted-foreground font-medium">
-                  <div className="flex items-center gap-1">
+                <div className="flex items-center gap-3 shrink-0 ml-4">
+                  <div className="hidden md:flex items-center gap-1 text-[9px] text-muted-foreground font-medium">
                     <Calendar className="h-3 w-3 text-muted-foreground/60" />
                     <span>
                       {book.status === "completed" && book.completedDate
@@ -415,17 +394,17 @@ export default function BooksPage() {
                         : "Not started"}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={(e) => handleOpenEditModal(book, e)}
-                      className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-all"
+                      className="p-1.5 rounded-md hover:bg-secondary text-muted-foreground hover:text-foreground transition-all"
                       title="Edit book details"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={(e) => handleDeleteBook(book._id, e)}
-                      className="p-1.5 rounded-lg hover:bg-danger/10 text-muted-foreground hover:text-danger transition-all"
+                      className="p-1.5 rounded-md hover:bg-danger/10 text-muted-foreground hover:text-danger transition-all"
                       title="Delete book"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
