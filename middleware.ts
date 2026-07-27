@@ -4,13 +4,20 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
   // CORS configuration
-  const allowedOrigin = "http://localhost:3000";
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": allowedOrigin,
+  const origin = request.headers.get("origin");
+  const corsHeaders: Record<string, string> = {
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
     "Access-Control-Allow-Credentials": "true",
   };
+  
+  if (origin) {
+    corsHeaders["Access-Control-Allow-Origin"] = origin;
+  } else {
+    corsHeaders["Access-Control-Allow-Origin"] = "*";
+    // If using "*", we must remove allow-credentials for strict browsers, though standard same-origin requests often don't check this.
+    delete corsHeaders["Access-Control-Allow-Credentials"];
+  }
 
   // Handle preflight OPTIONS requests
   if (request.method === "OPTIONS") {
