@@ -202,14 +202,14 @@ export default function AssetsPortfolioPage() {
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-foreground tracking-tight">Asset Portfolio</h2>
-            <p className="text-xs text-muted-foreground">Monitor and allocate your savings, stocks, fixed deposits, and gold net worth.</p>
+            <h2 className="text-lg font-semibold text-foreground tracking-tight">Asset Portfolio</h2>
+            <p className="text-[11px] text-muted-foreground">Monitor and allocate your savings, stocks, fixed deposits, and gold net worth.</p>
           </div>
           <button
             onClick={handleOpenAddModal}
-            className="flex items-center gap-1.5 self-start px-4 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] cursor-pointer"
+            className="flex items-center gap-1 self-start px-3.5 py-2 rounded-lg bg-primary text-white text-[11px] font-semibold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] cursor-pointer"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3.5 w-3.5" />
             Add Asset
           </button>
         </div>
@@ -217,44 +217,48 @@ export default function AssetsPortfolioPage() {
         {/* Net Worth & Chart Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Net Worth Summary */}
-          <div className="lg:col-span-1 rounded-2xl border border-border bg-card p-4 shadow-card flex flex-col justify-between relative overflow-hidden">
-            <div className="space-y-2">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <Landmark className="h-5 w-5" />
-              </span>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mt-4">Aggregate Net Worth</p>
-              <h3 className="text-3xl font-black text-foreground tracking-tight">
-                ₹{netWorth.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
-              </h3>
-              <p className="text-[11px] text-muted-foreground pt-1">Total valuation across all recorded bank accounts and asset classes.</p>
+          <div className="lg:col-span-1 rounded-xl border border-border bg-card p-3 shadow-card flex flex-col justify-between relative overflow-hidden">
+            <div>
+              <div className="flex items-center gap-3">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0">
+                  <Landmark className="h-4 w-4" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider truncate">Aggregate Net Worth</p>
+                  <h3 className="text-lg font-semibold text-foreground tracking-tight truncate">
+                    ₹{netWorth.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                  </h3>
+                </div>
+              </div>
+              <p className="text-[9px] text-muted-foreground leading-normal mt-2">Total valuation across all recorded bank accounts and asset classes.</p>
             </div>
             
-            <div className="mt-8 pt-4 border-t border-border/50">
-              <div className="flex justify-between items-center text-xs">
+            <div className="mt-4 pt-2 border-t border-border/40">
+              <div className="flex justify-between items-center text-[10px]">
                 <span className="text-muted-foreground font-medium">Asset Categories</span>
-                <span className="font-bold text-foreground">{chartData.length} active</span>
+                <span className="font-semibold text-foreground">{chartData.length} active</span>
               </div>
             </div>
             <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/5 blur-xl" />
           </div>
 
           {/* Allocation Recharts */}
-          <div className="lg:col-span-2 rounded-2xl border border-border bg-card p-4 shadow-card flex flex-col md:flex-row items-center gap-4">
+          <div className="lg:col-span-2 rounded-xl border border-border bg-card p-3 shadow-card flex flex-col md:flex-row items-center gap-4">
             <div className="flex-1 w-full flex flex-col items-center justify-center">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 self-start flex items-center gap-1.5">
+              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 self-start flex items-center gap-1.5">
                 <ChartIcon className="h-4 w-4 text-primary" />
                 Asset Allocation
               </h4>
               {chartData.length > 0 ? (
-                <div className="h-[180px] w-full relative flex items-center justify-center">
+                <div className="h-[130px] w-full relative flex items-center justify-center">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
                         data={chartData}
                         cx="50%"
                         cy="50%"
-                        innerRadius={50}
-                        outerRadius={75}
+                        innerRadius={32}
+                        outerRadius={48}
                         paddingAngle={3}
                         dataKey="value"
                       >
@@ -267,32 +271,32 @@ export default function AssetsPortfolioPage() {
                   </ResponsiveContainer>
                   {/* Center Text */}
                   <div className="absolute flex flex-col items-center text-center">
-                    <span className="text-[9px] font-bold uppercase text-muted-foreground tracking-wider">Total</span>
-                    <span className="text-xs font-black text-foreground">₹{(netWorth / 1000).toFixed(1)}k</span>
+                    <span className="text-[7px] font-bold uppercase text-muted-foreground tracking-wider">Total</span>
+                    <span className="text-[11px] font-bold text-foreground">₹{(netWorth / 1000).toFixed(1)}k</span>
                   </div>
                 </div>
               ) : (
-                <div className="h-[180px] flex items-center justify-center text-xs text-muted-foreground/60 italic font-medium">
+                <div className="h-[130px] flex items-center justify-center text-xs text-muted-foreground/60 italic font-medium">
                   Add assets to generate allocation charts.
                 </div>
               )}
             </div>
 
             {/* Legend list */}
-            <div className="flex-1 w-full space-y-2">
-              <h5 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">Portfolio Splits</h5>
-              <div className="grid grid-cols-2 gap-3.5">
+            <div className="flex-1 w-full space-y-1">
+              <h5 className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Portfolio Splits</h5>
+              <div className="grid grid-cols-6 gap-2">
                 {assetTypesList.map((type) => {
                   const val = groupedTotals[type] || 0;
                   const color = TYPE_COLORS[type];
                   const percentage = netWorth > 0 ? ((val / netWorth) * 100).toFixed(1) : "0.0";
                   
                   return (
-                    <div key={type} className="flex items-start gap-2.5">
-                      <span className="h-3 w-3 rounded-full mt-0.5 shrink-0" style={{ backgroundColor: color }} />
+                    <div key={type} className="flex items-start gap-1.5">
+                      <span className="h-2 w-2 rounded-full mt-0.5 shrink-0" style={{ backgroundColor: color }} />
                       <div>
-                        <p className="text-[11px] font-bold text-foreground leading-tight">{type}</p>
-                        <p className="text-[10px] text-muted-foreground font-semibold mt-0.5">
+                        <p className="text-[11px] font-medium text-foreground leading-tight">{type}</p>
+                        <p className="text-[8.5px] text-muted-foreground font-normal mt-0.5">
                           ₹{val.toLocaleString("en-IN")} ({percentage}%)
                         </p>
                       </div>
@@ -305,11 +309,11 @@ export default function AssetsPortfolioPage() {
         </div>
 
         {/* Assets List */}
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-card space-y-4">
-          <div className="border-b border-border/50 pb-4">
-            <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+        <div className="rounded-xl border border-border bg-card p-3.5 shadow-card space-y-3.5">
+          <div className="border-b border-border/40 pb-3">
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
               Individual Holdings
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary text-muted-foreground">
+              <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground">
                 {assets.length} items
               </span>
             </h3>
@@ -320,20 +324,20 @@ export default function AssetsPortfolioPage() {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : assets.length === 0 ? (
-            <div className="text-center py-12 text-xs text-muted-foreground font-medium italic">
+            <div className="text-center py-10 text-xs text-muted-foreground font-medium italic">
               No assets logged yet. Click &quot;Add Asset&quot; above to log your savings accounts, stocks, or gold.
             </div>
           ) : (
             <div className="overflow-x-auto w-full">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-border text-muted-foreground font-semibold">
-                    <th className="pb-2 pt-1">S.N</th>
-                    <th className="pb-2 pt-1">Asset Name</th>
-                    <th className="pb-2 pt-1">Category</th>
-                    <th className="pb-2 pt-1">Valuation / Amount</th>
-                    <th className="pb-2 pt-1">Description / Notes</th>
-                    <th className="pb-2 pt-1 text-right">Actions</th>
+                  <tr className="border-b border-border text-muted-foreground font-medium">
+                    <th className="pb-1.5 pt-0.5">S.N</th>
+                    <th className="pb-1.5 pt-0.5">Asset Name</th>
+                    <th className="pb-1.5 pt-0.5">Category</th>
+                    <th className="pb-1.5 pt-0.5">Valuation / Amount</th>
+                    <th className="pb-1.5 pt-0.5">Description / Notes</th>
+                    <th className="pb-1.5 pt-0.5 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
@@ -343,37 +347,37 @@ export default function AssetsPortfolioPage() {
                     
                     return (
                       <tr key={ast._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors">
-                        <td className="py-2 font-medium text-muted-foreground">{index + 1}.</td>
-                        <td className="py-2 font-bold text-foreground">{ast.name}</td>
-                        <td className="py-2 font-bold">
+                        <td className="py-1.5 font-medium text-muted-foreground">{index + 1}.</td>
+                        <td className="py-1.5 font-semibold text-foreground">{ast.name}</td>
+                        <td className="py-1.5 font-semibold">
                           <span className="flex items-center gap-1.5">
                             <span 
-                              className="h-6 w-6 rounded-lg flex items-center justify-center text-white shrink-0"
+                              className="h-5 w-5 rounded flex items-center justify-center text-white shrink-0"
                               style={{ backgroundColor: typeColor }}
                             >
-                              <Icon className="h-3.5 w-3.5" />
+                              <Icon className="h-3 w-3" />
                             </span>
                             <span style={{ color: typeColor }}>{ast.type}</span>
                           </span>
                         </td>
-                        <td className="py-2 font-black text-foreground text-sm">₹{ast.amount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
-                        <td className="py-2 text-muted-foreground font-medium max-w-[250px] truncate" title={ast.note}>
+                        <td className="py-1.5 font-semibold text-foreground text-xs">₹{ast.amount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
+                        <td className="py-1.5 text-muted-foreground font-medium max-w-[250px] truncate" title={ast.note}>
                           {ast.note || <span className="opacity-55 italic">None</span>}
                         </td>
-                        <td className="py-2 text-right flex items-center justify-end gap-1.5">
+                        <td className="py-1.5 text-right flex items-center justify-end gap-1">
                           <button
                             onClick={() => handleOpenEditModal(ast)}
-                            className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"
+                            className="p-1 rounded border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"
                             title="Edit Asset"
                           >
-                            <Edit2 className="h-3.5 w-3.5" />
+                            <Edit2 className="h-3 w-3" />
                           </button>
                           <button
                             onClick={() => handleDeleteAsset(ast._id, ast.name)}
-                            className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all cursor-pointer"
+                            className="p-1 rounded border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all cursor-pointer"
                             title="Delete Asset"
                           >
-                            <Trash2 className="h-3.5 w-3.5" />
+                            <Trash2 className="h-3 w-3" />
                           </button>
                         </td>
                       </tr>
@@ -388,21 +392,21 @@ export default function AssetsPortfolioPage() {
         {/* ADD / EDIT ASSET MODAL */}
         {showAddModal && (
           <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 md:pt-28 bg-black/65 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200">
+            <div className="w-full max-w-2xl rounded-xl border border-border bg-card p-5 shadow-card animate-in zoom-in-95 duration-200">
               
-              <div className="flex items-center justify-between border-b border-border/50 pb-3 mb-4">
-                <h3 className="text-base font-bold text-foreground">
+              <div className="flex items-center justify-between border-b border-border/50 pb-2.5 mb-3.5">
+                <h3 className="text-sm font-semibold text-foreground">
                   {editingAsset ? "Modify Asset Record" : "Add Asset"}
                 </h3>
                 <button
                   onClick={() => setShowAddModal(false)}
-                  className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
+                  className="p-1 rounded-lg hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
                 >
-                  <X className="h-4.5 w-4.5" />
+                  <X className="h-4 w-4" />
                 </button>
               </div>
 
-              <form onSubmit={handleAddOrEditAsset} className="space-y-5">
+              <form onSubmit={handleAddOrEditAsset} className="space-y-4">
                 {/* Row 1: Asset Name, Asset Type */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input
@@ -414,7 +418,7 @@ export default function AssetsPortfolioPage() {
                   />
 
                   <div className="space-y-1.5">
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Asset Class</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Asset Class</label>
                     <Select
                       value={type}
                       onChange={(e) => setType(e.target.value as any)}
@@ -451,21 +455,21 @@ export default function AssetsPortfolioPage() {
                 </div>
 
                 {/* Modal Footer Actions */}
-                <div className="mt-6 flex justify-end gap-3 pt-3 border-t border-border/50">
+                <div className="mt-5 flex justify-end gap-2.5 pt-2.5 border-t border-border/50">
                   <button
                     type="button"
                     onClick={() => setShowAddModal(false)}
-                    className="px-6 py-2.5 rounded-lg border border-border bg-card text-xs font-bold hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
+                    className="px-4.5 py-2 rounded-lg border border-border bg-card text-xs font-semibold hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 py-2.5 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] flex items-center justify-center gap-1 disabled:opacity-75 cursor-pointer"
+                    className="px-4.5 py-2 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] flex items-center justify-center gap-1 disabled:opacity-75 cursor-pointer"
                   >
                     {isSubmitting ? (
-                      <Loader2 className="h-4.5 w-4.5 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                     ) : editingAsset ? (
                       "Save Changes"
                     ) : (

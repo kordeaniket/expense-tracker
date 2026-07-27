@@ -224,14 +224,14 @@ export default function IncomeTrackerPage() {
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-foreground tracking-tight">Income Tracker</h2>
-            <p className="text-xs text-muted-foreground">Log and manage your salaries, freelancing payments, and earnings.</p>
+            <h2 className="text-lg font-semibold text-foreground tracking-tight">Income Tracker</h2>
+            <p className="text-[11px] text-muted-foreground">Log and manage your salaries, freelancing payments, and earnings.</p>
           </div>
           <button
             onClick={handleOpenAddModal}
-            className="flex items-center gap-1.5 self-start px-4 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] cursor-pointer"
+            className="flex items-center gap-1 self-start px-3.5 py-2 rounded-lg bg-primary text-white text-[11px] font-semibold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] cursor-pointer"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3.5 w-3.5" />
             Log Income
           </button>
         </div>
@@ -239,48 +239,48 @@ export default function IncomeTrackerPage() {
         {/* Metrics Row */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Total Lifetime Income */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
-              <TrendingUp className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-success/10 text-success shrink-0">
+              <TrendingUp className="h-4 w-4" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Total Income Logged</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">₹{totalIncome.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+            <div className="min-w-0">
+              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider truncate">Total Income Logged</p>
+              <h3 className="text-base font-semibold text-foreground truncate">₹{totalIncome.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
             </div>
             <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-success/5 blur-xl" />
           </div>
 
           {/* Current Month Income */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <ArrowUpRight className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0">
+              <ArrowUpRight className="h-4 w-4" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">This Month's Earnings</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">₹{currentMonthIncome.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+            <div className="min-w-0">
+              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider truncate">This Month's Earnings</p>
+              <h3 className="text-base font-semibold text-foreground truncate">₹{currentMonthIncome.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
             </div>
             <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/5 blur-xl" />
           </div>
 
           {/* Aggregate Salary Earning */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-info/10 text-info">
-              <Briefcase className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-info/10 text-info shrink-0">
+              <Briefcase className="h-4 w-4" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Total Salary Credited</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">₹{salaryTotal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+            <div className="min-w-0">
+              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider truncate">Total Salary Credited</p>
+              <h3 className="text-base font-semibold text-foreground truncate">₹{salaryTotal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
             </div>
             <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-info/5 blur-xl" />
           </div>
         </div>
 
         {/* Income History List */}
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-card space-y-4">
-          <div className="border-b border-border/50 pb-4">
-            <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+        <div className="rounded-xl border border-border bg-card p-3.5 shadow-card space-y-3.5">
+          <div className="border-b border-border/40 pb-3">
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
               Income Log
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary text-muted-foreground">
+              <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground">
                 {incomes.length} records
               </span>
             </h3>
@@ -291,21 +291,21 @@ export default function IncomeTrackerPage() {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : incomes.length === 0 ? (
-            <div className="text-center py-12 text-xs text-muted-foreground font-medium italic">
+            <div className="text-center py-10 text-xs text-muted-foreground font-medium italic">
               No incomes logged yet. Click &quot;Log Income&quot; above to log your monthly salary or deposits.
             </div>
           ) : (
             <div className="overflow-x-auto w-full">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-border text-muted-foreground font-semibold">
-                    <th className="pb-2 pt-1">S.N</th>
-                    <th className="pb-2 pt-1">Date</th>
-                    <th className="pb-2 pt-1">Category</th>
-                    <th className="pb-2 pt-1">Amount</th>
-                    <th className="pb-2 pt-1">Received In</th>
-                    <th className="pb-2 pt-1">Note</th>
-                    <th className="pb-2 pt-1 text-right">Actions</th>
+                  <tr className="border-b border-border text-muted-foreground font-medium">
+                    <th className="pb-1.5 pt-0.5">S.N</th>
+                    <th className="pb-1.5 pt-0.5">Date</th>
+                    <th className="pb-1.5 pt-0.5">Category</th>
+                    <th className="pb-1.5 pt-0.5">Amount</th>
+                    <th className="pb-1.5 pt-0.5">Received In</th>
+                    <th className="pb-1.5 pt-0.5">Note</th>
+                    <th className="pb-1.5 pt-0.5 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
@@ -316,15 +316,15 @@ export default function IncomeTrackerPage() {
                     
                     return (
                       <tr key={inc._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors">
-                        <td className="py-2 font-medium text-muted-foreground">{index + 1}.</td>
-                        <td className="py-2 font-medium text-muted-foreground">
+                        <td className="py-1.5 font-medium text-muted-foreground">{index + 1}.</td>
+                        <td className="py-1.5 font-medium text-muted-foreground">
                           {new Date(inc.date).toLocaleDateString("en-IN", {
                             day: "numeric",
                             month: "short",
                             year: "numeric",
                           })}
                         </td>
-                        <td className="py-2 font-bold">
+                        <td className="py-1.5 font-semibold">
                           <span className="flex items-center gap-1.5">
                             <span
                               className="h-2 w-2 rounded-full shrink-0"
@@ -333,11 +333,11 @@ export default function IncomeTrackerPage() {
                             {inc.category}
                           </span>
                         </td>
-                        <td className="py-2 font-extrabold text-success text-sm">₹{inc.amount.toFixed(2)}</td>
-                        <td className="py-2 font-semibold">
+                        <td className="py-1.5 font-semibold text-success">₹{inc.amount.toFixed(2)}</td>
+                        <td className="py-1.5 font-semibold">
                           {inc.mode ? (
                             <span
-                              className="inline-flex px-2 py-0.5 rounded-md text-[10px] tracking-wide uppercase border font-bold"
+                              className="inline-flex px-1.5 py-0.5 rounded text-[9px] tracking-wide uppercase border font-semibold"
                               style={{
                                 backgroundColor: `${modeColor}12`,
                                 color: modeColor,
@@ -347,26 +347,26 @@ export default function IncomeTrackerPage() {
                               {inc.mode}
                             </span>
                           ) : (
-                            <span className="text-[10px] text-muted-foreground/60 italic">-</span>
+                            <span className="text-[9px] text-muted-foreground/60 italic">-</span>
                           )}
                         </td>
-                        <td className="py-2 text-muted-foreground font-medium max-w-[200px] truncate" title={inc.note}>
+                        <td className="py-1.5 text-muted-foreground font-medium max-w-[200px] truncate" title={inc.note}>
                           {inc.note || <span className="opacity-55 italic">None</span>}
                         </td>
-                        <td className="py-2 text-right flex items-center justify-end gap-1.5">
+                        <td className="py-1.5 text-right flex items-center justify-end gap-1">
                           <button
                             onClick={() => handleOpenEditModal(inc)}
-                            className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"
+                            className="p-1 rounded border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"
                             title="Edit Log"
                           >
-                            <Edit2 className="h-3.5 w-3.5" />
+                            <Edit2 className="h-3 w-3" />
                           </button>
                           <button
                             onClick={() => handleDeleteIncome(inc._id)}
-                            className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all cursor-pointer"
+                            className="p-1 rounded border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all cursor-pointer"
                             title="Delete Log"
                           >
-                            <Trash2 className="h-3.5 w-3.5" />
+                            <Trash2 className="h-3 w-3" />
                           </button>
                         </td>
                       </tr>
@@ -381,21 +381,21 @@ export default function IncomeTrackerPage() {
         {/* LOG / EDIT INCOME MODAL */}
         {showAddModal && (
           <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 md:pt-28 bg-black/65 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="w-full max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200">
+            <div className="w-full max-w-3xl rounded-xl border border-border bg-card p-5 shadow-card animate-in zoom-in-95 duration-200">
               
-              <div className="flex items-center justify-between border-b border-border/50 pb-3 mb-4">
-                <h3 className="text-base font-bold text-foreground">
+              <div className="flex items-center justify-between border-b border-border/50 pb-2.5 mb-3.5">
+                <h3 className="text-sm font-semibold text-foreground">
                   {editingIncome ? "Modify Income Log" : "Log Income"}
                 </h3>
                 <button
                   onClick={() => setShowAddModal(false)}
-                  className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
+                  className="p-1 rounded-lg hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
                 >
-                  <X className="h-4.5 w-4.5" />
+                  <X className="h-4 w-4" />
                 </button>
               </div>
 
-              <form onSubmit={handleAddOrEditIncome} className="space-y-5">
+              <form onSubmit={handleAddOrEditIncome} className="space-y-4">
                 {/* Row 1: Amount, Category, Received Mode */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Amount */}
@@ -411,7 +411,7 @@ export default function IncomeTrackerPage() {
 
                   {/* Category Selector */}
                   <div className="space-y-1.5">
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Category</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Category</label>
                     <Select
                       required
                       value={category}
@@ -427,7 +427,7 @@ export default function IncomeTrackerPage() {
 
                   {/* Received Mode */}
                   <div className="space-y-1.5">
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Received In (Account)</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Received In (Account)</label>
                     <Select
                       value={mode}
                       onChange={(e) => setMode(e.target.value)}
@@ -468,21 +468,21 @@ export default function IncomeTrackerPage() {
                 </div>
 
                 {/* Modal Footer Actions */}
-                <div className="mt-6 flex justify-end gap-3 pt-3 border-t border-border/50">
+                <div className="mt-5 flex justify-end gap-2.5 pt-2.5 border-t border-border/50">
                   <button
                     type="button"
                     onClick={() => setShowAddModal(false)}
-                    className="px-6 py-2.5 rounded-lg border border-border bg-card text-xs font-bold hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
+                    className="px-4.5 py-2 rounded-lg border border-border bg-card text-xs font-semibold hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 py-2.5 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] flex items-center justify-center gap-1 disabled:opacity-75 cursor-pointer"
+                    className="px-4.5 py-2 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] flex items-center justify-center gap-1 disabled:opacity-75 cursor-pointer"
                   >
                     {isSubmitting ? (
-                      <Loader2 className="h-4.5 w-4.5 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                     ) : editingIncome ? (
                       "Save Changes"
                     ) : (

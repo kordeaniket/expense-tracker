@@ -201,35 +201,35 @@ export default function ExpensesPage() {
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-foreground tracking-tight">All Expenses</h2>
-            <p className="text-xs text-muted-foreground">Manage and track your detailed transaction logs.</p>
+            <h2 className="text-lg font-semibold text-foreground tracking-tight">All Expenses</h2>
+            <p className="text-[11px] text-muted-foreground">Manage and track your detailed transaction logs.</p>
           </div>
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-1.5 self-start px-4 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] cursor-pointer"
+            className="flex items-center gap-1 px-3.5 py-2 rounded-lg bg-primary text-white text-[11px] font-semibold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] cursor-pointer"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3.5 w-3.5" />
             Add Expense
           </button>
         </div>
 
         {/* Filters and List */}
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-card space-y-4">
-          <div className="flex items-center justify-between border-b border-border/50 pb-4">
-            <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+        <div className="rounded-xl border border-border bg-card p-3.5 shadow-card space-y-3.5">
+          <div className="flex items-center justify-between border-b border-border/40 pb-3">
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
               Expense History
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary text-muted-foreground">
+              <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground">
                 {filteredExpenses.length} total
               </span>
             </h3>
 
             {/* Category Filter */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <Filter className="h-3.5 w-3.5 text-muted-foreground" />
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="rounded-md border border-input bg-background py-1.5 px-3 text-xs font-semibold outline-none text-foreground cursor-pointer"
+                className="rounded border border-input bg-background py-1 px-2.5 text-xs font-medium outline-none text-foreground cursor-pointer"
               >
                 <option value="all">All Categories</option>
                 {categories.map((cat) => (
@@ -246,22 +246,22 @@ export default function ExpensesPage() {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : filteredExpenses.length === 0 ? (
-            <div className="text-center py-12 text-xs text-muted-foreground font-medium italic">
+            <div className="text-center py-10 text-xs text-muted-foreground font-medium italic">
               No expenses recorded yet. Click &quot;Add Expense&quot; above to log your first transaction.
             </div>
           ) : (
             <div className="overflow-x-auto w-full">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-border text-muted-foreground font-semibold">
-                    <th className="pb-2 pt-1">S.N</th>
-                    <th className="pb-2 pt-1">Date</th>
-                    <th className="pb-2 pt-1">Category</th>
-                    <th className="pb-2 pt-1">Sub Category</th>
-                    <th className="pb-2 pt-1">Amount</th>
-                    <th className="pb-2 pt-1">Mode</th>
-                    <th className="pb-2 pt-1">Note</th>
-                    <th className="pb-2 pt-1 text-right">Actions</th>
+                  <tr className="border-b border-border text-muted-foreground font-medium">
+                    <th className="pb-1.5 pt-0.5">S.N</th>
+                    <th className="pb-1.5 pt-0.5">Date</th>
+                    <th className="pb-1.5 pt-0.5">Category</th>
+                    <th className="pb-1.5 pt-0.5">Sub Category</th>
+                    <th className="pb-1.5 pt-0.5">Amount</th>
+                    <th className="pb-1.5 pt-0.5">Mode</th>
+                    <th className="pb-1.5 pt-0.5">Note</th>
+                    <th className="pb-1.5 pt-0.5 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
@@ -269,15 +269,15 @@ export default function ExpensesPage() {
                     const matchedCat = categories.find(c => c.name === exp.category);
                     return (
                       <tr key={exp._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors">
-                        <td className="py-2 font-medium text-muted-foreground">{index + 1}.</td>
-                        <td className="py-2 font-medium text-muted-foreground">
+                        <td className="py-1.5 font-medium text-muted-foreground">{index + 1}.</td>
+                        <td className="py-1.5 font-medium text-muted-foreground">
                           {new Date(exp.date).toLocaleDateString("en-IN", {
                             day: "numeric",
                             month: "short",
                             year: "numeric",
                           })}
                         </td>
-                        <td className="py-2 font-bold">
+                        <td className="py-1.5 font-semibold">
                           <span className="flex items-center gap-1.5">
                             <span
                               className="h-2 w-2 rounded-full shrink-0"
@@ -286,24 +286,24 @@ export default function ExpensesPage() {
                             {exp.category}
                           </span>
                         </td>
-                        <td className="py-2 text-muted-foreground font-semibold">
+                        <td className="py-1.5 text-muted-foreground font-medium">
                           {exp.subCategory ? (
-                            <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md bg-secondary text-[10px]">
+                            <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-secondary text-[9px]">
                               <Tag className="h-2.5 w-2.5" />
                               {exp.subCategory}
                             </span>
                           ) : (
-                            <span className="text-[10px] italic opacity-60">-</span>
+                            <span className="text-[9px] italic opacity-60">-</span>
                           )}
                         </td>
-                        <td className="py-2 font-extrabold text-foreground text-sm">₹{exp.amount.toFixed(2)}</td>
-                        <td className="py-2 font-bold">
+                        <td className="py-1.5 font-semibold text-foreground">₹{exp.amount.toFixed(2)}</td>
+                        <td className="py-1.5 font-semibold">
                           {(() => {
                             const matchedMode = paymentModes.find((pm) => pm.name.toLowerCase() === exp.mode.toLowerCase());
                             const color = matchedMode?.color || "#8A8D9F";
                             return (
                               <span 
-                                className="inline-flex px-2 py-0.5 rounded-md text-[10px] tracking-wide uppercase border font-semibold"
+                                className="inline-flex px-1.5 py-0.5 rounded text-[9px] tracking-wide uppercase border font-semibold"
                                 style={{
                                   backgroundColor: `${color}12`,
                                   color: color,
@@ -315,16 +315,16 @@ export default function ExpensesPage() {
                             );
                           })()}
                         </td>
-                        <td className="py-2 text-muted-foreground font-medium max-w-[150px] truncate" title={exp.note}>
+                        <td className="py-1.5 text-muted-foreground font-medium max-w-[150px] truncate" title={exp.note}>
                           {exp.note || <span className="opacity-55 italic">None</span>}
                         </td>
-                        <td className="py-2 text-right">
+                        <td className="py-1.5 text-right">
                           <button
                             onClick={() => handleDeleteExpense(exp._id)}
-                            className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all"
+                            className="p-1 rounded border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all"
                             title="Delete Log"
                           >
-                            <Trash2 className="h-3.5 w-3.5" />
+                            <Trash2 className="h-3 w-3" />
                           </button>
                         </td>
                       </tr>
@@ -339,10 +339,10 @@ export default function ExpensesPage() {
         {/* ADD EXPENSE MODAL */}
         {showAddModal && (
           <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 md:pt-28 bg-black/65 animate-in fade-in duration-200">
-            <div className="w-full max-w-3xl rounded-md border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200">
+            <div className="w-full max-w-3xl rounded-xl border border-border bg-card p-5 shadow-card animate-in zoom-in-95 duration-200">
 
-              <div className="flex items-center justify-between border-b border-border/50 pb-3 mb-4">
-                <h3 className="text-base font-bold text-foreground">Record Expense</h3>
+              <div className="flex items-center justify-between border-b border-border/50 pb-2.5 mb-3.5">
+                <h3 className="text-sm font-semibold text-foreground">Record Expense</h3>
                 <button
                   onClick={() => setShowAddModal(false)}
                   className="p-1 rounded-lg hover:bg-secondary text-muted-foreground"
@@ -351,7 +351,7 @@ export default function ExpensesPage() {
                 </button>
               </div>
 
-              <form onSubmit={handleAddExpense} className="space-y-5">
+              <form onSubmit={handleAddExpense} className="space-y-4">
 
                 {/* Row 1: Amount, Category, Sub Category */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -368,7 +368,7 @@ export default function ExpensesPage() {
 
                   {/* Category Selector */}
                   <div className="space-y-1.5">
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Category</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Category</label>
                     <Select
                       required
                       value={selectedCategoryName}
@@ -385,7 +385,7 @@ export default function ExpensesPage() {
 
                   {/* Cascading Subcategory Selector */}
                   <div className="space-y-1.5">
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Sub Category</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Sub Category</label>
                     <Select
                       value={selectedSubCategory}
                       onChange={(e) => setSelectedSubCategory(e.target.value)}
@@ -421,7 +421,7 @@ export default function ExpensesPage() {
 
                   {/* Payment Mode */}
                   <div className="space-y-1.5">
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Payment Mode</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Payment Mode</label>
                     <Select
                       value={mode}
                       onChange={(e) => setMode(e.target.value)}
@@ -448,18 +448,18 @@ export default function ExpensesPage() {
                   />
                 </div>
 
-                <div className="mt-6 flex justify-end gap-3 pt-2 border-t border-border/50">
+                <div className="mt-5 flex justify-end gap-2.5 pt-2.5 border-t border-border/50">
                   <button
                     type="button"
                     onClick={() => setShowAddModal(false)}
-                    className="px-6 py-2.5 rounded-md border border-border bg-card text-xs font-bold hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
+                    className="px-4.5 py-2 rounded-lg border border-border bg-card text-xs font-semibold hover:bg-secondary text-muted-foreground transition-all cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 py-2.5 rounded-md bg-primary text-white text-xs font-bold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] flex items-center justify-center gap-1 disabled:opacity-75 cursor-pointer"
+                    className="px-4.5 py-2 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98] flex items-center justify-center gap-1 disabled:opacity-75 cursor-pointer"
                   >
                     {isSubmitting ? (
                       <Loader2 className="h-4 w-4 animate-spin" />

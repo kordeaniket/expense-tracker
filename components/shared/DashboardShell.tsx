@@ -106,12 +106,12 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           key={item.label}
           href={item.href}
           onClick={() => setIsMobileSidebarOpen(false)}
-          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive
+          className={`flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all ${isActive
             ? "bg-primary text-white shadow-soft font-semibold"
             : "text-muted-foreground hover:bg-secondary hover:text-foreground"
             }`}
         >
-          <item.icon className="h-4.5 w-4.5" />
+          <item.icon className="h-4 w-4" />
           <span>{item.label}</span>
         </Link>
       );
@@ -127,57 +127,57 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   return (
     <div className="min-h-screen bg-slate-50/50 dark:bg-[#08070d] text-foreground flex">
       {/* SIDEBAR FOR DESKTOP */}
-      <aside className="hidden lg:flex flex-col w-64 bg-card border-r border-border p-4 fixed h-screen">
+      <aside className="hidden lg:flex flex-col w-56 bg-card border-r border-border p-3.5 fixed h-screen">
         {/* Logo */}
-        <div className="flex items-center gap-2 mb-8 shrink-0">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-primary to-accentPink flex items-center justify-center text-white font-bold text-lg">
+        <div className="flex items-center gap-2 mb-6 shrink-0">
+          <div className="h-7.5 w-7.5 rounded-lg bg-gradient-to-tr from-primary to-accentPink flex items-center justify-center text-white font-bold text-base">
             N
           </div>
-          <span className="font-extrabold text-xl tracking-tight text-foreground">
+          <span className="font-extrabold text-lg tracking-tight text-foreground">
             EXPENSIFY
           </span>
         </div>
 
         {/* Scrollable Container */}
-        <div className="flex-1 overflow-y-auto pr-2 pb-4 flex flex-col scrollbar-thin">
+        <div className="flex-1 overflow-y-auto pr-1 pb-4 flex flex-col scrollbar-thin">
           {/* Navigation Categories */}
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-3.5">
             {/* General Section */}
             <div className="space-y-1">
-              <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+              <h4 className="px-3.5 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
                 General
               </h4>
-              <nav className="space-y-1 mt-2">{renderSidebarLinks(generalItems)}</nav>
+              <nav className="space-y-1 mt-1.5">{renderSidebarLinks(generalItems)}</nav>
             </div>
 
             {/* Master Section */}
             <div className="space-y-1">
-              <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+              <h4 className="px-3.5 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
                 Master Menu
               </h4>
-              <nav className="space-y-1 mt-2">{renderSidebarLinks(masterItems)}</nav>
+              <nav className="space-y-1 mt-1.5">{renderSidebarLinks(masterItems)}</nav>
             </div>
 
             {/* Tools Section */}
             <div className="space-y-1">
-              <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+              <h4 className="px-3.5 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
                 Tools
               </h4>
-              <nav className="space-y-1 mt-2">{renderSidebarLinks(toolsItems)}</nav>
+              <nav className="space-y-1 mt-1.5">{renderSidebarLinks(toolsItems)}</nav>
             </div>
 
             {/* Other Section */}
             <div className="space-y-1">
-              <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+              <h4 className="px-3.5 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
                 Other
               </h4>
-              <nav className="space-y-1 mt-2">
+              <nav className="space-y-1 mt-1.5">
                 {renderSidebarLinks(otherItems)}
                 <button
                   onClick={() => setShowLogoutConfirm(true)}
-                  className="flex w-full items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-danger hover:bg-danger/10"
+                  className="flex w-full items-center gap-2.5 px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all text-danger hover:bg-danger/10"
                 >
-                  <LogOut className="h-4.5 w-4.5" />
+                  <LogOut className="h-4 w-4" />
                   <span>Logout</span>
                 </button>
               </nav>
@@ -185,14 +185,14 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           </div>
 
           {/* Upgrade Card */}
-          <div className="mt-4 shrink-0 p-3 rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-primary/10 flex flex-col items-center text-center relative overflow-hidden">
+          <div className="mt-3 shrink-0 p-3 rounded-xl border border-primary/20 bg-gradient-to-b from-primary/5 to-primary/10 flex flex-col items-center text-center relative overflow-hidden">
             <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/10 blur-xl" />
-            <Gem className="h-6 w-6 text-primary mb-2" />
-            <h5 className="font-bold text-sm text-foreground">Upgrade to PRO</h5>
-            <p className="text-[11px] text-muted-foreground mt-1 max-w-[150px]">
+            <Gem className="h-4.5 w-4.5 text-primary mb-2" />
+            <h5 className="font-bold text-xs text-foreground">Upgrade to PRO</h5>
+            <p className="text-[10px] text-muted-foreground mt-1 max-w-[140px]">
               Upgrade to premium plan + Get 1 month free
             </p>
-            <button className="mt-3 w-full py-2 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98]">
+            <button className="mt-2.5 w-full py-1.5 bg-primary text-white text-[10px] font-bold rounded-lg hover:bg-primary-600 transition-all shadow-soft active:scale-[0.98]">
               Upgrade
             </button>
           </div>
@@ -266,7 +266,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       )}
 
       {/* MAIN CONTAINER */}
-      <div className="flex-1 lg:pl-64 flex flex-col">
+      <div className="flex-1 lg:pl-56 flex flex-col">
         {/* TOP HEADER */}
         <header className="sticky top-0 z-40 bg-slate-50/80 dark:bg-[#08070d]/80 backdrop-blur-md border-b border-border/50 px-4 sm:px-5 lg:px-6 py-2.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 

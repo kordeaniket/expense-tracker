@@ -157,9 +157,8 @@ export default function DashboardPage() {
   if (lastMonthExpenses > 0) {
     expensesChangePercent = ((currentMonthExpenses - lastMonthExpenses) / lastMonthExpenses) * 100;
     isExpensesIncrease = expensesChangePercent >= 0;
-    expensesChangeText = `${Math.abs(expensesChangePercent).toFixed(0)}% ${
-      isExpensesIncrease ? "more" : "less"
-    } than last month`;
+    expensesChangeText = `${Math.abs(expensesChangePercent).toFixed(0)}% ${isExpensesIncrease ? "more" : "less"
+      } than last month`;
   }
 
   // Total Investment Valuation
@@ -169,7 +168,7 @@ export default function DashboardPage() {
   const totalSavingsAndFD = assets
     .filter((a) => a.type === "Savings" || a.type === "FD")
     .reduce((sum, a) => sum + a.amount, 0);
-  
+
   // Dynamic Goals resolution
   const hasDynamicGoals = goals.length > 0;
   const primaryGoal = hasDynamicGoals ? goals[0] : null;
@@ -250,55 +249,54 @@ export default function DashboardPage() {
   return (
     <DashboardShell>
       <div className="space-y-4">
-        
+
         {/* TOP ROW: METRIC CARDS */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-          
+
           {/* Account Balance Card */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative">
+          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card relative flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <Wallet className="h-5 w-5" />
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Wallet className="h-4.5 w-4.5" />
               </span>
               <button className="text-muted-foreground hover:text-foreground">
                 <MoreVertical className="h-4 w-4" />
               </button>
             </div>
-            <div className="mt-4">
-              <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+            <div className="mt-3">
+              <p className="text-[10.5px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Account Balance
               </p>
-              <h3 className="mt-1 text-2xl font-bold text-foreground">
+              <h3 className="mt-0.5 text-lg font-semibold text-foreground">
                 ₹{accountBalance.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </h3>
-              <div className="mt-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20">
+              <div className="mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary border border-primary/20">
                 <span>Calculated Net Balance</span>
               </div>
             </div>
           </div>
 
           {/* Monthly Expenses Card */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative">
+          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card relative flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-light text-danger">
-                <TrendingUp className="h-5 w-5" />
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-danger-light text-danger">
+                <TrendingUp className="h-4.5 w-4.5" />
               </span>
               <button className="text-muted-foreground hover:text-foreground">
                 <MoreVertical className="h-4 w-4" />
               </button>
             </div>
-            <div className="mt-4">
-              <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+            <div className="mt-3">
+              <p className="text-[10.5px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Monthly Expenses
               </p>
-              <h3 className="mt-1 text-2xl font-bold text-foreground">
+              <h3 className="mt-0.5 text-lg font-semibold text-foreground">
                 ₹{currentMonthExpenses.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </h3>
-              <div className={`mt-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
-                isExpensesIncrease 
-                  ? "bg-danger-light text-danger border border-danger/10" 
-                  : "bg-success/10 text-success border border-success/20"
-              }`}>
+              <div className={`mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium ${isExpensesIncrease
+                ? "bg-danger-light text-danger border border-danger/10"
+                : "bg-success/10 text-success border border-success/20"
+                }`}>
                 {isExpensesIncrease ? (
                   <ArrowUpRight className="h-3 w-3" />
                 ) : (
@@ -310,74 +308,52 @@ export default function DashboardPage() {
           </div>
 
           {/* Total Investment Card */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative flex flex-col justify-between">
+          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card relative flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-info-light text-info">
-                <PiggyBank className="h-5 w-5" />
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-info-light text-info">
+                <PiggyBank className="h-4.5 w-4.5" />
               </span>
               <button className="text-muted-foreground hover:text-foreground">
                 <MoreVertical className="h-4 w-4" />
               </button>
             </div>
-            <div className="mt-4">
-              <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+            <div className="mt-3">
+              <p className="text-[10.5px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Total Investments
               </p>
-              <h3 className="mt-1 text-2xl font-bold text-foreground">
+              <h3 className="mt-0.5 text-lg font-semibold text-foreground">
                 ₹{totalInvestments.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </h3>
-              <div className="mt-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-info-light text-info border border-info/10">
+              <div className="mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-info-light text-info border border-info/10">
                 <span>Dynamic Asset Portfolio</span>
               </div>
             </div>
           </div>
 
           {/* Savings Goal Card */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative flex items-center gap-3">
-            {/* Progress Circular Doughnut */}
-            <div className="relative flex items-center justify-center shrink-0">
-              <svg className="w-18 h-18 transform -rotate-90" viewBox="0 0 36 36">
-                <path
-                  className="text-slate-100 dark:text-slate-800"
-                  strokeWidth="3.5"
-                  stroke="currentColor"
-                  fill="none"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <path
-                  className="text-warning"
-                  strokeWidth="3.5"
-                  strokeDasharray={`${progressPercent.toFixed(0)}, 100`}
-                  strokeLinecap="round"
-                  stroke="currentColor"
-                  fill="none"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-              </svg>
-              {/* Target Symbol center */}
-              <div className="absolute flex flex-col items-center">
-                <Target className="h-4.5 w-4.5 text-warning" />
-              </div>
+          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card relative flex flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-warning/10 text-warning">
+                <Target className="h-4.5 w-4.5" />
+              </span>
+              <button className="text-muted-foreground hover:text-foreground">
+                <MoreVertical className="h-4 w-4" />
+              </button>
             </div>
-
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
-                  {hasDynamicGoals ? "Savings Goal" : "Emergency Goal"}
-                </p>
-                <button className="text-muted-foreground hover:text-foreground">
-                  <MoreVertical className="h-3.5 w-3.5" />
-                </button>
+            <div className="mt-3">
+              <p className="text-[10.5px] font-semibold text-muted-foreground uppercase tracking-wider truncate" title={goalTitle}>
+                {hasDynamicGoals ? `Savings Goal: ${goalTitle}` : `Emergency Goal: ${goalTitle}`}
+              </p>
+              <h3 className="mt-0.5 text-lg font-semibold text-foreground">
+                ₹{goalSaved.toLocaleString("en-IN")}
+              </h3>
+              <div className="mt-2 flex items-center justify-between gap-2 text-[10px] text-muted-foreground font-medium">
+                <span className="truncate">Target: ₹{goalTarget.toLocaleString("en-IN")}</span>
+                <span className="font-semibold text-warning shrink-0">{progressPercent.toFixed(0)}%</span>
               </div>
-              <h4 className="mt-1 text-[13px] font-bold text-foreground truncate" title={goalTitle}>
-                {goalTitle}
-              </h4>
-              <p className="text-[10px] text-muted-foreground font-medium mt-0.5">
-                Target: ₹{goalTarget.toLocaleString("en-IN")}
-              </p>
-              <p className="text-[10px] text-muted-foreground font-medium">
-                Saved: ₹{goalSaved.toLocaleString("en-IN")} ({progressPercent.toFixed(0)}%)
-              </p>
+              <div className="mt-1.5 w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div className="bg-warning h-full rounded-full transition-all duration-500" style={{ width: `${progressPercent}%` }} />
+              </div>
             </div>
           </div>
 
@@ -385,12 +361,12 @@ export default function DashboardPage() {
 
         {/* MIDDLE ROW: CHARTS */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-          
+
           {/* Monthly Expenses Rounded Bar Chart */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-7 flex flex-col">
-            <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
+          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card lg:col-span-7 flex flex-col">
+            <div className="flex items-center justify-between border-b border-border/40 pb-3 mb-3">
               <div>
-                <h3 className="text-[15px] font-bold text-foreground flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
                   Expense Trends
                   <span className="inline-flex items-center text-[10px] font-semibold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full">
                     Last 6 Months
@@ -401,11 +377,11 @@ export default function DashboardPage() {
                 <MoreVertical className="h-4 w-4" />
               </button>
             </div>
-            
+
             {/* Recharts Bar Chart */}
-            <div className="w-full h-72">
+            <div className="w-full h-64">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyTrendData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+                <BarChart data={monthlyTrendData} margin={{ top: 15, right: 10, left: -25, bottom: 0 }}>
                   <XAxis
                     dataKey="name"
                     axisLine={false}
@@ -423,7 +399,7 @@ export default function DashboardPage() {
                     contentStyle={{
                       backgroundColor: "var(--card)",
                       borderColor: "var(--border)",
-                      borderRadius: "12px",
+                      borderRadius: "10px",
                       fontSize: "12px",
                       color: "var(--foreground)",
                     }}
@@ -432,8 +408,8 @@ export default function DashboardPage() {
                   <Bar
                     dataKey="amount"
                     fill="#6C5CE7"
-                    radius={[10, 10, 0, 0]}
-                    maxBarSize={45}
+                    radius={[8, 8, 0, 0]}
+                    maxBarSize={40}
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -441,9 +417,9 @@ export default function DashboardPage() {
           </div>
 
           {/* Top Category Doughnut Chart */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-5 flex flex-col justify-between">
-            <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
-              <h3 className="text-[15px] font-bold text-foreground">
+          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card lg:col-span-5 flex flex-col justify-between">
+            <div className="flex items-center justify-between border-b border-border/40 pb-3 mb-3">
+              <h3 className="text-sm font-semibold text-foreground">
                 Top Categories
               </h3>
               <button className="text-muted-foreground hover:text-foreground">
@@ -451,19 +427,19 @@ export default function DashboardPage() {
               </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 flex-1">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-5 flex-1">
               {/* Doughnut Pie */}
               {displayCategoryData.length > 0 ? (
                 <>
-                  <div className="relative w-40 h-40 flex items-center justify-center shrink-0">
+                  <div className="relative w-36 h-36 flex items-center justify-center shrink-0">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie
                           data={displayCategoryData}
                           cx="50%"
                           cy="50%"
-                          innerRadius={50}
-                          outerRadius={75}
+                          innerRadius={44}
+                          outerRadius={62}
                           paddingAngle={3}
                           dataKey="value"
                         >
@@ -476,11 +452,11 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Legends with Custom Grid Layout */}
-                  <div className="flex-1 space-y-2.5 w-full">
+                  <div className="flex-1 space-y-2 w-full">
                     {displayCategoryData.map((item, idx) => (
                       <div key={idx} className="flex items-center justify-between text-xs">
                         <div className="flex items-center gap-2">
-                          <span className="h-3.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                          <span className="h-3 w-1.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
                           <span className="text-muted-foreground font-medium truncate max-w-[120px]">{item.name}</span>
                         </div>
                         <span className="font-bold text-foreground">₹{item.value.toLocaleString("en-IN", { maximumFractionDigits: 0 })}</span>
@@ -500,11 +476,11 @@ export default function DashboardPage() {
 
         {/* BOTTOM ROW: TABLES & LISTS */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-          
+
           {/* Recent Expenses Table */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-8 flex flex-col">
-            <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
-              <h3 className="text-[15px] font-bold text-foreground">
+          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card lg:col-span-8 flex flex-col">
+            <div className="flex items-center justify-between border-b border-border/40 pb-3 mb-3">
+              <h3 className="text-sm font-semibold text-foreground">
                 Recent Expenses
               </h3>
               <button className="text-muted-foreground hover:text-foreground">
@@ -528,13 +504,13 @@ export default function DashboardPage() {
                   <tbody className="divide-y divide-border/60">
                     {recentExpenses.map((expense) => (
                       <tr key={expense.sn} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors">
-                        <td className="py-2.5 font-medium text-muted-foreground">{expense.sn}.</td>
-                        <td className="py-2.5 font-bold text-foreground">{expense.amount}</td>
-                        <td className="py-2.5 font-medium text-foreground">{expense.category}</td>
-                        <td className="py-2.5 text-muted-foreground font-medium">{expense.subCategory}</td>
-                        <td className="py-2.5 text-muted-foreground font-medium">{expense.date}</td>
-                        <td className="py-2.5 font-bold">
-                          <span className="inline-flex px-2 py-0.5 rounded-md text-[10px] tracking-wide uppercase bg-secondary text-muted-foreground font-bold border border-border">
+                        <td className="py-2 font-medium text-muted-foreground">{expense.sn}.</td>
+                        <td className="py-2 font-bold text-foreground">{expense.amount}</td>
+                        <td className="py-2 font-medium text-foreground">{expense.category}</td>
+                        <td className="py-2 text-muted-foreground font-medium">{expense.subCategory}</td>
+                        <td className="py-2 text-muted-foreground font-medium">{expense.date}</td>
+                        <td className="py-2 font-bold">
+                          <span className="inline-flex px-2 py-0.5 rounded text-[10px] tracking-wide uppercase bg-secondary text-muted-foreground font-bold border border-border">
                             {expense.mode}
                           </span>
                         </td>
@@ -543,7 +519,7 @@ export default function DashboardPage() {
                   </tbody>
                 </table>
               ) : (
-                <div className="text-center py-12 text-xs text-muted-foreground font-medium italic">
+                <div className="text-center py-10 text-xs text-muted-foreground font-medium italic">
                   No expense records logged.
                 </div>
               )}
@@ -551,9 +527,9 @@ export default function DashboardPage() {
           </div>
 
           {/* Bill & Subscription List */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-4 flex flex-col justify-between">
-            <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
-              <h3 className="text-[15px] font-bold text-foreground">
+          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card lg:col-span-4 flex flex-col justify-between">
+            <div className="flex items-center justify-between border-b border-border/40 pb-3 mb-3">
+              <h3 className="text-sm font-semibold text-foreground">
                 Bill & Subscription
               </h3>
               <button className="text-muted-foreground hover:text-foreground">
@@ -561,12 +537,12 @@ export default function DashboardPage() {
               </button>
             </div>
 
-            <div className="space-y-4 flex-1 overflow-y-auto max-h-72 pr-1 mt-2">
+            <div className="space-y-3.5 flex-1 overflow-y-auto max-h-60 pr-1 mt-1">
               {subscriptionBills.length > 0 ? (
                 subscriptionBills.map((sub, index) => (
                   <div key={index} className="flex items-center justify-between hover:bg-slate-50/30 dark:hover:bg-slate-900/10 p-1.5 rounded-xl transition-all">
                     <div className="flex items-center gap-3">
-                      <div className={`h-9 w-9 rounded-xl flex items-center justify-center text-white font-bold text-sm ${sub.logoColor}`}>
+                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center text-white font-bold text-xs ${sub.logoColor}`}>
                         {sub.logoText}
                       </div>
                       <div>
@@ -578,7 +554,7 @@ export default function DashboardPage() {
                   </div>
                 ))
               ) : (
-                <div className="text-center py-12 text-xs text-muted-foreground font-medium italic">
+                <div className="text-center py-10 text-xs text-muted-foreground font-medium italic">
                   No recurring bills active.
                 </div>
               )}
