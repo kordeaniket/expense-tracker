@@ -228,23 +228,23 @@ export default function DashboardPage() {
       <div className="space-y-4">
 
         {/* TOP ROW: METRIC CARDS */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
 
           {/* Account Balance Card */}
-          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card relative flex flex-col justify-between">
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card relative flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                <Wallet className="h-4.5 w-4.5" />
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Wallet className="h-4 w-4" />
               </span>
               <button className="text-muted-foreground hover:text-foreground">
                 <MoreVertical className="h-4 w-4" />
               </button>
             </div>
-            <div className="mt-3">
-              <p className="text-[10.5px] font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="mt-2">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Account Balance
               </p>
-              <h3 className="mt-0.5 text-lg font-semibold text-foreground">
+              <h3 className="mt-0.5 text-base font-semibold text-foreground">
                 ₹{accountBalance.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </h3>
               <div className="mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary border border-primary/20">
@@ -254,20 +254,20 @@ export default function DashboardPage() {
           </div>
 
           {/* Monthly Expenses Card */}
-          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card relative flex flex-col justify-between">
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card relative flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-danger-light text-danger">
-                <TrendingUp className="h-4.5 w-4.5" />
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-danger-light text-danger">
+                <TrendingUp className="h-4 w-4" />
               </span>
               <button className="text-muted-foreground hover:text-foreground">
                 <MoreVertical className="h-4 w-4" />
               </button>
             </div>
-            <div className="mt-3">
-              <p className="text-[10.5px] font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="mt-2">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Monthly Expenses
               </p>
-              <h3 className="mt-0.5 text-lg font-semibold text-foreground">
+              <h3 className="mt-0.5 text-base font-semibold text-foreground">
                 ₹{currentMonthExpenses.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </h3>
               <div className={`mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium ${isExpensesIncrease
@@ -285,20 +285,20 @@ export default function DashboardPage() {
           </div>
 
           {/* Total Investment Card */}
-          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card relative flex flex-col justify-between">
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card relative flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-info-light text-info">
-                <PiggyBank className="h-4.5 w-4.5" />
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-info-light text-info">
+                <PiggyBank className="h-4 w-4" />
               </span>
               <button className="text-muted-foreground hover:text-foreground">
                 <MoreVertical className="h-4 w-4" />
               </button>
             </div>
-            <div className="mt-3">
-              <p className="text-[10.5px] font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="mt-2">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Total Investments
               </p>
-              <h3 className="mt-0.5 text-lg font-semibold text-foreground">
+              <h3 className="mt-0.5 text-base font-semibold text-foreground">
                 ₹{totalInvestments.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </h3>
               <div className="mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-info-light text-info border border-info/10">
@@ -308,27 +308,27 @@ export default function DashboardPage() {
           </div>
 
           {/* Savings Goal Card */}
-          <div className="rounded-xl border border-border bg-card p-3.5 shadow-card relative flex flex-col justify-between">
+          <div className="rounded-xl border border-border bg-card p-3 shadow-card relative flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-warning/10 text-warning">
-                <Target className="h-4.5 w-4.5" />
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-warning/10 text-warning">
+                <Target className="h-4 w-4" />
               </span>
               <button className="text-muted-foreground hover:text-foreground">
                 <MoreVertical className="h-4 w-4" />
               </button>
             </div>
-            <div className="mt-3">
-              <p className="text-[10.5px] font-semibold text-muted-foreground uppercase tracking-wider truncate" title={goalTitle}>
+            <div className="mt-2">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider truncate" title={goalTitle}>
                 {hasDynamicGoals ? `Savings Goal: ${goalTitle}` : `Emergency Goal: ${goalTitle}`}
               </p>
-              <h3 className="mt-0.5 text-lg font-semibold text-foreground">
+              <h3 className="mt-0.5 text-base font-semibold text-foreground">
                 ₹{goalSaved.toLocaleString("en-IN")}
               </h3>
               <div className="mt-2 flex items-center justify-between gap-2 text-[10px] text-muted-foreground font-medium">
                 <span className="truncate">Target: ₹{goalTarget.toLocaleString("en-IN")}</span>
                 <span className="font-semibold text-warning shrink-0">{progressPercent.toFixed(0)}%</span>
               </div>
-              <div className="mt-1.5 w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div className="mt-1 w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
                 <div className="bg-warning h-full rounded-full transition-all duration-500" style={{ width: `${progressPercent}%` }} />
               </div>
             </div>
