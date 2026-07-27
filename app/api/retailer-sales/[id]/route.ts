@@ -6,7 +6,7 @@ import { RetailerSale } from "@/models/RetailerSale";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -16,8 +16,9 @@ export async function GET(
 
     await connectDB();
     const userId = (session.user as any).id;
+    const resolvedParams = await params;
     const sale = await RetailerSale.findOne({
-      _id: params.id,
+      _id: resolvedParams.id,
       user: userId,
     });
 
@@ -37,7 +38,7 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -48,12 +49,13 @@ export async function PUT(
     await connectDB();
     const userId = (session.user as any).id;
     const body = await req.json();
+    const resolvedParams = await params;
 
     // Prevent user from updating invoice number to one that already exists for another record
     if (body.invoiceNumber) {
       const existingInvoice = await RetailerSale.findOne({
         invoiceNumber: body.invoiceNumber,
-        _id: { $ne: params.id },
+        _id: { $ne: resolvedParams.id },
       });
       if (existingInvoice) {
         return NextResponse.json(
@@ -64,7 +66,7 @@ export async function PUT(
     }
 
     const updatedSale = await RetailerSale.findOneAndUpdate(
-      { _id: params.id, user: userId },
+      { _id: resolvedParams.id, user: userId },
       { ...body },
       { new: true, runValidators: true }
     );
@@ -88,7 +90,7 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -98,9 +100,10 @@ export async function DELETE(
 
     await connectDB();
     const userId = (session.user as any).id;
+    const resolvedParams = await params;
 
     const deletedSale = await RetailerSale.findOneAndDelete({
-      _id: params.id,
+      _id: resolvedParams.id,
       user: userId,
     });
 
