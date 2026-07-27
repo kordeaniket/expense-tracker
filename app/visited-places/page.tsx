@@ -29,6 +29,7 @@ interface VisitedPlaceData {
   rating: number;
   notes?: string;
   imageUrl?: string;
+  wantToVisit?: boolean;
 }
 
 const RATING_OPTIONS = [1, 2, 3, 4, 5];
@@ -37,10 +38,10 @@ export default function VisitedPlacesPage() {
   const [places, setPlaces] = useState<VisitedPlaceData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // Modals toggle
   const [showPlaceModal, setShowPlaceModal] = useState(false);
-  
+
   // Selection/Editing states
   const [editingPlace, setEditingPlace] = useState<VisitedPlaceData | null>(null);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
@@ -52,6 +53,7 @@ export default function VisitedPlacesPage() {
   const [rating, setRating] = useState<number>(3);
   const [notes, setNotes] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [wantToVisit, setWantToVisit] = useState(false);
 
   const fetchPlaces = async () => {
     setIsLoading(true);
@@ -82,6 +84,7 @@ export default function VisitedPlacesPage() {
     setRating(3);
     setNotes("");
     setImageUrl("");
+    setWantToVisit(false);
     setShowPlaceModal(true);
   };
 
@@ -93,13 +96,18 @@ export default function VisitedPlacesPage() {
     setRating(place.rating || 3);
     setNotes(place.notes || "");
     setImageUrl(place.imageUrl || "");
+    setWantToVisit(place.wantToVisit || false);
     setShowPlaceModal(true);
   };
 
   const handlePlaceSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !dateVisited) {
-      toast.error("Please enter a name and date visited.");
+    if (!name.trim()) {
+      toast.error("Please enter a name.");
+      return;
+    }
+    if (!wantToVisit && !dateVisited) {
+      toast.error("Please enter a date visited.");
       return;
     }
 
@@ -118,6 +126,7 @@ export default function VisitedPlacesPage() {
           rating,
           notes: notes.trim(),
           imageUrl: imageUrl.trim(),
+          wantToVisit,
         }),
       });
 
@@ -141,7 +150,7 @@ export default function VisitedPlacesPage() {
       toast.error("Geolocation is not supported by your browser");
       return;
     }
-    
+
     setIsFetchingLocation(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -149,16 +158,16 @@ export default function VisitedPlacesPage() {
           const { latitude, longitude } = position.coords;
           const GOOGLE_API_KEY = 'AIzaSyCQMJIv9VeVedQWqnx1qugyL_KwlU-RZy0';
           const res = await fetch(
-              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`
           );
           const data = await res.json();
           const label =
-              data.results?.[0]?.address_components
-                  ?.slice(0, 2)
-                  ?.map((c: any) => c.long_name)
-                  ?.join(", ") ||
-              data.results?.[0]?.formatted_address ||
-              "Current Location";
+            data.results?.[0]?.address_components
+              ?.slice(0, 2)
+              ?.map((c: any) => c.long_name)
+              ?.join(", ") ||
+            data.results?.[0]?.formatted_address ||
+            "Current Location";
           setLocation(label);
           toast.success("Location fetched successfully!");
         } catch (error) {
@@ -198,7 +207,7 @@ export default function VisitedPlacesPage() {
   return (
     <DashboardShell>
       <div className="space-y-4">
-        
+
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -236,8 +245,8 @@ export default function VisitedPlacesPage() {
             <div className="mt-4">
               <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Average Rating</p>
               <h3 className="mt-1 text-2xl font-black text-foreground">
-                {places.length > 0 
-                  ? (places.reduce((acc, p) => acc + p.rating, 0) / places.length).toFixed(1) 
+                {places.length > 0
+                  ? (places.reduce((acc, p) => acc + p.rating, 0) / places.length).toFixed(1)
                   : "0.0"} <span className="text-sm font-medium text-muted-foreground">/ 5</span>
               </h3>
             </div>
@@ -255,78 +264,86 @@ export default function VisitedPlacesPage() {
             No places logged yet. Click &quot;Add Place&quot; above to add your first destination.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-2">
             {places.map((place) => {
               return (
                 <div
                   key={place._id}
-                  className="group relative rounded-2xl border border-border bg-card shadow-card hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden"
+                  className="group relative rounded-lg border border-border bg-card shadow-sm hover:shadow transition-all duration-300 flex items-center p-2 gap-3"
                 >
-                  {/* Image Header */}
-                  <div className="h-32 bg-slate-100 dark:bg-slate-900 relative">
+                  {/* Thumbnail Image */}
+                  <div className="h-10 w-10 shrink-0 rounded-md overflow-hidden bg-slate-100 dark:bg-slate-900 relative flex items-center justify-center">
                     {place.imageUrl ? (
-                      <img 
-                        src={place.imageUrl} 
-                        alt={place.name} 
+                      <img
+                        src={place.imageUrl}
+                        alt={place.name}
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1488646953014-c8c3313c4ce8?q=80&w=600&auto=format&fit=crop';
                         }}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-primary/5 text-primary/40">
-                        <Map className="h-10 w-10" />
-                      </div>
+                      <Map className="h-4 w-4 text-primary/40" />
                     )}
-                    <div className="absolute top-3 right-3 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-md rounded-lg p-1">
-                      <button
-                        onClick={() => handleOpenEditModal(place)}
-                        className="p-1.5 rounded-md text-foreground hover:text-primary transition-all cursor-pointer"
-                        title="Edit Place"
-                      >
-                        <Edit2 className="h-3.5 w-3.5" />
-                      </button>
-                      <button
-                        onClick={() => handleDeletePlace(place._id, place.name)}
-                        className="p-1.5 rounded-md text-foreground hover:text-danger transition-all cursor-pointer"
-                        title="Delete Place"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
                   </div>
 
-                  <div className="p-4 flex-1 flex flex-col">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="font-bold text-foreground text-sm tracking-tight">{place.name}</h3>
-                        {place.location && (
-                          <p className="text-[10px] text-muted-foreground font-medium mt-1 flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
-                            {place.location}
-                          </p>
+                  {/* Main Content - Row Layout */}
+                  <div className="flex-1 flex items-center justify-between min-w-0">
+                    <div className="flex flex-col justify-center min-w-0 pr-4">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-foreground text-xs truncate">{place.name}</h3>
+                        {place.wantToVisit && (
+                          <span className="bg-primary/10 text-primary text-[8px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">Wishlist</span>
                         )}
-                        <p className="text-[10px] text-muted-foreground font-medium mt-1 flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          Visited: {new Date(place.dateVisited).toLocaleDateString("en-IN", {
+                      </div>
+                      <div className="flex items-center gap-3 mt-1 text-[9px] text-muted-foreground font-medium">
+                        {place.location && (
+                          <span className="flex items-center gap-0.5 truncate">
+                            <MapPin className="h-2.5 w-2.5" />
+                            {place.location}
+                          </span>
+                        )}
+                        <span className="flex items-center gap-0.5 shrink-0">
+                          <Calendar className="h-2.5 w-2.5" />
+                          {place.wantToVisit ? "Planned: " : "Visited: "}
+                          {place.dateVisited ? new Date(place.dateVisited).toLocaleDateString("en-IN", {
                             day: "numeric",
                             month: "short",
-                            year: "numeric",
-                          })}
-                        </p>
-                      </div>
-                      
-                      <div className="flex bg-warning/10 px-1.5 py-1 rounded text-warning">
-                        <Star className="h-3.5 w-3.5 fill-current" />
-                        <span className="text-[10px] font-bold ml-1">{place.rating}</span>
+                            year: "numeric"
+                          }) : "-"}
+                        </span>
                       </div>
                     </div>
 
-                    {place.notes && (
-                      <div className="mt-3 pt-3 border-t border-border/50 text-[11px] text-muted-foreground italic flex-1">
-                        "{place.notes}"
+                    <div className="flex items-center gap-4 shrink-0">
+                      {place.notes && (
+                        <div className="hidden md:block text-[9px] text-muted-foreground italic truncate w-32 xl:w-48">
+                          "{place.notes}"
+                        </div>
+                      )}
+
+                      <div className="flex items-center bg-warning/10 px-1.5 py-0.5 rounded text-warning">
+                        <Star className="h-3 w-3 fill-current" />
+                        <span className="text-[9px] font-bold ml-0.5">{place.rating}</span>
                       </div>
-                    )}
+
+                      <div className="flex items-center gap-1 opacity-0 xl:opacity-100 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => handleOpenEditModal(place)}
+                          className="p-1 rounded text-foreground hover:bg-secondary hover:text-primary transition-all cursor-pointer"
+                          title="Edit Place"
+                        >
+                          <Edit2 className="h-3 w-3" />
+                        </button>
+                        <button
+                          onClick={() => handleDeletePlace(place._id, place.name)}
+                          className="p-1 rounded text-foreground hover:bg-danger/10 hover:text-danger transition-all cursor-pointer"
+                          title="Delete Place"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
@@ -338,7 +355,7 @@ export default function VisitedPlacesPage() {
         {showPlaceModal && (
           <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 md:pt-28 bg-black/65 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
             <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200 my-8">
-              
+
               <div className="flex items-center justify-between border-b border-border/50 pb-3 mb-4">
                 <h3 className="text-base font-bold text-foreground">
                   {editingPlace ? "Modify Visited Place" : "Log Visited Place"}
@@ -360,7 +377,7 @@ export default function VisitedPlacesPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
-                  
+
                   <div className="relative flex items-end gap-2">
                     <div className="flex-1">
                       <Input
@@ -387,12 +404,25 @@ export default function VisitedPlacesPage() {
                   </div>
                 </div>
 
+                <div className="flex items-center space-x-2 bg-secondary/50 p-3 rounded-xl border border-border">
+                  <input
+                    type="checkbox"
+                    id="wantToVisit"
+                    checked={wantToVisit}
+                    onChange={(e) => setWantToVisit(e.target.checked)}
+                    className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                  />
+                  <label htmlFor="wantToVisit" className="text-sm font-medium text-foreground cursor-pointer">
+                    Want to visit this place
+                  </label>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input
                     type="date"
-                    label="Date Visited"
+                    label={wantToVisit ? "Planned Date (Optional)" : "Date Visited"}
                     icon={Calendar}
-                    required
+                    required={!wantToVisit}
                     value={dateVisited}
                     onChange={(e) => setDateVisited(e.target.value)}
                   />
@@ -405,9 +435,8 @@ export default function VisitedPlacesPage() {
                           key={opt}
                           type="button"
                           onClick={() => setRating(opt)}
-                          className={`p-1.5 rounded-md transition-all cursor-pointer hover:scale-110 ${
-                            rating >= opt ? "text-warning" : "text-muted-foreground/30"
-                          }`}
+                          className={`p-1.5 rounded-md transition-all cursor-pointer hover:scale-110 ${rating >= opt ? "text-warning" : "text-muted-foreground/30"
+                            }`}
                         >
                           <Star className={`h-6 w-6 ${rating >= opt ? "fill-current" : ""}`} />
                         </button>
@@ -462,9 +491,10 @@ export default function VisitedPlacesPage() {
               </form>
             </div>
           </div>
-        )}
+        )
+        }
 
-      </div>
-    </DashboardShell>
+      </div >
+    </DashboardShell >
   );
 }

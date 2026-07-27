@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
     const userId = (session.user as any).id;
     const body = await req.json();
-    const { name, location, dateVisited, rating, notes, imageUrl } = body;
+    const { name, location, dateVisited, rating, notes, imageUrl, wantToVisit } = body;
 
     if (!name) {
       return NextResponse.json(
@@ -54,6 +54,7 @@ export async function POST(req: Request) {
       rating: rating ? Number(rating) : 3,
       notes: notes?.trim(),
       imageUrl: imageUrl?.trim(),
+      wantToVisit: Boolean(wantToVisit),
     });
 
     return NextResponse.json({

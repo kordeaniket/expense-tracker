@@ -243,22 +243,23 @@ export default function AssetsPortfolioPage() {
           </div>
 
           {/* Allocation Recharts */}
-          <div className="lg:col-span-2 rounded-xl border border-border bg-card p-3 shadow-card flex flex-col md:flex-row items-center gap-4">
-            <div className="flex-1 w-full flex flex-col items-center justify-center">
-              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 self-start flex items-center gap-1.5">
+          <div className="lg:col-span-2 rounded-xl border border-border bg-card p-4 shadow-card flex flex-col md:flex-row items-start md:items-center gap-6">
+            {/* Pie Chart - 30% width on md screens */}
+            <div className="w-full md:w-[30%] flex flex-col items-center justify-center">
+              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 self-start flex items-center gap-1.5">
                 <ChartIcon className="h-4 w-4 text-primary" />
                 Asset Allocation
               </h4>
               {chartData.length > 0 ? (
-                <div className="h-[130px] w-full relative flex items-center justify-center">
+                <div className="h-[140px] w-full relative flex items-center justify-center">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
                         data={chartData}
                         cx="50%"
                         cy="50%"
-                        innerRadius={32}
-                        outerRadius={48}
+                        innerRadius={36}
+                        outerRadius={56}
                         paddingAngle={3}
                         dataKey="value"
                       >
@@ -270,22 +271,22 @@ export default function AssetsPortfolioPage() {
                     </PieChart>
                   </ResponsiveContainer>
                   {/* Center Text */}
-                  <div className="absolute flex flex-col items-center text-center">
-                    <span className="text-[7px] font-bold uppercase text-muted-foreground tracking-wider">Total</span>
-                    <span className="text-[11px] font-bold text-foreground">₹{(netWorth / 1000).toFixed(1)}k</span>
+                  <div className="absolute flex flex-col items-center text-center pointer-events-none">
+                    <span className="text-[8px] font-bold uppercase text-muted-foreground tracking-wider">Total</span>
+                    <span className="text-xs font-bold text-foreground">₹{(netWorth / 1000).toFixed(1)}k</span>
                   </div>
                 </div>
               ) : (
-                <div className="h-[130px] flex items-center justify-center text-xs text-muted-foreground/60 italic font-medium">
+                <div className="h-[140px] flex items-center justify-center text-xs text-muted-foreground/60 italic font-medium">
                   Add assets to generate allocation charts.
                 </div>
               )}
             </div>
 
-            {/* Legend list */}
-            <div className="flex-1 w-full space-y-1">
-              <h5 className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Portfolio Splits</h5>
-              <div className="grid grid-cols-6 gap-2">
+            {/* Legend list - 70% width on md screens */}
+            <div className="w-full md:w-[70%] space-y-3">
+              <h5 className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Portfolio Splits</h5>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-4 gap-x-2">
                 {assetTypesList.map((type) => {
                   const val = groupedTotals[type] || 0;
                   const color = TYPE_COLORS[type];

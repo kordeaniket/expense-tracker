@@ -8,6 +8,7 @@ export interface IVisitedPlace extends Document {
   rating: number;
   notes?: string;
   imageUrl?: string;
+  wantToVisit?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -47,6 +48,10 @@ const visitedPlaceSchema = new Schema<IVisitedPlace>(
     imageUrl: {
       type: String,
       trim: true,
+    },
+    wantToVisit: {
+      type: Boolean,
+      default: false,
     },
   },
   {

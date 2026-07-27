@@ -28,6 +28,8 @@ import {
   Wallet,
   MapPin,
   BookOpen,
+  ShoppingCart,
+  Loader2,
 } from "lucide-react";
 
 interface SidebarItem {
@@ -43,6 +45,11 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [timeStr, setTimeStr] = useState("");
+  const [pendingRoute, setPendingRoute] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPendingRoute(null);
+  }, [pathname]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -88,6 +95,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   ];
 
   const toolsItems: SidebarItem[] = [
+    { label: "Sales Entry", href: "/retailer-sales", icon: ShoppingCart },
     // { label: "Insight", href: "/insight", icon: Lightbulb },
     // { label: "Analytics", href: "/analytics", icon: BarChart3 },
   ];
@@ -101,17 +109,27 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   const renderSidebarLinks = (items: SidebarItem[]) => {
     return items.map((item) => {
       const isActive = pathname === item.href;
+      const isPending = pendingRoute === item.href;
       return (
         <Link
           key={item.label}
           href={item.href}
-          onClick={() => setIsMobileSidebarOpen(false)}
+          onClick={(e) => {
+            if (!isActive) {
+              setPendingRoute(item.href);
+            }
+            setIsMobileSidebarOpen(false);
+          }}
           className={`flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all ${isActive
             ? "bg-primary text-white shadow-soft font-semibold"
             : "text-muted-foreground hover:bg-secondary hover:text-foreground"
             }`}
         >
-          <item.icon className="h-4 w-4" />
+          {isPending ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <item.icon className="h-4 w-4" />
+          )}
           <span>{item.label}</span>
         </Link>
       );

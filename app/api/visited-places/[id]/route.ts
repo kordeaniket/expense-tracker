@@ -17,7 +17,7 @@ export async function PUT(
     const { id } = await params;
 
     const body = await req.json();
-    const { name, location, dateVisited, rating, notes, imageUrl } = body;
+    const { name, location, dateVisited, rating, notes, imageUrl, wantToVisit } = body;
 
     await connectDB();
 
@@ -32,6 +32,7 @@ export async function PUT(
     if (rating !== undefined) place.rating = Number(rating);
     if (notes !== undefined) place.notes = notes?.trim();
     if (imageUrl !== undefined) place.imageUrl = imageUrl?.trim();
+    if (wantToVisit !== undefined) place.wantToVisit = Boolean(wantToVisit);
 
     await place.save();
 

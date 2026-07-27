@@ -296,47 +296,44 @@ export default function GoalsPage() {
         </div>
 
         {/* Global Progress metric cards */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {/* Total Target */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <Target className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Target className="h-4 w-4" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Total Goals Target</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">₹{totalTarget.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</h3>
+            <div className="flex-1 min-w-0">
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider truncate">Total Goals Target</p>
+              <h3 className="mt-0.5 text-lg font-black text-foreground truncate">₹{totalTarget.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</h3>
             </div>
-            <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/5 blur-xl" />
+            <div className="absolute -top-6 -right-6 w-16 h-16 rounded-full bg-primary/5 blur-xl" />
           </div>
 
           {/* Total Saved */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
-              <PiggyBank className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-success/10 text-success">
+              <PiggyBank className="h-4 w-4" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Combined Savings Allocation</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">₹{totalSaved.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</h3>
+            <div className="flex-1 min-w-0">
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider truncate">Combined Savings</p>
+              <h3 className="mt-0.5 text-lg font-black text-foreground truncate">₹{totalSaved.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</h3>
             </div>
-            <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-success/5 blur-xl" />
+            <div className="absolute -top-6 -right-6 w-16 h-16 rounded-full bg-success/5 blur-xl" />
           </div>
 
           {/* Aggregate Completion */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden flex flex-col justify-between">
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm flex flex-col justify-center gap-2">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Combined Progress</span>
-              <span className="text-[10px] font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10">
+              <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Combined Progress</span>
+              <span className="text-[10px] font-bold text-primary px-1.5 py-0.5 rounded md bg-primary/10">
                 {aggregateProgress.toFixed(1)}%
               </span>
             </div>
-            <div className="mt-4 space-y-2">
-              <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-primary to-accentPink transition-all duration-500" 
-                  style={{ width: `${aggregateProgress}%` }}
-                />
-              </div>
-              <p className="text-[10px] text-muted-foreground font-semibold">Total average goal milestones completion rate.</p>
+            <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-primary to-accentPink transition-all duration-500" 
+                style={{ width: `${aggregateProgress}%` }}
+              />
             </div>
           </div>
         </div>
@@ -351,7 +348,7 @@ export default function GoalsPage() {
             No savings goals logged yet. Click &quot;Create Goal&quot; above to set up your first milestone target.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-2">
             {goals.map((goal) => {
               const GoalIcon = ICON_MAP[goal.icon || "Target"] || Target;
               const progress = goal.targetAmount > 0 ? Math.min((goal.savedAmount / goal.targetAmount) * 100, 100) : 0;
@@ -361,125 +358,108 @@ export default function GoalsPage() {
               return (
                 <div
                   key={goal._id}
-                  className="group relative rounded-2xl border border-border bg-card p-4 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                  className="group relative rounded-lg border border-border bg-card p-3 shadow-sm hover:shadow transition-all duration-300 flex flex-col"
                 >
-                  <div>
-                    {/* Header */}
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                          <GoalIcon className="h-5 w-5" />
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-foreground text-sm tracking-tight">{goal.title}</h3>
-                          {goal.targetDate && (
-                            <p className="text-[10px] text-muted-foreground font-medium mt-0.5 flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              Target Date: {new Date(goal.targetDate).toLocaleDateString("en-IN", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })}
-                            </p>
-                          )}
-                        </div>
+                  <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4 w-full min-w-0">
+                    
+                    {/* Header: Icon, Title, Date */}
+                    <div className="flex items-center gap-3 md:w-1/4 shrink-0 min-w-0">
+                      <div className="h-10 w-10 shrink-0 rounded-md bg-primary/10 text-primary flex items-center justify-center">
+                        <GoalIcon className="h-5 w-5" />
+                      </div>
+                      <div className="flex flex-col justify-center min-w-0 flex-1">
+                        <h3 className="font-semibold text-foreground text-xs truncate">{goal.title}</h3>
+                        {goal.targetDate && (
+                          <p className="text-[9px] text-muted-foreground font-medium mt-0.5 flex items-center gap-1 truncate">
+                            <Calendar className="h-2.5 w-2.5 shrink-0" />
+                            {new Date(goal.targetDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Progress */}
+                    <div className="flex-1 flex flex-col justify-center min-w-0">
+                      <div className="flex items-end justify-between text-[10px] mb-1">
+                        <p className="font-bold text-foreground truncate">
+                          ₹{goal.savedAmount.toLocaleString("en-IN")} <span className="text-muted-foreground font-medium text-[9px]">/ ₹{goal.targetAmount.toLocaleString("en-IN")}</span>
+                        </p>
+                        <span className="font-bold text-primary text-[9px]">{progress.toFixed(0)}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-primary via-accentPink to-accentTeal transition-all duration-300" style={{ width: `${progress}%` }} />
+                      </div>
+                    </div>
+
+                    {/* Status & Actions */}
+                    <div className="flex items-center justify-between md:justify-end gap-3 shrink-0 mt-2 md:mt-0">
+                      
+                      {/* Pacing Advice Alert (Small icon only) */}
+                      <div className={`p-1.5 rounded-md border flex items-center justify-center shrink-0 ${
+                        pacing.status === "completed" 
+                          ? "bg-success/5 border-success/15 text-success"
+                          : pacing.status === "overdue"
+                            ? "bg-danger/5 border-danger/10 text-danger animate-pulse"
+                            : "bg-slate-50 dark:bg-slate-900/40 border-border text-primary"
+                      }`} title={pacing.message}>
+                        {pacing.status === "overdue" ? (
+                          <AlertTriangle className="h-3.5 w-3.5" />
+                        ) : pacing.status === "completed" ? (
+                          <Check className="h-3.5 w-3.5" />
+                        ) : (
+                          <TrendingUp className="h-3.5 w-3.5" />
+                        )}
                       </div>
 
-                      {/* Card actions */}
-                      <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                      <div className="flex items-center gap-1 xl:opacity-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex-wrap justify-end">
+                        <button
+                          onClick={() => handleOpenContributeModal(goal, "withdraw")}
+                          disabled={goal.savedAmount <= 0}
+                          className="p-1.5 rounded text-muted-foreground hover:bg-secondary hover:text-danger transition-all cursor-pointer disabled:opacity-50"
+                          title="Withdraw Funds"
+                        >
+                          <MinusCircle className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleOpenContributeModal(goal, "deposit")}
+                          disabled={progress >= 100}
+                          className="p-1.5 rounded text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all cursor-pointer disabled:opacity-50"
+                          title="Add Savings"
+                        >
+                          <PlusCircle className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={() => setActiveHistoryGoalId(isHistoryOpen ? null : goal._id)}
+                          className={`p-1.5 rounded transition-all cursor-pointer ${isHistoryOpen ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary hover:text-foreground"}`}
+                          title="Show History"
+                        >
+                          <History className="h-3.5 w-3.5" />
+                        </button>
+                        
+                        <div className="hidden md:block h-4 w-px bg-border mx-1" />
+                        
                         <button
                           onClick={() => handleOpenEditModal(goal)}
-                          className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"
+                          className="p-1.5 rounded text-muted-foreground hover:bg-secondary hover:text-primary transition-all cursor-pointer"
                           title="Edit Goal"
                         >
-                          <Edit2 className="h-3.5 w-3.5" />
+                          <Edit2 className="h-3 w-3" />
                         </button>
                         <button
                           onClick={() => handleDeleteGoal(goal._id, goal.title)}
-                          className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all cursor-pointer"
+                          className="p-1.5 rounded text-muted-foreground hover:bg-danger/10 hover:text-danger transition-all cursor-pointer"
                           title="Delete Goal"
                         >
-                          <Trash2 className="h-3.5 w-3.5" />
+                          <Trash2 className="h-3 w-3" />
                         </button>
                       </div>
                     </div>
-
-                    {/* Progress details */}
-                    <div className="mt-3 space-y-2">
-                      <div className="flex items-end justify-between text-xs">
-                        <div>
-                          <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Fund allocation</span>
-                          <p className="font-black text-foreground mt-0.5">
-                            ₹{goal.savedAmount.toLocaleString("en-IN")} / <span className="text-muted-foreground text-[10px]">₹{goal.targetAmount.toLocaleString("en-IN")}</span>
-                          </p>
-                        </div>
-                        <span className="font-extrabold text-primary text-sm bg-primary/5 px-2 py-0.5 rounded-md border border-primary/10">
-                          {progress.toFixed(0)}%
-                        </span>
-                      </div>
-                      
-                      {/* Progress Bar */}
-                      <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-gradient-to-r from-primary via-accentPink to-accentTeal transition-all duration-300"
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Pacing Advice Alert */}
-                    <div className={`mt-3 p-2 rounded-xl border flex items-start gap-2 ${
-                      pacing.status === "completed" 
-                        ? "bg-success/5 border-success/15 text-success"
-                        : pacing.status === "overdue"
-                          ? "bg-danger/5 border-danger/10 text-danger animate-pulse"
-                          : "bg-slate-50 dark:bg-slate-900/40 border-border text-muted-foreground"
-                    }`}>
-                      {pacing.status === "overdue" ? (
-                        <AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-danger shrink-0" />
-                      ) : pacing.status === "completed" ? (
-                        <Check className="h-3.5 w-3.5 mt-0.5 text-success shrink-0" />
-                      ) : (
-                        <TrendingUp className="h-3.5 w-3.5 mt-0.5 text-primary shrink-0" />
-                      )}
-                      <p className="text-[10px] font-semibold leading-relaxed">{pacing.message}</p>
-                    </div>
-
-                  </div>
-
-                  {/* Dynamic Action Buttons on card */}
-                  <div className="mt-5 pt-4 border-t border-border/50 flex items-center justify-between gap-3">
-                    <button
-                      onClick={() => handleOpenContributeModal(goal, "withdraw")}
-                      disabled={goal.savedAmount <= 0}
-                      className="flex-1 py-1.5 rounded-lg border border-border bg-card text-[11px] font-bold text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all flex items-center justify-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      <MinusCircle className="h-3.5 w-3.5" />
-                      Withdraw
-                    </button>
-                    <button
-                      onClick={() => handleOpenContributeModal(goal, "deposit")}
-                      disabled={progress >= 100}
-                      className="flex-1 py-1.5 rounded-lg bg-primary text-white text-[11px] font-bold hover:bg-primary-600 transition-all flex items-center justify-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      <PlusCircle className="h-3.5 w-3.5" />
-                      Add Savings
-                    </button>
                   </div>
 
                   {/* Expand Timeline Feed */}
-                  <div className="mt-3.5">
-                    <button
-                      onClick={() => setActiveHistoryGoalId(isHistoryOpen ? null : goal._id)}
-                      className="w-full py-1 rounded bg-secondary/40 text-[9px] font-bold text-muted-foreground hover:text-foreground transition-all flex items-center justify-center gap-1 cursor-pointer"
-                    >
-                      <History className="h-3 w-3" />
-                      {isHistoryOpen ? "Hide Contribution History" : "Show Contribution History"}
-                    </button>
-
-                    {/* Timeline logs */}
-                    {isHistoryOpen && (
-                      <div className="mt-3 space-y-2 max-h-[140px] overflow-y-auto pr-1 border border-border/40 rounded-lg p-2.5 bg-slate-50/20 dark:bg-slate-900/10">
+                  {isHistoryOpen && (
+                    <div className="mt-3 pt-3 border-t border-border/50">
+                      <div className="space-y-2 max-h-[140px] overflow-y-auto pr-1">
                         {goal.contributions && goal.contributions.length > 0 ? (
                           goal.contributions.map((c, idx) => (
                             <div key={idx} className="flex justify-between items-start gap-1 text-[10px] border-b border-border/30 pb-1.5 last:border-b-0 last:pb-0">
@@ -501,9 +481,8 @@ export default function GoalsPage() {
                           <p className="text-[9px] text-muted-foreground/60 italic text-center py-2">No timeline contributions logged.</p>
                         )}
                       </div>
-                    )}
-                  </div>
-
+                    </div>
+                  )}
                 </div>
               );
             })}
