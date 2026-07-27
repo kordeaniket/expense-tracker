@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import DashboardShell from "@/components/shared/DashboardShell";
-import { MoreVertical, Wallet, TrendingUp, PiggyBank, Target, ArrowUpRight, ArrowDownRight, Filter, ChevronDown, ListFilter, Play, Sparkles, Loader2 } from "lucide-react";
+import { MoreVertical, Wallet, TrendingUp, PiggyBank, Target, ArrowUpRight, ArrowDownRight, Filter, ChevronDown, ListFilter, Play, Sparkles } from "lucide-react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -78,7 +78,7 @@ const fetcher = async (urls: string[]) => {
 };
 
 export default function DashboardPage() {
-  const { data, isLoading } = useSWR(
+  const { data } = useSWR(
     [
       "/api/expenses",
       "/api/income",
@@ -100,16 +100,6 @@ export default function DashboardPage() {
   const goals: GoalData[] = data?.[4]?.goals || [];
   const subscriptions: SubscriptionData[] = data?.[5]?.subscriptions || [];
 
-  if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#08070d]">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="animate-spin h-8 w-8 text-primary" />
-          <p className="text-xs text-muted-foreground font-semibold">Loading dashboard summary...</p>
-        </div>
-      </div>
-    );
-  }
 
   // Aggregate Calculations
   const totalIncome = incomes.reduce((sum, inc) => sum + inc.amount, 0);
