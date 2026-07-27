@@ -375,7 +375,7 @@ export default function RetailerSalesEntryMain() {
                 onChange={(e) => setCustomerName(e.target.value)}
                 icon={User}
               />
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Input 
                   placeholder="Phone" 
                   value={customerPhone}
@@ -469,7 +469,7 @@ export default function RetailerSalesEntryMain() {
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">
                   Payment Mode
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {paymentModes.map(pm => (
                     <button
                       key={pm._id}

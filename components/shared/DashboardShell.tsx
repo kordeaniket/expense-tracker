@@ -95,7 +95,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   ];
 
   const toolsItems: SidebarItem[] = [
-    { label: "Sales Entry", href: "/retailer-sales", icon: ShoppingCart },
+    // { label: "Sales Entry", href: "/retailer-sales", icon: ShoppingCart },
     // { label: "Insight", href: "/insight", icon: Lightbulb },
     // { label: "Analytics", href: "/analytics", icon: BarChart3 },
   ];
