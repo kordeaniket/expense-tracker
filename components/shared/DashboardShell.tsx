@@ -253,12 +253,12 @@ export default function DashboardShell({ children }: { children: React.ReactNode
                 <nav className="space-y-1 mt-2">{renderSidebarLinks(masterItems)}</nav>
               </div>
 
-              <div className="space-y-1">
+              {/* <div className="space-y-1">
                 <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
                   Tools
                 </h4>
                 <nav className="space-y-1 mt-2">{renderSidebarLinks(toolsItems)}</nav>
-              </div>
+              </div> */}
 
               <div className="space-y-1">
                 <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
