@@ -197,7 +197,7 @@ export default function VisitedPlacesPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -215,9 +215,9 @@ export default function VisitedPlacesPage() {
         </div>
 
         {/* Global Progress metric cards */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {/* Total Places */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <Globe className="h-5 w-5" />
             </div>
@@ -229,7 +229,7 @@ export default function VisitedPlacesPage() {
           </div>
 
           {/* Average Rating */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
               <Star className="h-5 w-5 fill-current" />
             </div>
@@ -255,7 +255,7 @@ export default function VisitedPlacesPage() {
             No places logged yet. Click &quot;Add Place&quot; above to add your first destination.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {places.map((place) => {
               return (
                 <div
@@ -296,7 +296,7 @@ export default function VisitedPlacesPage() {
                     </div>
                   </div>
 
-                  <div className="p-5 flex-1 flex flex-col">
+                  <div className="p-4 flex-1 flex flex-col">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <h3 className="font-bold text-foreground text-sm tracking-tight">{place.name}</h3>
@@ -323,7 +323,7 @@ export default function VisitedPlacesPage() {
                     </div>
 
                     {place.notes && (
-                      <div className="mt-4 pt-4 border-t border-border/50 text-[11px] text-muted-foreground italic flex-1">
+                      <div className="mt-3 pt-3 border-t border-border/50 text-[11px] text-muted-foreground italic flex-1">
                         "{place.notes}"
                       </div>
                     )}

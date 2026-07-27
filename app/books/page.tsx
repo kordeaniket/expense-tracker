@@ -221,7 +221,7 @@ export default function BooksPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -242,7 +242,7 @@ export default function BooksPage() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
+          <div className="p-3 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
             <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
               <BookOpen className="h-5 w-5" />
             </div>
@@ -251,7 +251,7 @@ export default function BooksPage() {
               <h3 className="text-lg font-bold text-foreground mt-0.5">{stats.total}</h3>
             </div>
           </div>
-          <div className="p-4 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
+          <div className="p-3 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
             <div className="h-10 w-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0">
               <Clock className="h-5 w-5" />
             </div>
@@ -260,7 +260,7 @@ export default function BooksPage() {
               <h3 className="text-lg font-bold text-foreground mt-0.5">{stats.reading}</h3>
             </div>
           </div>
-          <div className="p-4 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
+          <div className="p-3 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
             <div className="h-10 w-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">
               <CheckCircle className="h-5 w-5" />
             </div>
@@ -269,7 +269,7 @@ export default function BooksPage() {
               <h3 className="text-lg font-bold text-foreground mt-0.5">{stats.completed}</h3>
             </div>
           </div>
-          <div className="p-4 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
+          <div className="p-3 rounded-2xl border border-border bg-card shadow-soft flex items-center gap-3.5">
             <div className="h-10 w-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0">
               <Bookmark className="h-5 w-5" />
             </div>
@@ -281,7 +281,7 @@ export default function BooksPage() {
         </div>
 
         {/* Filter and Search Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card p-4 rounded-2xl border border-border">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card p-3 rounded-2xl border border-border">
           <div className="flex gap-1 overflow-x-auto pb-1 md:pb-0">
             {(["all", "to-read", "reading", "completed"] as const).map((tab) => (
               <button
@@ -324,12 +324,12 @@ export default function BooksPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredBooks.map((book) => (
               <div
                 key={book._id}
                 onClick={() => handleOpenDetailModal(book)}
-                className="group cursor-pointer flex flex-col justify-between p-5 rounded-2xl border border-border bg-card shadow-soft hover:shadow-md hover:border-primary/30 transition-all duration-200 relative overflow-hidden"
+                className="group cursor-pointer flex flex-col justify-between p-4 rounded-2xl border border-border bg-card shadow-soft hover:shadow-md hover:border-primary/30 transition-all duration-200 relative overflow-hidden"
               >
                 {/* Status indicator bar */}
                 <div

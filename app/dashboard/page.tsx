@@ -249,13 +249,13 @@ export default function DashboardPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         
         {/* TOP ROW: METRIC CARDS */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           
           {/* Account Balance Card */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative">
             <div className="flex items-center justify-between">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <Wallet className="h-5 w-5" />
@@ -278,7 +278,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Monthly Expenses Card */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative">
             <div className="flex items-center justify-between">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-light text-danger">
                 <TrendingUp className="h-5 w-5" />
@@ -310,7 +310,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Total Investment Card */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative flex flex-col justify-between">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative flex flex-col justify-between">
             <div className="flex items-center justify-between">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-info-light text-info">
                 <PiggyBank className="h-5 w-5" />
@@ -333,7 +333,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Savings Goal Card */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative flex items-center gap-4">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative flex items-center gap-3">
             {/* Progress Circular Doughnut */}
             <div className="relative flex items-center justify-center shrink-0">
               <svg className="w-18 h-18 transform -rotate-90" viewBox="0 0 36 36">
@@ -384,10 +384,10 @@ export default function DashboardPage() {
         </div>
 
         {/* MIDDLE ROW: CHARTS */}
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           
           {/* Monthly Expenses Rounded Bar Chart */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card lg:col-span-7 flex flex-col">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-7 flex flex-col">
             <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
               <div>
                 <h3 className="text-[15px] font-bold text-foreground flex items-center gap-2">
@@ -441,7 +441,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Top Category Doughnut Chart */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card lg:col-span-5 flex flex-col justify-between">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-5 flex flex-col justify-between">
             <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
               <h3 className="text-[15px] font-bold text-foreground">
                 Top Categories
@@ -499,10 +499,10 @@ export default function DashboardPage() {
         </div>
 
         {/* BOTTOM ROW: TABLES & LISTS */}
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           
           {/* Recent Expenses Table */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card lg:col-span-8 flex flex-col">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-8 flex flex-col">
             <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
               <h3 className="text-[15px] font-bold text-foreground">
                 Recent Expenses
@@ -517,23 +517,23 @@ export default function DashboardPage() {
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
                     <tr className="border-b border-border text-muted-foreground font-semibold">
-                      <th className="pb-3 pt-1">S.N</th>
-                      <th className="pb-3 pt-1">Amount</th>
-                      <th className="pb-3 pt-1">Category</th>
-                      <th className="pb-3 pt-1">Sub Category</th>
-                      <th className="pb-3 pt-1">Date</th>
-                      <th className="pb-3 pt-1">Mode</th>
+                      <th className="pb-2 pt-1">S.N</th>
+                      <th className="pb-2 pt-1">Amount</th>
+                      <th className="pb-2 pt-1">Category</th>
+                      <th className="pb-2 pt-1">Sub Category</th>
+                      <th className="pb-2 pt-1">Date</th>
+                      <th className="pb-2 pt-1">Mode</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border/60">
                     {recentExpenses.map((expense) => (
                       <tr key={expense.sn} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors">
-                        <td className="py-3.5 font-medium text-muted-foreground">{expense.sn}.</td>
-                        <td className="py-3.5 font-bold text-foreground">{expense.amount}</td>
-                        <td className="py-3.5 font-medium text-foreground">{expense.category}</td>
-                        <td className="py-3.5 text-muted-foreground font-medium">{expense.subCategory}</td>
-                        <td className="py-3.5 text-muted-foreground font-medium">{expense.date}</td>
-                        <td className="py-3.5 font-bold">
+                        <td className="py-2.5 font-medium text-muted-foreground">{expense.sn}.</td>
+                        <td className="py-2.5 font-bold text-foreground">{expense.amount}</td>
+                        <td className="py-2.5 font-medium text-foreground">{expense.category}</td>
+                        <td className="py-2.5 text-muted-foreground font-medium">{expense.subCategory}</td>
+                        <td className="py-2.5 text-muted-foreground font-medium">{expense.date}</td>
+                        <td className="py-2.5 font-bold">
                           <span className="inline-flex px-2 py-0.5 rounded-md text-[10px] tracking-wide uppercase bg-secondary text-muted-foreground font-bold border border-border">
                             {expense.mode}
                           </span>
@@ -551,7 +551,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Bill & Subscription List */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card lg:col-span-4 flex flex-col justify-between">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-4 flex flex-col justify-between">
             <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
               <h3 className="text-[15px] font-bold text-foreground">
                 Bill & Subscription

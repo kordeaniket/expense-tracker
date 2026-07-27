@@ -157,7 +157,7 @@ export default function PaymentModesPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -183,13 +183,13 @@ export default function PaymentModesPage() {
             No payment modes available. Click &quot;Add Payment Mode&quot; above to create one.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {paymentModes.map((mode) => {
               const Icon = TYPE_ICONS[mode.type] || Wallet;
               return (
                 <div
                   key={mode._id}
-                  className="group relative rounded-2xl border border-border bg-card p-6 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[160px]"
+                  className="group relative rounded-2xl border border-border bg-card p-4 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden min-h-[160px]"
                 >
                   {/* Decorative Card Stripe */}
                   <div 
@@ -204,7 +204,7 @@ export default function PaymentModesPage() {
                   />
 
                   {/* Card content */}
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-2.5">
                         <div 

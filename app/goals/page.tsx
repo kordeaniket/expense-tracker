@@ -278,7 +278,7 @@ export default function GoalsPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -296,9 +296,9 @@ export default function GoalsPage() {
         </div>
 
         {/* Global Progress metric cards */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Total Target */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <Target className="h-5 w-5" />
             </div>
@@ -310,7 +310,7 @@ export default function GoalsPage() {
           </div>
 
           {/* Total Saved */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <PiggyBank className="h-5 w-5" />
             </div>
@@ -322,7 +322,7 @@ export default function GoalsPage() {
           </div>
 
           {/* Aggregate Completion */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden flex flex-col justify-between">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden flex flex-col justify-between">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Combined Progress</span>
               <span className="text-[10px] font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10">
@@ -351,7 +351,7 @@ export default function GoalsPage() {
             No savings goals logged yet. Click &quot;Create Goal&quot; above to set up your first milestone target.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {goals.map((goal) => {
               const GoalIcon = ICON_MAP[goal.icon || "Target"] || Target;
               const progress = goal.targetAmount > 0 ? Math.min((goal.savedAmount / goal.targetAmount) * 100, 100) : 0;
@@ -361,7 +361,7 @@ export default function GoalsPage() {
               return (
                 <div
                   key={goal._id}
-                  className="group relative rounded-2xl border border-border bg-card p-5 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                  className="group relative rounded-2xl border border-border bg-card p-4 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
                 >
                   <div>
                     {/* Header */}
@@ -405,7 +405,7 @@ export default function GoalsPage() {
                     </div>
 
                     {/* Progress details */}
-                    <div className="mt-5 space-y-2">
+                    <div className="mt-3 space-y-2">
                       <div className="flex items-end justify-between text-xs">
                         <div>
                           <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Fund allocation</span>
@@ -428,7 +428,7 @@ export default function GoalsPage() {
                     </div>
 
                     {/* Pacing Advice Alert */}
-                    <div className={`mt-4 p-2.5 rounded-xl border flex items-start gap-2 ${
+                    <div className={`mt-3 p-2 rounded-xl border flex items-start gap-2 ${
                       pacing.status === "completed" 
                         ? "bg-success/5 border-success/15 text-success"
                         : pacing.status === "overdue"

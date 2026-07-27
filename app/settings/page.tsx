@@ -323,7 +323,7 @@ export default function SettingsPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         <div>
           <h2 className="text-xl font-bold text-foreground tracking-tight">Settings</h2>
           <p className="text-xs text-muted-foreground">
@@ -339,10 +339,10 @@ export default function SettingsPage() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
             
             {/* Left: Summary Profile Card */}
-            <div className="lg:col-span-4 rounded-md border border-border bg-card p-6 shadow-card flex flex-col items-center text-center h-fit">
+            <div className="lg:col-span-4 rounded-md border border-border bg-card p-4 shadow-card flex flex-col items-center text-center h-fit">
               <div className="relative h-28 w-28 rounded-full border-4 border-primary/20 overflow-hidden flex items-center justify-center text-3xl font-extrabold text-primary bg-primary-50">
                 {avatarPreview ? (
                   <img
@@ -366,7 +366,7 @@ export default function SettingsPage() {
               </div>
               
               {/* Navigation Items (Left sidebar style tabs) */}
-              <div className="w-full mt-6 space-y-1.5 border-t border-border/50 pt-6">
+              <div className="w-full mt-6 space-y-1.5 border-t border-border/50 pt-4">
                 <button
                   onClick={() => setActiveTab("profile")}
                   className={`flex w-full items-center gap-3 px-4 py-2.5 rounded-md text-sm font-semibold transition-all ${
@@ -415,11 +415,11 @@ export default function SettingsPage() {
             </div>
 
             {/* Right: Detailed Edit Form */}
-            <div className="lg:col-span-8 rounded-md border border-border bg-card p-6 shadow-card min-h-[400px]">
+            <div className="lg:col-span-8 rounded-md border border-border bg-card p-4 shadow-card min-h-[400px]">
               
               {/* TAB 1: PROFILE INFO */}
               {activeTab === "profile" && (
-                <form onSubmit={handleSubmitProfile(onProfileSubmit)} className="space-y-6">
+                <form onSubmit={handleSubmitProfile(onProfileSubmit)} className="space-y-4">
                   <div>
                     <h3 className="text-base font-bold text-foreground">Profile Information</h3>
                     <p className="text-xs text-muted-foreground">Update your personal account credentials.</p>
@@ -509,7 +509,7 @@ export default function SettingsPage() {
 
               {/* TAB 2: PREFERENCES */}
               {activeTab === "preferences" && (
-                <form onSubmit={handleSubmitProfile(onProfileSubmit)} className="space-y-6">
+                <form onSubmit={handleSubmitProfile(onProfileSubmit)} className="space-y-4">
                   <div>
                     <h3 className="text-base font-bold text-foreground">Preferences</h3>
                     <p className="text-xs text-muted-foreground">Manage your settings theme, default currency, and locations.</p>
@@ -597,7 +597,7 @@ export default function SettingsPage() {
 
               {/* TAB 3: CATEGORY MASTER */}
               {activeTab === "categories" && (
-                <div className="space-y-6">
+                <div className="space-y-4">
                   <div>
                     <h3 className="text-base font-bold text-foreground">Category & Sub Category Master</h3>
                     <p className="text-xs text-muted-foreground">Manage your custom categories and subcategories mapping.</p>

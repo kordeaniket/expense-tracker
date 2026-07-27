@@ -336,7 +336,7 @@ export default function SubscriptionsPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -354,9 +354,9 @@ export default function SubscriptionsPage() {
         </div>
 
         {/* Global Summary Cards */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Monthly Commitment */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <CalendarDays className="h-5 w-5" />
             </div>
@@ -368,7 +368,7 @@ export default function SubscriptionsPage() {
           </div>
 
           {/* Active Subscriptions */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <CheckCircle className="h-5 w-5" />
             </div>
@@ -380,7 +380,7 @@ export default function SubscriptionsPage() {
           </div>
 
           {/* Urgent Deadlines */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
               <AlertTriangle className="h-5 w-5" />
             </div>
@@ -402,7 +402,7 @@ export default function SubscriptionsPage() {
             No active subscription profiles registered. Click &quot;Add Subscription&quot; to log your first bill.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {subscriptions.map((sub) => {
               const dueInfo = getDaysRemainingText(sub.nextDueDate);
               const progressLetter = sub.name.charAt(0).toUpperCase() || "?";
@@ -413,7 +413,7 @@ export default function SubscriptionsPage() {
               return (
                 <div
                   key={sub._id}
-                  className={`group relative rounded-2xl border bg-card p-5 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+                  className={`group relative rounded-2xl border bg-card p-4 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden ${
                     sub.status !== "active" ? "border-slate-200 dark:border-slate-800 opacity-75" : "border-border"
                   }`}
                 >

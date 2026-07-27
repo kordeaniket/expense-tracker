@@ -196,7 +196,7 @@ export default function ExpensesPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
 
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -214,7 +214,7 @@ export default function ExpensesPage() {
         </div>
 
         {/* Filters and List */}
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-card space-y-4">
+        <div className="rounded-2xl border border-border bg-card p-4 shadow-card space-y-4">
           <div className="flex items-center justify-between border-b border-border/50 pb-4">
             <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
               Expense History
@@ -254,14 +254,14 @@ export default function ExpensesPage() {
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-border text-muted-foreground font-semibold">
-                    <th className="pb-3 pt-1">S.N</th>
-                    <th className="pb-3 pt-1">Date</th>
-                    <th className="pb-3 pt-1">Category</th>
-                    <th className="pb-3 pt-1">Sub Category</th>
-                    <th className="pb-3 pt-1">Amount</th>
-                    <th className="pb-3 pt-1">Mode</th>
-                    <th className="pb-3 pt-1">Note</th>
-                    <th className="pb-3 pt-1 text-right">Actions</th>
+                    <th className="pb-2 pt-1">S.N</th>
+                    <th className="pb-2 pt-1">Date</th>
+                    <th className="pb-2 pt-1">Category</th>
+                    <th className="pb-2 pt-1">Sub Category</th>
+                    <th className="pb-2 pt-1">Amount</th>
+                    <th className="pb-2 pt-1">Mode</th>
+                    <th className="pb-2 pt-1">Note</th>
+                    <th className="pb-2 pt-1 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
@@ -269,15 +269,15 @@ export default function ExpensesPage() {
                     const matchedCat = categories.find(c => c.name === exp.category);
                     return (
                       <tr key={exp._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors">
-                        <td className="py-3.5 font-medium text-muted-foreground">{index + 1}.</td>
-                        <td className="py-3.5 font-medium text-muted-foreground">
+                        <td className="py-2 font-medium text-muted-foreground">{index + 1}.</td>
+                        <td className="py-2 font-medium text-muted-foreground">
                           {new Date(exp.date).toLocaleDateString("en-IN", {
                             day: "numeric",
                             month: "short",
                             year: "numeric",
                           })}
                         </td>
-                        <td className="py-3.5 font-bold">
+                        <td className="py-2 font-bold">
                           <span className="flex items-center gap-1.5">
                             <span
                               className="h-2 w-2 rounded-full shrink-0"
@@ -286,7 +286,7 @@ export default function ExpensesPage() {
                             {exp.category}
                           </span>
                         </td>
-                        <td className="py-3.5 text-muted-foreground font-semibold">
+                        <td className="py-2 text-muted-foreground font-semibold">
                           {exp.subCategory ? (
                             <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md bg-secondary text-[10px]">
                               <Tag className="h-2.5 w-2.5" />
@@ -296,8 +296,8 @@ export default function ExpensesPage() {
                             <span className="text-[10px] italic opacity-60">-</span>
                           )}
                         </td>
-                        <td className="py-3.5 font-extrabold text-foreground text-sm">₹{exp.amount.toFixed(2)}</td>
-                        <td className="py-3.5 font-bold">
+                        <td className="py-2 font-extrabold text-foreground text-sm">₹{exp.amount.toFixed(2)}</td>
+                        <td className="py-2 font-bold">
                           {(() => {
                             const matchedMode = paymentModes.find((pm) => pm.name.toLowerCase() === exp.mode.toLowerCase());
                             const color = matchedMode?.color || "#8A8D9F";
@@ -315,10 +315,10 @@ export default function ExpensesPage() {
                             );
                           })()}
                         </td>
-                        <td className="py-3.5 text-muted-foreground font-medium max-w-[150px] truncate" title={exp.note}>
+                        <td className="py-2 text-muted-foreground font-medium max-w-[150px] truncate" title={exp.note}>
                           {exp.note || <span className="opacity-55 italic">None</span>}
                         </td>
-                        <td className="py-3.5 text-right">
+                        <td className="py-2 text-right">
                           <button
                             onClick={() => handleDeleteExpense(exp._id)}
                             className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-danger hover:bg-danger/5 transition-all"

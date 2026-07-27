@@ -305,7 +305,7 @@ export default function DailyPlansPage() {
       <button
         key={`day-${day}`}
         onClick={() => setSelectedDate(cellDate)}
-        className={`h-14 p-1.5 border border-border/40 rounded-lg flex flex-col justify-between items-start transition-all relative hover:bg-secondary cursor-pointer ${isSelected
+        className={`h-12 p-1 border border-border/40 rounded-lg flex flex-col justify-between items-start transition-all relative hover:bg-secondary cursor-pointer ${isSelected
             ? "ring-2 ring-primary bg-primary/5 border-primary"
             : isToday
               ? "border-primary/50 bg-secondary/30"
@@ -341,7 +341,7 @@ export default function DailyPlansPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
 
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -359,9 +359,9 @@ export default function DailyPlansPage() {
         </div>
 
         {/* Statistics Metric cards */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Today Progress */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden flex flex-col justify-between">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden flex flex-col justify-between">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Today&apos;s Checklist Progress</span>
               <span className="text-[10px] font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10">
@@ -380,7 +380,7 @@ export default function DailyPlansPage() {
           </div>
 
           {/* Habit Streaks */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
               <Award className="h-5 w-5" />
             </div>
@@ -392,7 +392,7 @@ export default function DailyPlansPage() {
           </div>
 
           {/* Lifetime Completions */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <CheckCircle2 className="h-5 w-5" />
             </div>
@@ -405,10 +405,10 @@ export default function DailyPlansPage() {
         </div>
 
         {/* Dashboard Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
           {/* Calendar Segment (Left/8 Columns) */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card lg:col-span-7 flex flex-col justify-between">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-7 flex flex-col justify-between">
             <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
               <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
                 <Calendar className="h-4.5 w-4.5 text-primary" />
@@ -452,7 +452,7 @@ export default function DailyPlansPage() {
           </div>
 
           {/* Focused Day Checklist Inspector (Right/5 Columns) */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card lg:col-span-5 flex flex-col justify-between">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card lg:col-span-5 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
                 <div>
@@ -488,7 +488,7 @@ export default function DailyPlansPage() {
                       <div
                         key={plan._id}
                         onClick={() => handleToggleCompletion(plan)}
-                        className={`flex items-start justify-between p-3 border rounded-xl hover:bg-slate-50/60 dark:hover:bg-slate-900/10 transition-all cursor-pointer ${isCompleted
+                        className={`flex items-start justify-between p-2 border rounded-xl hover:bg-slate-50/60 dark:hover:bg-slate-900/10 transition-all cursor-pointer ${isCompleted
                             ? "border-success/30 bg-success/[0.02]"
                             : "border-border bg-card"
                           }`}

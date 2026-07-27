@@ -127,7 +127,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   return (
     <div className="min-h-screen bg-slate-50/50 dark:bg-[#08070d] text-foreground flex">
       {/* SIDEBAR FOR DESKTOP */}
-      <aside className="hidden lg:flex flex-col w-64 bg-card border-r border-border p-6 fixed h-screen">
+      <aside className="hidden lg:flex flex-col w-64 bg-card border-r border-border p-4 fixed h-screen">
         {/* Logo */}
         <div className="flex items-center gap-2 mb-8 shrink-0">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-primary to-accentPink flex items-center justify-center text-white font-bold text-lg">
@@ -141,7 +141,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         {/* Scrollable Container */}
         <div className="flex-1 overflow-y-auto pr-2 pb-4 flex flex-col scrollbar-thin">
           {/* Navigation Categories */}
-          <div className="flex-1 space-y-6">
+          <div className="flex-1 space-y-4">
             {/* General Section */}
             <div className="space-y-1">
               <h4 className="px-4 text-[11px] font-bold text-muted-foreground/60 uppercase tracking-widest">
@@ -185,7 +185,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           </div>
 
           {/* Upgrade Card */}
-          <div className="mt-8 shrink-0 p-4 rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-primary/10 flex flex-col items-center text-center relative overflow-hidden">
+          <div className="mt-4 shrink-0 p-3 rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/5 to-primary/10 flex flex-col items-center text-center relative overflow-hidden">
             <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/10 blur-xl" />
             <Gem className="h-6 w-6 text-primary mb-2" />
             <h5 className="font-bold text-sm text-foreground">Upgrade to PRO</h5>
@@ -268,7 +268,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       {/* MAIN CONTAINER */}
       <div className="flex-1 lg:pl-64 flex flex-col">
         {/* TOP HEADER */}
-        <header className="sticky top-0 z-40 bg-slate-50/80 dark:bg-[#08070d]/80 backdrop-blur-md border-b border-border/50 px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <header className="sticky top-0 z-40 bg-slate-50/80 dark:bg-[#08070d]/80 backdrop-blur-md border-b border-border/50 px-4 sm:px-5 lg:px-6 py-2.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 
           {/* Greeting */}
           <div className="flex items-center gap-3">
@@ -342,7 +342,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         </header>
 
         {/* CONTENT ZONE */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
+        <main className="flex-1 p-3.5 sm:p-4 lg:p-5 space-y-4">
           {children}
         </main>
         {showLogoutConfirm && (

@@ -201,7 +201,7 @@ export default function CategoriesPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -227,11 +227,11 @@ export default function CategoriesPage() {
             No categories available. Click &quot;Add Category&quot; above to create one.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories.map((cat) => (
               <div
                 key={cat._id}
-                className="group relative rounded-2xl border border-border bg-card p-5 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                className="group relative rounded-2xl border border-border bg-card p-4 shadow-card hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
                 style={{ borderTop: `4px solid ${cat.color || "#6C5CE7"}` }}
               >
                 {/* Visual Accent Background */}
@@ -279,7 +279,7 @@ export default function CategoriesPage() {
                   </div>
 
                   {/* Divider */}
-                  <div className="my-4 border-b border-border/50" />
+                  <div className="my-3 border-b border-border/50" />
 
                   {/* Subcategories */}
                   <div className="space-y-2">
@@ -292,7 +292,7 @@ export default function CategoriesPage() {
                         {cat.subcategories.map((sub, idx) => (
                           <span
                             key={idx}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-50 dark:bg-slate-900/35 border border-border text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-slate-50 dark:bg-slate-900/35 border border-border text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
                           >
                             <Tag className="h-2.5 w-2.5 text-muted-foreground/60" />
                             {sub}

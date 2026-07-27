@@ -219,7 +219,7 @@ export default function IncomeTrackerPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -237,9 +237,9 @@ export default function IncomeTrackerPage() {
         </div>
 
         {/* Metrics Row */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Total Lifetime Income */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <TrendingUp className="h-5 w-5" />
             </div>
@@ -251,7 +251,7 @@ export default function IncomeTrackerPage() {
           </div>
 
           {/* Current Month Income */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <ArrowUpRight className="h-5 w-5" />
             </div>
@@ -263,7 +263,7 @@ export default function IncomeTrackerPage() {
           </div>
 
           {/* Aggregate Salary Earning */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-card relative overflow-hidden">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-info/10 text-info">
               <Briefcase className="h-5 w-5" />
             </div>
@@ -276,7 +276,7 @@ export default function IncomeTrackerPage() {
         </div>
 
         {/* Income History List */}
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-card space-y-4">
+        <div className="rounded-2xl border border-border bg-card p-4 shadow-card space-y-4">
           <div className="border-b border-border/50 pb-4">
             <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
               Income Log
@@ -299,13 +299,13 @@ export default function IncomeTrackerPage() {
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-border text-muted-foreground font-semibold">
-                    <th className="pb-3 pt-1">S.N</th>
-                    <th className="pb-3 pt-1">Date</th>
-                    <th className="pb-3 pt-1">Category</th>
-                    <th className="pb-3 pt-1">Amount</th>
-                    <th className="pb-3 pt-1">Received In</th>
-                    <th className="pb-3 pt-1">Note</th>
-                    <th className="pb-3 pt-1 text-right">Actions</th>
+                    <th className="pb-2 pt-1">S.N</th>
+                    <th className="pb-2 pt-1">Date</th>
+                    <th className="pb-2 pt-1">Category</th>
+                    <th className="pb-2 pt-1">Amount</th>
+                    <th className="pb-2 pt-1">Received In</th>
+                    <th className="pb-2 pt-1">Note</th>
+                    <th className="pb-2 pt-1 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
@@ -316,15 +316,15 @@ export default function IncomeTrackerPage() {
                     
                     return (
                       <tr key={inc._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors">
-                        <td className="py-3.5 font-medium text-muted-foreground">{index + 1}.</td>
-                        <td className="py-3.5 font-medium text-muted-foreground">
+                        <td className="py-2 font-medium text-muted-foreground">{index + 1}.</td>
+                        <td className="py-2 font-medium text-muted-foreground">
                           {new Date(inc.date).toLocaleDateString("en-IN", {
                             day: "numeric",
                             month: "short",
                             year: "numeric",
                           })}
                         </td>
-                        <td className="py-3.5 font-bold">
+                        <td className="py-2 font-bold">
                           <span className="flex items-center gap-1.5">
                             <span
                               className="h-2 w-2 rounded-full shrink-0"
@@ -333,8 +333,8 @@ export default function IncomeTrackerPage() {
                             {inc.category}
                           </span>
                         </td>
-                        <td className="py-3.5 font-extrabold text-success text-sm">₹{inc.amount.toFixed(2)}</td>
-                        <td className="py-3.5 font-semibold">
+                        <td className="py-2 font-extrabold text-success text-sm">₹{inc.amount.toFixed(2)}</td>
+                        <td className="py-2 font-semibold">
                           {inc.mode ? (
                             <span
                               className="inline-flex px-2 py-0.5 rounded-md text-[10px] tracking-wide uppercase border font-bold"
@@ -350,10 +350,10 @@ export default function IncomeTrackerPage() {
                             <span className="text-[10px] text-muted-foreground/60 italic">-</span>
                           )}
                         </td>
-                        <td className="py-3.5 text-muted-foreground font-medium max-w-[200px] truncate" title={inc.note}>
+                        <td className="py-2 text-muted-foreground font-medium max-w-[200px] truncate" title={inc.note}>
                           {inc.note || <span className="opacity-55 italic">None</span>}
                         </td>
-                        <td className="py-3.5 text-right flex items-center justify-end gap-1.5">
+                        <td className="py-2 text-right flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => handleOpenEditModal(inc)}
                             className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"

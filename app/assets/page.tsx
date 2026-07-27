@@ -197,7 +197,7 @@ export default function AssetsPortfolioPage() {
 
   return (
     <DashboardShell>
-      <div className="space-y-6">
+      <div className="space-y-4">
         
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -215,9 +215,9 @@ export default function AssetsPortfolioPage() {
         </div>
 
         {/* Net Worth & Chart Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Net Worth Summary */}
-          <div className="lg:col-span-1 rounded-2xl border border-border bg-card p-6 shadow-card flex flex-col justify-between relative overflow-hidden">
+          <div className="lg:col-span-1 rounded-2xl border border-border bg-card p-4 shadow-card flex flex-col justify-between relative overflow-hidden">
             <div className="space-y-2">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <Landmark className="h-5 w-5" />
@@ -239,7 +239,7 @@ export default function AssetsPortfolioPage() {
           </div>
 
           {/* Allocation Recharts */}
-          <div className="lg:col-span-2 rounded-2xl border border-border bg-card p-6 shadow-card flex flex-col md:flex-row items-center gap-6">
+          <div className="lg:col-span-2 rounded-2xl border border-border bg-card p-4 shadow-card flex flex-col md:flex-row items-center gap-4">
             <div className="flex-1 w-full flex flex-col items-center justify-center">
               <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 self-start flex items-center gap-1.5">
                 <ChartIcon className="h-4 w-4 text-primary" />
@@ -305,7 +305,7 @@ export default function AssetsPortfolioPage() {
         </div>
 
         {/* Assets List */}
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-card space-y-4">
+        <div className="rounded-2xl border border-border bg-card p-4 shadow-card space-y-4">
           <div className="border-b border-border/50 pb-4">
             <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
               Individual Holdings
@@ -328,12 +328,12 @@ export default function AssetsPortfolioPage() {
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-border text-muted-foreground font-semibold">
-                    <th className="pb-3 pt-1">S.N</th>
-                    <th className="pb-3 pt-1">Asset Name</th>
-                    <th className="pb-3 pt-1">Category</th>
-                    <th className="pb-3 pt-1">Valuation / Amount</th>
-                    <th className="pb-3 pt-1">Description / Notes</th>
-                    <th className="pb-3 pt-1 text-right">Actions</th>
+                    <th className="pb-2 pt-1">S.N</th>
+                    <th className="pb-2 pt-1">Asset Name</th>
+                    <th className="pb-2 pt-1">Category</th>
+                    <th className="pb-2 pt-1">Valuation / Amount</th>
+                    <th className="pb-2 pt-1">Description / Notes</th>
+                    <th className="pb-2 pt-1 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
@@ -343,9 +343,9 @@ export default function AssetsPortfolioPage() {
                     
                     return (
                       <tr key={ast._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors">
-                        <td className="py-3.5 font-medium text-muted-foreground">{index + 1}.</td>
-                        <td className="py-3.5 font-bold text-foreground">{ast.name}</td>
-                        <td className="py-3.5 font-bold">
+                        <td className="py-2 font-medium text-muted-foreground">{index + 1}.</td>
+                        <td className="py-2 font-bold text-foreground">{ast.name}</td>
+                        <td className="py-2 font-bold">
                           <span className="flex items-center gap-1.5">
                             <span 
                               className="h-6 w-6 rounded-lg flex items-center justify-center text-white shrink-0"
@@ -356,11 +356,11 @@ export default function AssetsPortfolioPage() {
                             <span style={{ color: typeColor }}>{ast.type}</span>
                           </span>
                         </td>
-                        <td className="py-3.5 font-black text-foreground text-sm">₹{ast.amount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
-                        <td className="py-3.5 text-muted-foreground font-medium max-w-[250px] truncate" title={ast.note}>
+                        <td className="py-2 font-black text-foreground text-sm">₹{ast.amount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
+                        <td className="py-2 text-muted-foreground font-medium max-w-[250px] truncate" title={ast.note}>
                           {ast.note || <span className="opacity-55 italic">None</span>}
                         </td>
-                        <td className="py-3.5 text-right flex items-center justify-end gap-1.5">
+                        <td className="py-2 text-right flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => handleOpenEditModal(ast)}
                             className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-950/20 transition-all cursor-pointer"
