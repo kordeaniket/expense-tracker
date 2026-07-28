@@ -106,6 +106,12 @@ export default function DashboardShell({ children }: { children: React.ReactNode
     // { label: "Support", href: "/support", icon: Headphones },
   ];
 
+  const getPageTitle = () => {
+    const allItems = [...generalItems, ...masterItems, ...toolsItems, ...otherItems];
+    const item = allItems.find((i) => i.href === pathname);
+    return item ? item.label : "Expensify";
+  };
+
   const renderSidebarLinks = (items: SidebarItem[]) => {
     return items.map((item) => {
       const isActive = pathname === item.href;
@@ -286,62 +292,31 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       {/* MAIN CONTAINER */}
       <div className="flex-1 lg:pl-56 flex flex-col">
         {/* TOP HEADER */}
-        <header className="sticky top-0 z-40 bg-slate-50/80 dark:bg-[#08070d]/80 backdrop-blur-md border-b border-border/50 px-4 sm:px-5 lg:px-6 py-2.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-
-          {/* Greeting */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsMobileSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-xl border border-border bg-card text-muted-foreground hover:text-foreground"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-            <div>
-              <h2 className="text-xl font-bold text-foreground tracking-tight flex items-center gap-1.5">
-                Hi, {session?.user?.name?.split(" ")[0] || "Ananya"} 👋
-              </h2>
-              <p className="text-xs text-muted-foreground">
-                Track your all expense and transactions
-              </p>
-            </div>
-          </div>
-
-          {/* Middle & Right Header Actions */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1 sm:justify-end max-w-3xl">
-            {/* Clock */}
-            <div className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-card border border-border text-xs text-muted-foreground font-medium shrink-0" title="Current Local Time">
-              <Clock className="h-3.5 w-3.5 text-primary" />
-              <span>{timeStr || "Loading clock..."}</span>
-            </div>
-
-            {/* Search Input */}
-            <div className="relative flex-1 sm:max-w-xs">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search expenses, transaction, cards"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-xl border border-input bg-card pl-9 pr-4 py-2 text-xs outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-foreground"
-              />
-            </div>
-
-            {/* Icons & Avatar */}
-            <div className="flex items-center justify-between sm:justify-start gap-3">
-              {/* Notifications */}
-              <button className="relative p-2.5 rounded-xl border border-border bg-card text-muted-foreground hover:text-foreground transition-all hover:bg-secondary">
-                <Bell className="h-4 w-4" />
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-danger" />
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-danger animate-ping" />
-              </button>
-
-              {/* Profile Avatar */}
-              <Link
-                href="/settings"
-                className="flex items-center gap-2 cursor-pointer hover:opacity-85 transition-opacity"
-                title="View Profile Settings"
+        <header className="sticky top-0 z-40 bg-slate-50/80 dark:bg-[#08070d]/80 backdrop-blur-md border-b border-border/50 px-4 sm:px-5 lg:px-6 py-2.5 flex items-center justify-between gap-3">
+          
+          {/* Mobile App Bar Header Style (lg:hidden) */}
+          <div className="flex lg:hidden items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setIsMobileSidebarOpen(true)}
+                className="p-1.5 rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground"
               >
-                <div className="h-9 w-9 rounded-xl bg-primary-100 dark:bg-primary-900 border border-primary/20 overflow-hidden flex items-center justify-center text-sm font-bold text-primary">
+                <Menu className="h-4.5 w-4.5" />
+              </button>
+              <h1 className="text-base font-bold text-foreground tracking-tight">
+                {getPageTitle()}
+              </h1>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              {/* Notification & Profile Avatar */}
+              <button className="relative p-2 rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground transition-all">
+                <Bell className="h-4 w-4" />
+                <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-danger animate-ping" />
+              </button>
+              
+              <Link href="/settings" className="flex items-center">
+                <div className="h-7 w-7 rounded-lg bg-primary-100 dark:bg-primary-900 border border-primary/20 overflow-hidden flex items-center justify-center text-xs font-bold text-primary">
                   {session?.user?.image ? (
                     <img
                       src={session.user.image}
@@ -354,15 +329,139 @@ export default function DashboardShell({ children }: { children: React.ReactNode
                 </div>
               </Link>
             </div>
+          </div>
 
+          {/* Desktop App Bar Header Style (hidden lg:flex) */}
+          <div className="hidden lg:flex items-center justify-between w-full">
+            <div>
+              <h2 className="text-xl font-bold text-foreground tracking-tight flex items-center gap-1.5">
+                Hi, {session?.user?.name?.split(" ")[0] || "Ananya"} 👋
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                Track your all expense and transactions
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 flex-1 justify-end max-w-3xl">
+              {/* Clock */}
+              <div className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-card border border-border text-xs text-muted-foreground font-medium shrink-0" title="Current Local Time">
+                <Clock className="h-3.5 w-3.5 text-primary" />
+                <span>{timeStr || "Loading clock..."}</span>
+              </div>
+
+              {/* Search Input */}
+              <div className="relative flex-1 sm:max-w-xs">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search expenses, transaction, cards"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full rounded-xl border border-input bg-card pl-9 pr-4 py-2 text-xs outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-foreground"
+                />
+              </div>
+
+              {/* Icons & Avatar */}
+              <div className="flex items-center justify-between sm:justify-start gap-3">
+                {/* Notifications */}
+                <button className="relative p-2.5 rounded-xl border border-border bg-card text-muted-foreground hover:text-foreground transition-all hover:bg-secondary">
+                  <Bell className="h-4 w-4" />
+                  <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-danger animate-ping" />
+                </button>
+
+                {/* Profile Avatar */}
+                <Link
+                  href="/settings"
+                  className="flex items-center gap-2 cursor-pointer hover:opacity-85 transition-opacity"
+                  title="View Profile Settings"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-primary-100 dark:bg-primary-900 border border-primary/20 overflow-hidden flex items-center justify-center text-sm font-bold text-primary">
+                    {session?.user?.image ? (
+                      <img
+                        src={session.user.image}
+                        alt={session.user.name || "User avatar"}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      session?.user?.name ? session.user.name.charAt(0).toUpperCase() : "A"
+                    )}
+                  </div>
+                </Link>
+              </div>
+            </div>
           </div>
 
         </header>
 
         {/* CONTENT ZONE */}
-        <main className="flex-1 p-3.5 sm:p-4 lg:p-5 space-y-4">
+        <main className="flex-1 p-3.5 sm:p-4 lg:p-5 pb-24 sm:pb-24 lg:pb-5 space-y-4">
           {children}
         </main>
+
+        {/* BOTTOM NAVIGATION BAR FOR MOBILE (lg:hidden) */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card/90 dark:bg-[#0c0a18]/95 backdrop-blur-lg border-t border-border/60 flex justify-around items-center h-16 lg:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.03)] px-2">
+          {/* Dashboard Link */}
+          <Link
+            href="/dashboard"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${
+              pathname === "/dashboard"
+                ? "text-primary font-bold"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <LayoutDashboard className="h-5 w-5" />
+            <span>Dashboard</span>
+          </Link>
+
+          {/* Expenses Link */}
+          <Link
+            href="/expenses"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${
+              pathname === "/expenses"
+                ? "text-primary font-bold"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <TrendingUp className="h-5 w-5" />
+            <span>Expenses</span>
+          </Link>
+
+          {/* Sales Link */}
+          <Link
+            href="/retailer-sales"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${
+              pathname === "/retailer-sales"
+                ? "text-primary font-bold"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <ShoppingCart className="h-5 w-5" />
+            <span>Sales</span>
+          </Link>
+
+          {/* Daily Plans Link */}
+          <Link
+            href="/daily-plans"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${
+              pathname === "/daily-plans"
+                ? "text-primary font-bold"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <CheckSquare className="h-5 w-5" />
+            <span>Daily Plans</span>
+          </Link>
+
+          {/* More menu button */}
+          <button
+            onClick={() => setIsMobileSidebarOpen(true)}
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all text-muted-foreground hover:text-foreground`}
+          >
+            <Menu className="h-5 w-5" />
+            <span>More</span>
+          </button>
+        </div>
+
         {showLogoutConfirm && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200">
@@ -396,3 +495,4 @@ export default function DashboardShell({ children }: { children: React.ReactNode
     </div>
   );
 }
+
