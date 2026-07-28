@@ -79,8 +79,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
 
   const generalItems: SidebarItem[] = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { label: "All Expenses", href: "/expenses", icon: TrendingUp },
     { label: "Income Tracker", href: "/income", icon: PiggyBank },
+    { label: "All Expenses", href: "/expenses", icon: TrendingUp },
     { label: "Asset Portfolio", href: "/assets", icon: Wallet },
     { label: "Savings Goals", href: "/goals", icon: Target },
     { label: "Bills & Subs", href: "/subscriptions", icon: CalendarDays },
@@ -404,8 +404,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           <Link
             href="/dashboard"
             className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/dashboard"
-                ? "text-primary font-bold"
-                : "text-muted-foreground hover:text-foreground"
+              ? "text-primary font-bold"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
             <LayoutDashboard className="h-5 w-5" />
@@ -416,8 +416,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           <Link
             href="/expenses"
             className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/expenses"
-                ? "text-primary font-bold"
-                : "text-muted-foreground hover:text-foreground"
+              ? "text-primary font-bold"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
             <TrendingUp className="h-5 w-5" />
@@ -428,8 +428,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           <Link
             href="/income"
             className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/income"
-                ? "text-primary font-bold"
-                : "text-muted-foreground hover:text-foreground"
+              ? "text-primary font-bold"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
             <PiggyBank className="h-5 w-5" />
@@ -440,8 +440,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           <Link
             href="/daily-plans"
             className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/daily-plans"
-                ? "text-primary font-bold"
-                : "text-muted-foreground hover:text-foreground"
+              ? "text-primary font-bold"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
             <CheckSquare className="h-5 w-5" />
@@ -452,8 +452,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           <Link
             href="/books"
             className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/books"
-                ? "text-primary font-bold"
-                : "text-muted-foreground hover:text-foreground"
+              ? "text-primary font-bold"
+              : "text-muted-foreground hover:text-foreground"
               }`}
           >
             <BookOpen className="h-5 w-5" />
