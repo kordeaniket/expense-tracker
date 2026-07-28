@@ -293,7 +293,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       <div className="flex-1 lg:pl-56 flex flex-col">
         {/* TOP HEADER */}
         <header className="sticky top-0 z-40 bg-slate-50/80 dark:bg-[#08070d]/80 backdrop-blur-md border-b border-border/50 px-4 sm:px-5 lg:px-6 py-2.5 flex items-center justify-between gap-3">
-          
+
           {/* Mobile App Bar Header Style (lg:hidden) */}
           <div className="flex lg:hidden items-center justify-between w-full">
             <div className="flex items-center gap-2">
@@ -307,14 +307,14 @@ export default function DashboardShell({ children }: { children: React.ReactNode
                 {getPageTitle()}
               </h1>
             </div>
-            
+
             <div className="flex items-center gap-2">
               {/* Notification & Profile Avatar */}
               <button className="relative p-2 rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground transition-all">
                 <Bell className="h-4 w-4" />
                 <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-danger animate-ping" />
               </button>
-              
+
               <Link href="/settings" className="flex items-center">
                 <div className="h-7 w-7 rounded-lg bg-primary-100 dark:bg-primary-900 border border-primary/20 overflow-hidden flex items-center justify-center text-xs font-bold text-primary">
                   {session?.user?.image ? (
@@ -403,11 +403,10 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           {/* Dashboard Link */}
           <Link
             href="/dashboard"
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${
-              pathname === "/dashboard"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${pathname === "/dashboard"
                 ? "text-primary font-bold"
                 : "text-muted-foreground hover:text-foreground"
-            }`}
+              }`}
           >
             <LayoutDashboard className="h-5 w-5" />
             <span>Dashboard</span>
@@ -416,11 +415,10 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           {/* Expenses Link */}
           <Link
             href="/expenses"
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${
-              pathname === "/expenses"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${pathname === "/expenses"
                 ? "text-primary font-bold"
                 : "text-muted-foreground hover:text-foreground"
-            }`}
+              }`}
           >
             <TrendingUp className="h-5 w-5" />
             <span>Expenses</span>
@@ -429,11 +427,10 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           {/* Sales Link */}
           <Link
             href="/retailer-sales"
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${
-              pathname === "/retailer-sales"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${pathname === "/retailer-sales"
                 ? "text-primary font-bold"
                 : "text-muted-foreground hover:text-foreground"
-            }`}
+              }`}
           >
             <ShoppingCart className="h-5 w-5" />
             <span>Sales</span>
@@ -442,11 +439,10 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           {/* Daily Plans Link */}
           <Link
             href="/daily-plans"
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${
-              pathname === "/daily-plans"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${pathname === "/daily-plans"
                 ? "text-primary font-bold"
                 : "text-muted-foreground hover:text-foreground"
-            }`}
+              }`}
           >
             <CheckSquare className="h-5 w-5" />
             <span>Daily Plans</span>
