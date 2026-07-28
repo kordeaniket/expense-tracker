@@ -366,41 +366,41 @@ export default function SubscriptionsPage() {
         </div>
 
         {/* Global Summary Cards */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {/* Monthly Commitment */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <CalendarDays className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm flex items-center gap-3 relative overflow-hidden">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <CalendarDays className="h-4.5 w-4.5" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Monthly Commitment</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">₹{monthlyCommitment.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</h3>
+            <div className="min-w-0 flex-1">
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Monthly Commitment</p>
+              <h3 className="text-lg font-extrabold text-foreground leading-tight">₹{monthlyCommitment.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</h3>
+              <p className="text-[9px] text-muted-foreground/60 font-medium truncate mt-0.5">Sum of active plans normalized monthly.</p>
             </div>
-            <p className="text-[10px] text-muted-foreground/60 font-semibold mt-1">Sum value of active subscriptions normalized monthly.</p>
           </div>
 
           {/* Active Subscriptions */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
-              <CheckCircle className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm flex items-center gap-3 relative overflow-hidden">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-success/10 text-success">
+              <CheckCircle className="h-4.5 w-4.5" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Active Services</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">{activeSubs} <span className="text-muted-foreground text-xs font-normal">/ {subscriptions.length} Profiles</span></h3>
+            <div className="min-w-0 flex-1">
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Active Services</p>
+              <h3 className="text-lg font-extrabold text-foreground leading-tight">{activeSubs} <span className="text-muted-foreground text-xs font-normal">/ {subscriptions.length} Profiles</span></h3>
+              <p className="text-[9px] text-muted-foreground/60 font-medium truncate mt-0.5">Current running recurring plans.</p>
             </div>
-            <p className="text-[10px] text-muted-foreground/60 font-semibold mt-1">Number of current running recurring plans.</p>
           </div>
 
           {/* Urgent Deadlines */}
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-card relative overflow-hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
-              <AlertTriangle className="h-5 w-5" />
+          <div className="rounded-xl border border-border bg-card p-3 shadow-sm flex items-center gap-3 relative overflow-hidden">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-warning/10 text-warning">
+              <AlertTriangle className="h-4.5 w-4.5" />
             </div>
-            <div className="mt-4">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Upcoming Deadlines</p>
-              <h3 className="mt-1 text-2xl font-black text-foreground">{upcomingBillsCount} <span className="text-muted-foreground text-xs font-normal">due in 7 days</span></h3>
+            <div className="min-w-0 flex-1">
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Upcoming Deadlines</p>
+              <h3 className="text-lg font-extrabold text-foreground leading-tight">{upcomingBillsCount} <span className="text-muted-foreground text-xs font-normal">due in 7 days</span></h3>
+              <p className="text-[9px] text-muted-foreground/60 font-medium truncate mt-0.5">Urgent cycles requiring settlement.</p>
             </div>
-            <p className="text-[10px] text-muted-foreground/60 font-semibold mt-1">Overdue or expiring recurring cycles requiring settlement.</p>
           </div>
         </div>
 
@@ -425,115 +425,123 @@ export default function SubscriptionsPage() {
               return (
                 <div
                   key={sub._id}
-                  className={`group relative rounded-lg border bg-card p-3 shadow-sm hover:shadow transition-all duration-300 flex flex-col ${
+                  className={`group relative rounded-lg border bg-card p-2 shadow-sm hover:shadow transition-all duration-300 flex flex-col justify-center min-h-[52px] ${
                     sub.status !== "active" ? "border-slate-200 dark:border-slate-800 opacity-75" : "border-border"
                   }`}
                 >
-                  <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4 w-full min-w-0">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full min-w-0">
                     
-                    {/* Header: Icon, Title, Billing Cycle & Category */}
-                    <div className="flex items-center gap-3 md:w-1/4 shrink-0 min-w-0">
-                      <div className={`h-10 w-10 shrink-0 rounded-md text-white font-bold flex items-center justify-center text-sm ${avatarBg}`}>
+                    {/* Column 1: Icon, Title, Billing Cycle & Category (25% width on md) */}
+                    <div className="flex items-center gap-2 md:w-1/4 shrink-0 min-w-0">
+                      <div className={`h-8 w-8 shrink-0 rounded text-white font-bold flex items-center justify-center text-xs ${avatarBg}`}>
                         {progressLetter}
                       </div>
                       <div className="flex flex-col justify-center min-w-0 flex-1">
-                        <h3 className="font-semibold text-foreground text-xs truncate">{sub.name}</h3>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <span className="inline-flex items-center gap-0.5 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-secondary text-muted-foreground">
+                        <h3 className="font-semibold text-foreground text-xs truncate leading-tight">{sub.name}</h3>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="inline-flex items-center gap-0.5 text-[8px] font-bold uppercase tracking-wider px-1 py-0.2 rounded bg-secondary text-muted-foreground">
                             {sub.billingCycle}
                           </span>
                           <span className="text-[9px] text-muted-foreground/80 font-medium flex items-center gap-0.5 truncate">
-                            <Tag className="h-2.5 w-2.5 shrink-0" />
+                            <Tag className="h-2.5 w-2.5 shrink-0 text-muted-foreground/60" />
                             {sub.category}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Due Date & Cost */}
-                    <div className="flex-1 flex items-center justify-between min-w-0">
-                      <div className="flex flex-col justify-center">
-                        <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">Amount</span>
-                        <p className="font-bold text-foreground text-xs truncate">
-                          ₹{sub.amount.toLocaleString("en-IN")}
-                        </p>
-                      </div>
-                      
+                    {/* Column 2: Cost (12% width on md) */}
+                    <div className="flex flex-row md:flex-col items-center md:items-start justify-between md:justify-center md:w-[12%] shrink-0 min-w-0">
+                      <span className="text-[8px] text-muted-foreground font-bold uppercase tracking-wider block md:hidden">Amount: </span>
+                      <p className="font-bold text-foreground text-xs truncate">
+                        ₹{sub.amount.toLocaleString("en-IN")}
+                      </p>
+                    </div>
+
+                    {/* Column 3: Payment Account & Notes (Inline on md, 33% width) */}
+                    <div className="flex items-center gap-1.5 text-[9px] text-muted-foreground/80 min-w-0 md:w-1/3 shrink-0">
+                      <CreditCard className="h-3 w-3 text-primary/70 shrink-0" />
+                      <span className="font-medium text-foreground truncate max-w-[90px]">{sub.paymentMode}</span>
+                      {sub.note && (
+                        <>
+                          <span className="text-muted-foreground/30 font-light">|</span>
+                          <span className="italic text-muted-foreground truncate flex-1" title={sub.note}>
+                            "{sub.note}"
+                          </span>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Column 4: Due Date & Days remaining (15% width on md) */}
+                    <div className="flex-1 flex md:flex-col items-center md:items-end justify-between md:justify-center min-w-0 text-right">
                       {sub.status === "active" ? (
-                        <div className="flex flex-col items-end text-right">
-                          <span className={`text-[9px] font-bold ${
-                            dueInfo.status === "overdue" ? "text-danger animate-pulse" : dueInfo.status === "today" ? "text-warning" : "text-primary"
-                          }`}>
-                            {dueInfo.text}
-                          </span>
-                          <span className="text-[9px] text-muted-foreground truncate">
-                            Due: {new Date(sub.nextDueDate).toLocaleDateString("en-IN")}
-                          </span>
-                        </div>
+                        <>
+                          <span className="text-[8px] text-muted-foreground font-bold uppercase tracking-wider block md:hidden">Due Status: </span>
+                          <div className="flex flex-row md:flex-col gap-1.5 md:gap-0 items-center md:items-end">
+                            <span className={`text-[9px] font-bold leading-tight ${
+                              dueInfo.status === "overdue" ? "text-danger animate-pulse" : dueInfo.status === "today" ? "text-warning" : "text-primary"
+                            }`}>
+                              {dueInfo.text}
+                            </span>
+                            <span className="text-[9px] text-muted-foreground/80 truncate">
+                              ({new Date(sub.nextDueDate).toLocaleDateString("en-IN")})
+                            </span>
+                          </div>
+                        </>
                       ) : (
-                        <div className="flex flex-col items-end text-right">
+                        <>
+                          <span className="text-[8px] text-muted-foreground font-bold uppercase tracking-wider block md:hidden">Status: </span>
                           <span className={`inline-flex px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wide border ${
                             sub.status === "paused" ? "bg-warning/10 text-warning border-warning/20" : "bg-slate-100 dark:bg-slate-800 text-muted-foreground border-border"
                           }`}>
                             {sub.status}
                           </span>
-                        </div>
+                        </>
                       )}
                     </div>
 
-                    {/* Status & Actions */}
-                    <div className="flex items-center justify-between md:justify-end gap-3 shrink-0 mt-2 md:mt-0">
+                    {/* Column 5: Actions (right aligned on md) */}
+                    <div className="flex items-center justify-between md:justify-end gap-2 shrink-0 mt-1 md:mt-0 border-t border-border/40 pt-1.5 md:pt-0 md:border-none">
                       
                       {sub.status === "active" && (
                         <button
                           onClick={() => handleMarkAsPaid(sub)}
-                          className="px-2 py-1 text-[9px] font-bold uppercase text-white bg-primary hover:bg-primary-600 rounded flex items-center transition-all active:scale-[0.98] cursor-pointer"
+                          className="px-1.5 py-0.5 text-[8px] font-bold uppercase text-white bg-primary hover:bg-primary-600 rounded flex items-center transition-all active:scale-[0.98] cursor-pointer"
                           title="Click to pay and advance due date cycle"
                         >
                           Mark Paid
                         </button>
                       )}
 
-                      <div className="flex items-center gap-1 xl:opacity-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex-wrap justify-end">
+                      <div className="flex items-center gap-0.5 xl:opacity-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity justify-end">
                         <button
                           onClick={() => handleStatusToggle(sub)}
-                          className={`p-1.5 rounded transition-all cursor-pointer ${
+                          className={`p-1 rounded transition-all cursor-pointer ${
                             sub.status === "active" ? "text-warning hover:bg-warning/10" : "text-success hover:bg-success/10"
                           }`}
                           title={sub.status === "active" ? "Pause Subscription" : "Resume Subscription"}
                         >
-                          {sub.status === "active" ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+                          {sub.status === "active" ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
                         </button>
                         
-                        <div className="hidden md:block h-4 w-px bg-border mx-1" />
+                        <div className="hidden md:block h-3.5 w-px bg-border mx-0.5" />
 
                         <button
                           onClick={() => handleOpenEditModal(sub)}
-                          className="p-1.5 rounded text-muted-foreground hover:bg-secondary hover:text-primary transition-all cursor-pointer"
+                          className="p-1 rounded text-muted-foreground hover:bg-secondary hover:text-primary transition-all cursor-pointer"
                           title="Edit"
                         >
                           <Edit2 className="h-3 w-3" />
                         </button>
                         <button
                           onClick={() => handleDelete(sub._id, sub.name)}
-                          className="p-1.5 rounded text-muted-foreground hover:bg-danger/10 hover:text-danger transition-all cursor-pointer"
+                          className="p-1 rounded text-muted-foreground hover:bg-danger/10 hover:text-danger transition-all cursor-pointer"
                           title="Delete"
                         >
                           <Trash2 className="h-3 w-3" />
                         </button>
                       </div>
                     </div>
-                  </div>
-                  
-                  {/* Info log */}
-                  <div className="mt-2 text-[9px] text-muted-foreground/80 flex items-center gap-1.5 p-1 rounded-md">
-                    <CreditCard className="h-3 w-3 text-primary shrink-0" />
-                    <span className="font-medium text-foreground truncate">{sub.paymentMode}</span>
-                    {sub.note && (
-                      <span className="italic border-l border-border/50 pl-1.5 truncate max-w-[200px]" title={sub.note}>
-                        "{sub.note}"
-                      </span>
-                    )}
                   </div>
                 </div>
               );
@@ -544,7 +552,7 @@ export default function SubscriptionsPage() {
         {/* CREATE / EDIT MODAL */}
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 md:pt-28 bg-black/65 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200">
+            <div className="w-full max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200">
               
               <div className="flex items-center justify-between border-b border-border/50 pb-3 mb-4">
                 <h3 className="text-base font-bold text-foreground">
@@ -558,9 +566,9 @@ export default function SubscriptionsPage() {
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Row 1: Name, Cost */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Service Name */}
                   <Input
                     label="Service Name"
                     placeholder="E.g., Netflix, electricity, rent pool..."
@@ -569,6 +577,7 @@ export default function SubscriptionsPage() {
                     onChange={(e) => setName(e.target.value)}
                   />
 
+                  {/* Cycle Billing Amount */}
                   <NumberInput
                     label="Cycle Billing Amount (INR)"
                     step="1"
@@ -578,10 +587,8 @@ export default function SubscriptionsPage() {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                   />
-                </div>
 
-                {/* Row 2: Category, Cycle */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Category */}
                   <div className="space-y-1.5">
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Category</label>
                     <Select
@@ -594,6 +601,7 @@ export default function SubscriptionsPage() {
                     </Select>
                   </div>
 
+                  {/* Billing Cycle */}
                   <div className="space-y-1.5">
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Billing Cycle</label>
                     <Select
@@ -605,10 +613,8 @@ export default function SubscriptionsPage() {
                       ))}
                     </Select>
                   </div>
-                </div>
 
-                {/* Row 3: Due Date, Payment Account */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Upcoming Due Date */}
                   <Input
                     type="date"
                     label="Upcoming Due Date"
@@ -618,6 +624,7 @@ export default function SubscriptionsPage() {
                     onChange={(e) => setNextDueDate(e.target.value)}
                   />
 
+                  {/* Payment Account (Mode) */}
                   <div className="space-y-1.5">
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Payment Account (Mode)</label>
                     <Select
@@ -633,10 +640,8 @@ export default function SubscriptionsPage() {
                       )}
                     </Select>
                   </div>
-                </div>
 
-                {/* Row 4: Status, Note */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Status */}
                   <div className="space-y-1.5">
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Status</label>
                     <Select
@@ -649,12 +654,15 @@ export default function SubscriptionsPage() {
                     </Select>
                   </div>
 
-                  <Input
-                    label="Notes / Description (Optional)"
-                    placeholder="E.g., dynamic premium family sharing plan..."
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
-                  />
+                  {/* Notes / Description */}
+                  <div className="md:col-span-2">
+                    <Input
+                      label="Notes / Description (Optional)"
+                      placeholder="E.g., dynamic premium family sharing plan..."
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                    />
+                  </div>
                 </div>
 
                 {/* Modal Footer Actions */}
