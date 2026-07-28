@@ -223,7 +223,7 @@ export default function CategoriesPage() {
             No categories available. Click &quot;Add Category&quot; above to create one.
           </div>
         ) : (
-          <div className="flex flex-col gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {categories.map((cat) => (
               <div
                 key={cat._id}
@@ -259,13 +259,13 @@ export default function CategoriesPage() {
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar mask-gradient-right pb-0.5">
+                    <div className="flex flex-wrap items-center gap-1.5 pb-0.5">
                       {cat.subcategories && cat.subcategories.length > 0 ? (
                         <>
-                          <span className="shrink-0 text-[9px] text-muted-foreground font-semibold flex items-center gap-1">
+                          <span className="shrink-0 text-[9px] text-muted-foreground font-semibold flex items-center gap-1 mr-1">
                             <FolderOpen className="h-3 w-3" /> {cat.subcategories.length}
                           </span>
-                          <div className="flex items-center gap-1.5 min-w-0">
+                          <div className="flex flex-wrap items-center gap-1.5">
                             {cat.subcategories.map((sub, idx) => (
                               <span
                                 key={idx}

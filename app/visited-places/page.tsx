@@ -61,6 +61,88 @@ export default function VisitedPlacesPage() {
   const [imageUrl, setImageUrl] = useState("");
   const [wantToVisit, setWantToVisit] = useState(false);
 
+  // Autocomplete suggestions states
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isSearchingPlaces, setIsSearchingPlaces] = useState(false);
+
+  // Search Nominatim API with fallback local list
+  useEffect(() => {
+    if (location.trim().length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setIsSearchingPlaces(true);
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+            location
+          )}&addressdetails=1&limit=5`,
+          {
+            headers: {
+              "Accept-Language": "en",
+            },
+          }
+        );
+
+        if (!response.ok) throw new Error("API error");
+
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const results = data.map((item: any) => {
+            const city = item.address.city || item.address.town || item.address.village || item.address.suburb || item.name;
+            const country = item.address.country;
+            if (city && country && city !== country) {
+              return `${city}, ${country}`;
+            }
+            return item.display_name.split(",").slice(0, 2).join(",").trim();
+          });
+          const uniqueResults = Array.from(new Set(results)) as string[];
+          setSuggestions(uniqueResults);
+        } else {
+          filterLocalPlaces(location);
+        }
+      } catch (err) {
+        filterLocalPlaces(location);
+      } finally {
+        setIsSearchingPlaces(false);
+      }
+    }, 450); // Debounce time
+
+    return () => clearTimeout(timer);
+  }, [location]);
+
+  const filterLocalPlaces = (query: string) => {
+    const localPopular = [
+      "Paris, France", "London, United Kingdom", "New York, USA", "Tokyo, Japan", "Rome, Italy",
+      "Goa, India", "Mumbai, India", "Delhi, India", "Bengaluru, India", "Sydney, Australia",
+      "Dubai, UAE", "Singapore", "Barcelona, Spain", "Amsterdam, Netherlands", "Bangkok, Thailand",
+      "Bali, Indonesia", "Phuket, Thailand", "Maldives", "Cape Town, South Africa", "Cairo, Egypt",
+      "Rio de Janeiro, Brazil", "Istanbul, Turkey", "Venice, Italy", "Florence, Italy", "Vienna, Austria",
+      "Prague, Czech Republic", "Munich, Germany", "Berlin, Germany", "Madrid, Spain", "Lisbon, Portugal",
+      "Toronto, Canada", "Vancouver, Canada", "San Francisco, USA", "Los Angeles, USA", "Las Vegas, USA",
+      "Miami, USA", "Chicago, USA", "Boston, USA", "Seattle, USA", "Washington DC, USA",
+      "Hong Kong", "Seoul, South Korea", "Shanghai, China", "Beijing, China",
+      "Chennai, India", "Kolkata, India", "Hyderabad, India", "Pune, India",
+      "Jaipur, India", "Udaipur, India", "Agra, India", "Kochi, India", "Manali, India",
+      "Shimla, India", "Darjeeling, India", "Ooty, India", "Munnar, India", "Srinagar, India",
+      "Zurich, Switzerland", "Geneva, Switzerland", "Melbourne, Australia"
+    ];
+
+    const matched = localPopular.filter((place) =>
+      place.toLowerCase().includes(query.toLowerCase())
+    );
+    setSuggestions(matched.slice(0, 5));
+  };
+
+  const handleSelectSuggestion = (sug: string) => {
+    setLocation(sug);
+    setSuggestions([]);
+    setShowSuggestions(false);
+  };
+
   const fetchPlaces = async () => {
     setIsLoading(true);
     try {
@@ -365,10 +447,10 @@ export default function VisitedPlacesPage() {
 
         {/* CREATE / EDIT PLACE MODAL */}
         {showPlaceModal && (
-          <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 md:pt-28 bg-black/65 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
-            <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-card animate-in zoom-in-95 duration-200 my-8">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
+            <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-5 shadow-card animate-in zoom-in-95 duration-200 my-auto">
 
-              <div className="flex items-center justify-between border-b border-border/50 pb-3 mb-4">
+              <div className="flex items-center justify-between border-b border-border/50 pb-2 mb-3">
                 <h3 className="text-base font-bold text-foreground">
                   {editingPlace ? "Modify Visited Place" : "Log Visited Place"}
                 </h3>
@@ -380,8 +462,8 @@ export default function VisitedPlacesPage() {
                 </button>
               </div>
 
-              <form onSubmit={handlePlaceSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form onSubmit={handlePlaceSubmit} className="space-y-3.5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Input
                     label="Place Name"
                     placeholder="E.g. Eiffel Tower, Maldives, Goa..."
@@ -391,14 +473,47 @@ export default function VisitedPlacesPage() {
                   />
 
                   <div className="relative flex items-end gap-2">
-                    <div className="flex-1">
+                    <div className="flex-1 relative">
                       <Input
-                        label="Location (City, Country)"
+                        label="Location"
                         placeholder="E.g. Paris, France"
                         icon={MapPin}
                         value={location}
-                        onChange={(e) => setLocation(e.target.value)}
+                        onChange={(e) => {
+                          setLocation(e.target.value);
+                          setShowSuggestions(true);
+                        }}
+                        onFocus={() => {
+                          if (location.trim().length >= 2) setShowSuggestions(true);
+                        }}
+                        onBlur={() => {
+                          setTimeout(() => setShowSuggestions(false), 200);
+                        }}
                       />
+                      {showSuggestions && (suggestions.length > 0 || isSearchingPlaces) && (
+                        <div className="absolute z-50 left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-xl border border-border bg-card p-1 shadow-lg animate-in fade-in slide-in-from-top-2 duration-150 scrollbar-thin">
+                          {isSearchingPlaces ? (
+                            <div className="flex items-center gap-2 p-2 text-xs text-muted-foreground font-medium">
+                              <Loader2 className="h-3 w-3 animate-spin text-primary" />
+                              <span>Searching places...</span>
+                            </div>
+                          ) : (
+                            suggestions.map((sug, idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onMouseDown={(e) => {
+                                  e.preventDefault();
+                                  handleSelectSuggestion(sug);
+                                }}
+                                className="w-full text-left px-3 py-1.5 text-xs font-semibold text-foreground rounded-lg hover:bg-secondary transition-all cursor-pointer truncate"
+                              >
+                                {sug}
+                              </button>
+                            ))
+                          )}
+                        </div>
+                      )}
                     </div>
                     <button
                       type="button"
@@ -414,22 +529,7 @@ export default function VisitedPlacesPage() {
                       )}
                     </button>
                   </div>
-                </div>
 
-                <div className="flex items-center space-x-2 bg-secondary/50 p-3 rounded-xl border border-border">
-                  <input
-                    type="checkbox"
-                    id="wantToVisit"
-                    checked={wantToVisit}
-                    onChange={(e) => setWantToVisit(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                  />
-                  <label htmlFor="wantToVisit" className="text-sm font-medium text-foreground cursor-pointer">
-                    Want to visit this place
-                  </label>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input
                     type="date"
                     label={wantToVisit ? "Planned Date (Optional)" : "Date Visited"}
@@ -438,19 +538,34 @@ export default function VisitedPlacesPage() {
                     value={dateVisited}
                     onChange={(e) => setDateVisited(e.target.value)}
                   />
+                </div>
 
-                  <div className="space-y-1.5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center space-x-2 bg-secondary/50 px-4 py-2 rounded-xl border border-border h-[42px] self-end">
+                    <input
+                      type="checkbox"
+                      id="wantToVisit"
+                      checked={wantToVisit}
+                      onChange={(e) => setWantToVisit(e.target.checked)}
+                      className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                    />
+                    <label htmlFor="wantToVisit" className="text-xs font-semibold text-foreground cursor-pointer">
+                      Want to visit this place
+                    </label>
+                  </div>
+
+                  <div className="space-y-1">
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Rating</label>
-                    <div className="flex gap-2 h-[42px] items-center">
+                    <div className="flex gap-2 h-[34px] items-center">
                       {RATING_OPTIONS.map((opt) => (
                         <button
                           key={opt}
                           type="button"
                           onClick={() => setRating(opt)}
-                          className={`p-1.5 rounded-md transition-all cursor-pointer hover:scale-110 ${rating >= opt ? "text-warning" : "text-muted-foreground/30"
+                          className={`p-1 rounded-md transition-all cursor-pointer hover:scale-110 ${rating >= opt ? "text-warning" : "text-muted-foreground/30"
                             }`}
                         >
-                          <Star className={`h-6 w-6 ${rating >= opt ? "fill-current" : ""}`} />
+                          <Star className={`h-5.5 w-5.5 ${rating >= opt ? "fill-current" : ""}`} />
                         </button>
                       ))}
                     </div>
@@ -470,7 +585,7 @@ export default function VisitedPlacesPage() {
                 <div className="space-y-1.5">
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Memories / Notes</label>
                   <textarea
-                    className="w-full h-24 rounded-xl border border-input bg-card px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-foreground resize-none"
+                    className="w-full h-16 rounded-xl border border-input bg-card px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-foreground resize-none"
                     placeholder="Write about your experience..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
@@ -478,7 +593,7 @@ export default function VisitedPlacesPage() {
                 </div>
 
                 {/* Modal Footer Actions */}
-                <div className="mt-6 flex justify-end gap-3 pt-3 border-t border-border/50">
+                <div className="mt-4 flex justify-end gap-3 pt-2.5 border-t border-border/50">
                   <button
                     type="button"
                     onClick={() => setShowPlaceModal(false)}
