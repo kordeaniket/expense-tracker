@@ -399,11 +399,11 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         </main>
 
         {/* BOTTOM NAVIGATION BAR FOR MOBILE (lg:hidden) */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card/90 dark:bg-[#0c0a18]/95 backdrop-blur-lg border-t border-border/60 flex justify-around items-center h-16 lg:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.03)] px-2">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card/90 dark:bg-[#0c0a18]/95 backdrop-blur-lg border-t border-border/60 flex justify-around items-center h-16 lg:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.03)] px-1">
           {/* Dashboard Link */}
           <Link
             href="/dashboard"
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${pathname === "/dashboard"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/dashboard"
                 ? "text-primary font-bold"
                 : "text-muted-foreground hover:text-foreground"
               }`}
@@ -415,7 +415,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           {/* Expenses Link */}
           <Link
             href="/expenses"
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${pathname === "/expenses"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/expenses"
                 ? "text-primary font-bold"
                 : "text-muted-foreground hover:text-foreground"
               }`}
@@ -424,22 +424,46 @@ export default function DashboardShell({ children }: { children: React.ReactNode
             <span>Expenses</span>
           </Link>
 
+          {/* Income Link */}
+          <Link
+            href="/income"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/income"
+                ? "text-primary font-bold"
+                : "text-muted-foreground hover:text-foreground"
+              }`}
+          >
+            <PiggyBank className="h-5 w-5" />
+            <span>Income</span>
+          </Link>
+
           {/* Daily Plans Link */}
           <Link
             href="/daily-plans"
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${pathname === "/daily-plans"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/daily-plans"
                 ? "text-primary font-bold"
                 : "text-muted-foreground hover:text-foreground"
               }`}
           >
             <CheckSquare className="h-5 w-5" />
-            <span>Daily Plans</span>
+            <span className="truncate max-w-[55px] text-center">Plans</span>
+          </Link>
+
+          {/* Books Link */}
+          <Link
+            href="/books"
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all ${pathname === "/books"
+                ? "text-primary font-bold"
+                : "text-muted-foreground hover:text-foreground"
+              }`}
+          >
+            <BookOpen className="h-5 w-5" />
+            <span>Books</span>
           </Link>
 
           {/* More menu button */}
           <button
             onClick={() => setIsMobileSidebarOpen(true)}
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all text-muted-foreground hover:text-foreground`}
+            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[9px] sm:text-[10px] font-medium transition-all text-muted-foreground hover:text-foreground`}
           >
             <Menu className="h-5 w-5" />
             <span>More</span>
