@@ -21,6 +21,7 @@ import {
   Search,
   ChevronRight,
   Sparkles,
+  MoreVertical,
 } from "lucide-react";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
@@ -70,6 +71,9 @@ export default function BooksPage() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteName, setDeleteName] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Mobile action sheet state
+  const [activeMobileMenuBook, setActiveMobileMenuBook] = useState<BookData | null>(null);
 
   const fetchBooks = async () => {
     setIsLoading(true);
@@ -408,7 +412,8 @@ export default function BooksPage() {
                         : "Not started"}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {/* Desktop actions: show on hover */}
+                  <div className="hidden md:flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={(e) => handleOpenEditModal(book, e)}
                       className="p-1.5 rounded-md hover:bg-secondary text-muted-foreground hover:text-foreground transition-all"
@@ -422,6 +427,20 @@ export default function BooksPage() {
                       title="Delete book"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+
+                  {/* Mobile action: show more button */}
+                  <div className="md:hidden">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveMobileMenuBook(book);
+                      }}
+                      className="p-2 rounded-xl hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all"
+                      title="Manage book"
+                    >
+                      <MoreVertical className="h-4.5 w-4.5" />
                     </button>
                   </div>
                 </div>
@@ -770,6 +789,66 @@ export default function BooksPage() {
           title="Remove Book"
           message={`Are you sure you want to remove "${deleteName}" from your library?`}
         />
+
+        {/* Mobile Bottom Menu Sheet */}
+        {activeMobileMenuBook && (
+          <div className="fixed inset-0 z-50 flex items-end justify-center bg-background/80 backdrop-blur-xs md:hidden animate-in fade-in duration-200">
+            <div 
+              className="fixed inset-0 bg-black/40" 
+              onClick={() => setActiveMobileMenuBook(null)} 
+            />
+            <div className="relative w-full bg-card rounded-t-2xl border-t border-border shadow-lg p-5 pb-8 space-y-4 animate-in slide-in-from-bottom duration-300 z-10">
+              <div className="w-12 h-1 bg-border rounded-full mx-auto mb-1" />
+              <div className="flex items-center justify-between pb-2 border-b border-border/50">
+                <div>
+                  <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Manage Book</h4>
+                  <p className="text-sm font-bold text-foreground truncate mt-0.5 max-w-[80vw]">
+                    {activeMobileMenuBook.title}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveMobileMenuBook(null)}
+                  className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground transition-all"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="space-y-1">
+                <button
+                  onClick={() => {
+                    const book = activeMobileMenuBook;
+                    setActiveMobileMenuBook(null);
+                    handleOpenDetailModal(book);
+                  }}
+                  className="w-full py-3 px-4 rounded-xl hover:bg-secondary text-left font-semibold text-xs flex items-center gap-3 text-foreground transition-colors"
+                >
+                  <BookOpen className="h-4 w-4 text-primary" /> View Details
+                </button>
+                <button
+                  onClick={() => {
+                    const book = activeMobileMenuBook;
+                    setActiveMobileMenuBook(null);
+                    handleOpenEditModal(book);
+                  }}
+                  className="w-full py-3 px-4 rounded-xl hover:bg-secondary text-left font-semibold text-xs flex items-center gap-3 text-foreground transition-colors"
+                >
+                  <Edit2 className="h-4 w-4 text-primary" /> Edit Details
+                </button>
+                <button
+                  onClick={(e) => {
+                    const book = activeMobileMenuBook;
+                    setActiveMobileMenuBook(null);
+                    handleDeleteBook(book._id, book.title, e);
+                  }}
+                  className="w-full py-3 px-4 rounded-xl hover:bg-danger/10 hover:text-danger text-left font-semibold text-xs flex items-center gap-3 text-danger transition-colors"
+                >
+                  <Trash2 className="h-4 w-4" /> Delete Book
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
     </DashboardShell>
