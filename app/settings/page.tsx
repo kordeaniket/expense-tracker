@@ -10,8 +10,9 @@ import { toast } from "sonner";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
-import { User, Shield, Sliders, Loader2, Mail, Smartphone, Globe, Coins, Lock, Eye, EyeOff, FolderTree, Plus, Trash2, Edit2, X, Tag } from "lucide-react";
+import { User, Shield, Sliders, Loader2, Mail, Smartphone, Globe, Coins, Lock, Eye, EyeOff, FolderTree, Plus, Trash2, Edit2, X, Tag, Palette } from "lucide-react";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
+import { COLOR_PALETTES, applyColorPalette, getAppliedColorPalette } from "@/lib/colorPalettes";
 
 // Schemas for forms
 const profileSchema = z.object({
@@ -55,6 +56,17 @@ export default function SettingsPage() {
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isSavingPassword, setIsSavingPassword] = useState(false);
+  const [selectedPalette, setSelectedPalette] = useState("rose");
+
+  useEffect(() => {
+    setSelectedPalette(getAppliedColorPalette());
+  }, []);
+
+  const handlePaletteChange = (paletteId: string) => {
+    setSelectedPalette(paletteId);
+    applyColorPalette(paletteId);
+    toast.success("Color palette updated successfully!");
+  };
   
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -553,6 +565,52 @@ export default function SettingsPage() {
                         <option value="EUR">EUR (€)</option>
                         <option value="GBP">GBP (£)</option>
                       </Select>
+                    </div>
+                  </div>
+
+                  {/* Color Palette Selector */}
+                  <div className="border-t border-border/50 pt-4 space-y-3">
+                    <div>
+                      <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5 uppercase tracking-wider">
+                        <Palette className="h-4 w-4 text-primary" />
+                        Application Color Theme
+                      </h4>
+                      <p className="text-[11px] text-muted-foreground">Choose a premium color palette to personalize your entire workspace.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {COLOR_PALETTES.map((palette) => {
+                        const isSelected = selectedPalette === palette.id;
+                        return (
+                          <button
+                            key={palette.id}
+                            type="button"
+                            onClick={() => handlePaletteChange(palette.id)}
+                            className={`flex flex-col text-left p-3.5 rounded-xl border transition-all cursor-pointer relative overflow-hidden ${
+                              isSelected
+                                ? "border-primary bg-primary/5 ring-1 ring-primary"
+                                : "border-border bg-card hover:bg-secondary/45 hover:border-border/80"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between w-full">
+                              <span className="font-bold text-xs text-foreground tracking-tight">{palette.name}</span>
+                              <div className="flex items-center gap-1">
+                                <span
+                                  className="h-3 w-3 rounded-full border border-white/20 shadow-sm"
+                                  style={{ backgroundColor: palette.shades.DEFAULT }}
+                                />
+                                <span
+                                  className="h-3.5 w-1 rounded-full opacity-60"
+                                  style={{ backgroundColor: palette.shades[600] }}
+                                />
+                              </div>
+                            </div>
+                            <p className="text-[10px] text-muted-foreground mt-1.5 font-medium leading-relaxed">
+                              {palette.description}
+                            </p>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 

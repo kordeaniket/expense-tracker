@@ -101,7 +101,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   ];
 
   const otherItems: SidebarItem[] = [
-    // { label: "Setting", href: "/settings", icon: Settings },
+    { label: "Settings", href: "/settings", icon: Settings },
     // { label: "Help Center", href: "/help", icon: HelpCircle },
     // { label: "Support", href: "/support", icon: Headphones },
   ];
