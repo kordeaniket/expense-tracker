@@ -11,6 +11,7 @@ import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { User, Shield, Sliders, Loader2, Mail, Smartphone, Globe, Coins, Lock, Eye, EyeOff, FolderTree, Plus, Trash2, Edit2, X, Tag } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 // Schemas for forms
 const profileSchema = z.object({
@@ -71,6 +72,10 @@ export default function SettingsPage() {
   const [catType, setCatType] = useState<"expense" | "income">("expense");
   const [catColor, setCatColor] = useState("#6C5CE7");
   const [subcatString, setSubcatString] = useState("");
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const {
     register: registerProfile,
@@ -278,11 +283,15 @@ export default function SettingsPage() {
   };
 
   // Delete Category
-  const handleDeleteCategory = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this category?")) return;
+  const handleDeleteCategory = (id: string) => {
+    setDeleteId(id);
+  };
 
+  const confirmDeleteCategory = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/categories/${id}`, {
+      const response = await fetch(`/api/categories/${deleteId}`, {
         method: "DELETE",
       });
 
@@ -293,14 +302,17 @@ export default function SettingsPage() {
       }
 
       toast.success("Category deleted successfully!");
+      setDeleteId(null);
       fetchCategories();
-      if (editingCategory?._id === id) {
+      if (editingCategory?._id === deleteId) {
         setEditingCategory(null);
         setCatName("");
         setSubcatString("");
       }
     } catch (error: any) {
-      toast.error(error.message || "Something went wrong.");
+      toast.error(error.message || "Failed to delete category.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -886,6 +898,15 @@ export default function SettingsPage() {
 
           </div>
         )}
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => setDeleteId(null)}
+          onConfirm={confirmDeleteCategory}
+          isDeleting={isDeleting}
+          title="Delete Category"
+          message="Are you sure you want to delete this category? All associated subcategories will also be deleted."
+        />
+
       </div>
     </DashboardShell>
   );

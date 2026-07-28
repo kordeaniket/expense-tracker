@@ -20,6 +20,7 @@ import {
   CheckCircle2,
   ListTodo,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface DailyPlan {
   _id: string;
@@ -52,6 +53,11 @@ export default function DailyPlansPage() {
   const [frequency, setFrequency] = useState<"daily" | "once">("daily");
   const [targetDate, setTargetDate] = useState("");
   const [time, setTime] = useState("");
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchPlans = async () => {
     setIsLoading(true);
@@ -134,18 +140,22 @@ export default function DailyPlansPage() {
     }
   };
 
-  const handleDelete = async (id: string, planName: string, e: React.MouseEvent) => {
+  const handleDelete = (id: string, planName: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!confirm(`Are you sure you want to delete "${planName}"?`)) {
-      return;
-    }
+    setDeleteId(id);
+    setDeleteName(planName);
+  };
 
+  const confirmDeletePlan = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/daily-plans/${id}`, {
+      const response = await fetch(`/api/daily-plans/${deleteId}`, {
         method: "DELETE",
       });
       if (response.ok) {
         toast.success("Plan deleted.");
+        setDeleteId(null);
         fetchPlans();
       } else {
         const data = await response.json();
@@ -153,6 +163,8 @@ export default function DailyPlansPage() {
       }
     } catch (error: any) {
       toast.error(error.message || "Could not remove daily plan.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -641,6 +653,18 @@ export default function DailyPlansPage() {
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => {
+            setDeleteId(null);
+            setDeleteName("");
+          }}
+          onConfirm={confirmDeletePlan}
+          isDeleting={isDeleting}
+          title="Delete Daily Plan"
+          message={`Are you sure you want to delete "${deleteName}"?`}
+        />
 
       </div>
     </DashboardShell>

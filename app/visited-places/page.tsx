@@ -20,6 +20,7 @@ import {
   ImageIcon,
   LocateFixed,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface VisitedPlaceData {
   _id: string;
@@ -45,6 +46,11 @@ export default function VisitedPlacesPage() {
   // Selection/Editing states
   const [editingPlace, setEditingPlace] = useState<VisitedPlaceData | null>(null);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Form states
   const [name, setName] = useState("");
@@ -183,13 +189,16 @@ export default function VisitedPlacesPage() {
     );
   };
 
-  const handleDeletePlace = async (id: string, placeName: string) => {
-    if (!confirm(`Are you sure you want to delete "${placeName}"?`)) {
-      return;
-    }
+  const handleDeletePlace = (id: string, placeName: string) => {
+    setDeleteId(id);
+    setDeleteName(placeName);
+  };
 
+  const confirmDeletePlace = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/visited-places/${id}`, {
+      const response = await fetch(`/api/visited-places/${deleteId}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -198,9 +207,12 @@ export default function VisitedPlacesPage() {
       }
 
       toast.success("Visited place deleted successfully.");
+      setDeleteId(null);
       fetchPlaces();
     } catch (error: any) {
       toast.error(error.message || "Failed to delete visited place.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -491,8 +503,18 @@ export default function VisitedPlacesPage() {
               </form>
             </div>
           </div>
-        )
-        }
+        )}
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => {
+            setDeleteId(null);
+            setDeleteName("");
+          }}
+          onConfirm={confirmDeletePlace}
+          isDeleting={isDeleting}
+          title="Delete Visited Place"
+          message={`Are you sure you want to delete "${deleteName}"?`}
+        />
 
       </div >
     </DashboardShell >

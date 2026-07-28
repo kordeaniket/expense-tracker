@@ -22,6 +22,7 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface BookData {
   _id: string;
@@ -64,6 +65,11 @@ export default function BooksPage() {
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<"all" | "to-read" | "reading" | "completed">("all");
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchBooks = async () => {
     setIsLoading(true);
@@ -179,24 +185,32 @@ export default function BooksPage() {
     }
   };
 
-  const handleDeleteBook = async (id: string, e?: React.MouseEvent) => {
+  const handleDeleteBook = (id: string, name: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    if (!confirm("Are you sure you want to remove this book from your library?")) return;
+    setDeleteId(id);
+    setDeleteName(name);
+  };
 
+  const confirmDeleteBook = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/books/${id}`, { method: "DELETE" });
+      const response = await fetch(`/api/books/${deleteId}`, { method: "DELETE" });
       const data = await response.json();
       if (response.ok) {
         toast.success("Book removed successfully.");
-        if (selectedBook?._id === id) {
+        if (selectedBook?._id === deleteId) {
           setShowDetailModal(false);
         }
+        setDeleteId(null);
         fetchBooks();
       } else {
         throw new Error(data.error || "Failed to delete book.");
       }
     } catch (error: any) {
       toast.error(error.message || "An error occurred.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -403,7 +417,7 @@ export default function BooksPage() {
                       <Edit2 className="h-3.5 w-3.5" />
                     </button>
                     <button
-                      onClick={(e) => handleDeleteBook(book._id, e)}
+                      onClick={(e) => handleDeleteBook(book._id, book.title, e)}
                       className="p-1.5 rounded-md hover:bg-danger/10 text-muted-foreground hover:text-danger transition-all"
                       title="Delete book"
                     >
@@ -475,7 +489,7 @@ export default function BooksPage() {
                       <Edit2 className="h-3 w-3" /> Edit
                     </button>
                     <button
-                      onClick={() => handleDeleteBook(selectedBook._id)}
+                      onClick={() => handleDeleteBook(selectedBook._id, selectedBook.title)}
                       className="px-3.5 py-1.5 rounded-xl border border-danger/20 hover:bg-danger/10 text-danger text-xs font-semibold flex items-center gap-1.5"
                     >
                       <Trash2 className="h-3 w-3" /> Delete
@@ -744,6 +758,19 @@ export default function BooksPage() {
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => {
+            setDeleteId(null);
+            setDeleteName("");
+          }}
+          onConfirm={confirmDeleteBook}
+          isDeleting={isDeleting}
+          title="Remove Book"
+          message={`Are you sure you want to remove "${deleteName}" from your library?`}
+        />
+
       </div>
     </DashboardShell>
   );

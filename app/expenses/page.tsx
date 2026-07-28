@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/Input";
 import { NumberInput } from "@/components/ui/NumberInput";
 import { Select } from "@/components/ui/Select";
 import { Plus, Trash2, Calendar, CreditCard, Notebook, Tag, Loader2, X, Filter } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface CategoryData {
   _id: string;
@@ -61,6 +62,10 @@ export default function ExpensesPage() {
 
   // Filtering states
   const [filterCategory, setFilterCategory] = useState("all");
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -168,11 +173,15 @@ export default function ExpensesPage() {
     }
   };
 
-  const handleDeleteExpense = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this expense log?")) return;
+  const handleDeleteExpense = (id: string) => {
+    setDeleteId(id);
+  };
 
+  const confirmDeleteExpense = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/expenses/${id}`, {
+      const response = await fetch(`/api/expenses/${deleteId}`, {
         method: "DELETE",
       });
 
@@ -183,9 +192,12 @@ export default function ExpensesPage() {
       }
 
       toast.success("Expense log deleted successfully!");
+      setDeleteId(null);
       fetchData();
     } catch (error: any) {
       toast.error(error.message || "Something went wrong.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -474,6 +486,15 @@ export default function ExpensesPage() {
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => setDeleteId(null)}
+          onConfirm={confirmDeleteExpense}
+          isDeleting={isDeleting}
+          title="Delete Expense Log"
+          message="Are you sure you want to delete this expense log? This action is irreversible."
+        />
 
       </div>
     </DashboardShell>

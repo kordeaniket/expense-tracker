@@ -17,6 +17,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface CategoryData {
   _id: string;
@@ -60,6 +61,11 @@ export default function CategoriesPage() {
   const [newSubcatName, setNewSubcatName] = useState("");
   const [editingSubcatIdx, setEditingSubcatIdx] = useState<number | null>(null);
   const [editingSubcatVal, setEditingSubcatVal] = useState("");
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleOpenAddModal = () => {
     setEditingCategory(null);
@@ -162,13 +168,16 @@ export default function CategoriesPage() {
     }
   };
 
-  const handleDeleteCategory = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete the category "${name}"? All associated subcategories will also be deleted.`)) {
-      return;
-    }
+  const handleDeleteCategory = (id: string, name: string) => {
+    setDeleteId(id);
+    setDeleteName(name);
+  };
 
+  const confirmDeleteCategory = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/categories/${id}`, {
+      const response = await fetch(`/api/categories/${deleteId}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -177,9 +186,12 @@ export default function CategoriesPage() {
       }
 
       toast.success("Category deleted successfully.");
+      setDeleteId(null);
       mutate();
     } catch (error: any) {
       toast.error(error.message || "Failed to delete category.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -527,6 +539,19 @@ export default function CategoriesPage() {
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => {
+            setDeleteId(null);
+            setDeleteName("");
+          }}
+          onConfirm={confirmDeleteCategory}
+          isDeleting={isDeleting}
+          title="Delete Category"
+          message={`Are you sure you want to delete the category "${deleteName}"? All associated subcategories will also be deleted.`}
+        />
+
       </div>
     </DashboardShell>
   );

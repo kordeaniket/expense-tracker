@@ -22,6 +22,7 @@ import {
   CheckCircle,
   HelpCircle,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface Subscription {
   _id: string;
@@ -68,6 +69,11 @@ export default function SubscriptionsPage() {
   // Modal controls
   const [showModal, setShowModal] = useState(false);
   const [editingSub, setEditingSub] = useState<Subscription | null>(null);
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Form Fields
   const [name, setName] = useState("");
@@ -182,17 +188,21 @@ export default function SubscriptionsPage() {
     }
   };
 
-  const handleDelete = async (id: string, subName: string) => {
-    if (!confirm(`Are you sure you want to delete "${subName}"?`)) {
-      return;
-    }
+  const handleDelete = (id: string, subName: string) => {
+    setDeleteId(id);
+    setDeleteName(subName);
+  };
 
+  const confirmDeleteSubscription = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/subscriptions/${id}`, {
+      const response = await fetch(`/api/subscriptions/${deleteId}`, {
         method: "DELETE",
       });
       if (response.ok) {
         toast.success("Subscription removed successfully.");
+        setDeleteId(null);
         fetchData();
       } else {
         const data = await response.json();
@@ -200,6 +210,8 @@ export default function SubscriptionsPage() {
       }
     } catch (error: any) {
       toast.error(error.message || "Could not delete subscription.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -674,6 +686,18 @@ export default function SubscriptionsPage() {
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => {
+            setDeleteId(null);
+            setDeleteName("");
+          }}
+          onConfirm={confirmDeleteSubscription}
+          isDeleting={isDeleting}
+          title="Delete Subscription"
+          message={`Are you sure you want to delete "${deleteName}"?`}
+        />
 
       </div>
     </DashboardShell>

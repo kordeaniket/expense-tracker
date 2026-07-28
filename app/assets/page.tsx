@@ -20,6 +20,7 @@ import {
   HelpCircle,
   PiggyBank,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 import {
   ResponsiveContainer,
   PieChart,
@@ -66,6 +67,11 @@ export default function AssetsPortfolioPage() {
   const [type, setType] = useState<"Savings" | "Stocks" | "Mutual Funds" | "FD" | "Gold" | "Other">("Savings");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchAssets = async () => {
     setIsLoading(true);
@@ -149,13 +155,16 @@ export default function AssetsPortfolioPage() {
     }
   };
 
-  const handleDeleteAsset = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete the asset "${name}"?`)) {
-      return;
-    }
+  const handleDeleteAsset = (id: string, name: string) => {
+    setDeleteId(id);
+    setDeleteName(name);
+  };
 
+  const confirmDeleteAsset = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/assets/${id}`, {
+      const response = await fetch(`/api/assets/${deleteId}`, {
         method: "DELETE",
       });
 
@@ -165,9 +174,12 @@ export default function AssetsPortfolioPage() {
       }
 
       toast.success("Asset removed from portfolio.");
+      setDeleteId(null);
       fetchAssets();
     } catch (error: any) {
       toast.error(error.message || "Something went wrong.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -484,6 +496,18 @@ export default function AssetsPortfolioPage() {
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => {
+            setDeleteId(null);
+            setDeleteName("");
+          }}
+          onConfirm={confirmDeleteAsset}
+          isDeleting={isDeleting}
+          title="Delete Asset"
+          message={`Are you sure you want to delete the asset "${deleteName}"?`}
+        />
 
       </div>
     </DashboardShell>

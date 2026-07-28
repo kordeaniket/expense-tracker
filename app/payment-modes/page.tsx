@@ -18,6 +18,7 @@ import {
   Building,
   Wallet,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface PaymentModeData {
   _id: string;
@@ -51,6 +52,11 @@ export default function PaymentModesPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [editingMode, setEditingMode] = useState<PaymentModeData | null>(null);
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Form states
   const [name, setName] = useState("");
@@ -134,13 +140,16 @@ export default function PaymentModesPage() {
     }
   };
 
-  const handleDeleteMode = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete the payment mode "${name}"?`)) {
-      return;
-    }
+  const handleDeleteMode = (id: string, name: string) => {
+    setDeleteId(id);
+    setDeleteName(name);
+  };
 
+  const confirmDeleteMode = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/payment-modes/${id}`, {
+      const response = await fetch(`/api/payment-modes/${deleteId}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -149,9 +158,12 @@ export default function PaymentModesPage() {
       }
 
       toast.success("Payment mode deleted successfully.");
+      setDeleteId(null);
       fetchPaymentModes();
     } catch (error: any) {
       toast.error(error.message || "Failed to delete payment mode.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -349,6 +361,19 @@ export default function PaymentModesPage() {
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => {
+            setDeleteId(null);
+            setDeleteName("");
+          }}
+          onConfirm={confirmDeleteMode}
+          isDeleting={isDeleting}
+          title="Delete Payment Mode"
+          message={`Are you sure you want to delete the payment mode "${deleteName}"?`}
+        />
+
       </div>
     </DashboardShell>
   );

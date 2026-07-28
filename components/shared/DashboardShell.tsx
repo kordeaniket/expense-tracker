@@ -424,18 +424,6 @@ export default function DashboardShell({ children }: { children: React.ReactNode
             <span>Expenses</span>
           </Link>
 
-          {/* Sales Link */}
-          <Link
-            href="/retailer-sales"
-            className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 text-[10px] font-medium transition-all ${pathname === "/retailer-sales"
-                ? "text-primary font-bold"
-                : "text-muted-foreground hover:text-foreground"
-              }`}
-          >
-            <ShoppingCart className="h-5 w-5" />
-            <span>Sales</span>
-          </Link>
-
           {/* Daily Plans Link */}
           <Link
             href="/daily-plans"

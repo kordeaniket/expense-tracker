@@ -20,6 +20,7 @@ import {
   Briefcase,
   Edit2,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface CategoryData {
   _id: string;
@@ -67,6 +68,10 @@ export default function IncomeTrackerPage() {
   const [note, setNote] = useState("");
   const [mode, setMode] = useState("");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -178,11 +183,15 @@ export default function IncomeTrackerPage() {
     }
   };
 
-  const handleDeleteIncome = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this income log?")) return;
+  const handleDeleteIncome = (id: string) => {
+    setDeleteId(id);
+  };
 
+  const confirmDeleteIncome = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/income/${id}`, {
+      const response = await fetch(`/api/income/${deleteId}`, {
         method: "DELETE",
       });
 
@@ -193,9 +202,12 @@ export default function IncomeTrackerPage() {
       }
 
       toast.success("Income record deleted successfully!");
+      setDeleteId(null);
       fetchData();
     } catch (error: any) {
       toast.error(error.message || "Something went wrong.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -496,6 +508,15 @@ export default function IncomeTrackerPage() {
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => setDeleteId(null)}
+          onConfirm={confirmDeleteIncome}
+          isDeleting={isDeleting}
+          title="Delete Income Log"
+          message="Are you sure you want to delete this income log? This action is irreversible."
+        />
 
       </div>
     </DashboardShell>

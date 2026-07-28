@@ -28,6 +28,7 @@ import {
   MinusCircle,
   PlusCircle,
 } from "lucide-react";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 interface Contribution {
   _id?: string;
@@ -77,6 +78,11 @@ export default function GoalsPage() {
   const goals: GoalData[] = data?.goals || [];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Delete modal states
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
   
   // Modals toggle
   const [showGoalModal, setShowGoalModal] = useState(false);
@@ -203,13 +209,16 @@ export default function GoalsPage() {
     }
   };
 
-  const handleDeleteGoal = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete the savings goal "${name}"?`)) {
-      return;
-    }
+  const handleDeleteGoal = (id: string, name: string) => {
+    setDeleteId(id);
+    setDeleteName(name);
+  };
 
+  const confirmDeleteGoal = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/goals/${id}`, {
+      const response = await fetch(`/api/goals/${deleteId}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -218,9 +227,12 @@ export default function GoalsPage() {
       }
 
       toast.success("Goal deleted successfully.");
+      setDeleteId(null);
       mutate();
     } catch (error: any) {
       toast.error(error.message || "Failed to delete savings goal.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -677,10 +689,21 @@ export default function GoalsPage() {
                 </div>
 
               </form>
-
             </div>
           </div>
         )}
+
+        <DeleteConfirmModal
+          isOpen={deleteId !== null}
+          onClose={() => {
+            setDeleteId(null);
+            setDeleteName("");
+          }}
+          onConfirm={confirmDeleteGoal}
+          isDeleting={isDeleting}
+          title="Delete Savings Goal"
+          message={`Are you sure you want to delete the savings goal "${deleteName}"?`}
+        />
 
       </div>
     </DashboardShell>
