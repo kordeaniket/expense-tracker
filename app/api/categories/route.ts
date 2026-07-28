@@ -8,7 +8,7 @@ const DEFAULT_CATEGORIES = [
   {
     name: "Food & Dining",
     type: "expense",
-    color: "#6C5CE7",
+    color: "#F43F5E",
     subcategories: ["Swiggy", "Zomato", "Restaurants", "Groceries"],
   },
   {
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
       user: userId,
       name: name.trim(),
       type,
-      color: color || "#6C5CE7",
+      color: color || "#F43F5E",
       subcategories: Array.isArray(subcategories)
         ? subcategories.map((sub) => sub.trim()).filter(Boolean)
         : [],

@@ -35,7 +35,7 @@ interface PaymentModeData {
 }
 
 const FALLBACK_CATEGORIES: CategoryData[] = [
-  { _id: "1", name: "Food & Dining", type: "expense", color: "#6C5CE7", subcategories: ["Swiggy", "Zomato", "Restaurants", "Groceries"] },
+  { _id: "1", name: "Food & Dining", type: "expense", color: "#F43F5E", subcategories: ["Swiggy", "Zomato", "Restaurants", "Groceries"] },
   { _id: "2", name: "Shopping", type: "expense", color: "#00B894", subcategories: ["Amazon", "Myntra", "Flipkart", "Clothing", "Electronics"] },
   { _id: "3", name: "Travel & Transport", type: "expense", color: "#FD79A8", subcategories: ["Uber", "Ola", "Metro", "Petrol/Fuel", "Flight"] },
   { _id: "4", name: "Bills & Utilities", type: "expense", color: "#FF6B81", subcategories: ["Electricity", "WiFi", "Water", "Mobile Recharge"] },
@@ -293,7 +293,7 @@ export default function ExpensesPage() {
                           <span className="flex items-center gap-1.5">
                             <span
                               className="h-2 w-2 rounded-full shrink-0"
-                              style={{ backgroundColor: matchedCat?.color || "#6C5CE7" }}
+                              style={{ backgroundColor: matchedCat?.color || "#F43F5E" }}
                             />
                             {exp.category}
                           </span>

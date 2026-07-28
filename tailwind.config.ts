@@ -23,17 +23,17 @@ const config: Config = {
 
         // Core brand palette (from dashboard reference)
         primary: {
-          DEFAULT: "#6C5CE7", // main purple/indigo
-          50: "#F3F1FE",
-          100: "#E6E1FD",
-          200: "#C7BCFA",
-          300: "#A796F6",
-          400: "#8A79EF",
-          500: "#6C5CE7",
-          600: "#5646C9",
-          700: "#4234A0",
-          800: "#302677",
-          900: "#1D1750",
+          DEFAULT: "#F43F5E", // main rose/coral
+          50: "#FFF1F2",
+          100: "#FFE4E6",
+          200: "#FECDD3",
+          300: "#FDA4AF",
+          400: "#FB7185",
+          500: "#F43F5E",
+          600: "#E11D48",
+          700: "#BE123C",
+          800: "#9F1239",
+          900: "#881337",
           foreground: "#FFFFFF",
         },
         secondary: {

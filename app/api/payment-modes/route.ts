@@ -13,7 +13,7 @@ const DEFAULT_PAYMENT_MODES = [
   {
     name: "UPI",
     type: "UPI",
-    color: "#6C5CE7",
+    color: "#F43F5E",
   },
   {
     name: "Card",
@@ -96,7 +96,7 @@ export async function POST(req: Request) {
       user: userId,
       name: name.trim(),
       type,
-      color: color || "#6C5CE7",
+      color: color || "#F43F5E",
     });
 
     return NextResponse.json({

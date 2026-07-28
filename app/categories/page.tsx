@@ -28,7 +28,7 @@ interface CategoryData {
 }
 
 const PRESET_COLORS = [
-  "#6C5CE7", // Purple (Default)
+  "#F43F5E", // Rose/Coral (Default)
   "#00B894", // Green
   "#FD79A8", // Pink
   "#FF6B81", // Red
@@ -54,7 +54,7 @@ export default function CategoriesPage() {
   // Form states
   const [name, setName] = useState("");
   const [type, setType] = useState<"expense" | "income">("expense");
-  const [color, setColor] = useState("#6C5CE7");
+  const [color, setColor] = useState("#F43F5E");
   const [subcategories, setSubcategories] = useState<string[]>([]);
   
   // Subcategory helper states
@@ -71,7 +71,7 @@ export default function CategoriesPage() {
     setEditingCategory(null);
     setName("");
     setType("expense");
-    setColor("#6C5CE7");
+    setColor("#F43F5E");
     setSubcategories([]);
     setNewSubcatName("");
     setEditingSubcatIdx(null);
@@ -82,7 +82,7 @@ export default function CategoriesPage() {
     setEditingCategory(cat);
     setName(cat.name);
     setType(cat.type);
-    setColor(cat.color || "#6C5CE7");
+    setColor(cat.color || "#F43F5E");
     setSubcategories(cat.subcategories || []);
     setNewSubcatName("");
     setEditingSubcatIdx(null);
@@ -239,7 +239,7 @@ export default function CategoriesPage() {
                   {/* Color strip */}
                   <div 
                     className="shrink-0 h-10 w-1.5 rounded-full" 
-                    style={{ backgroundColor: cat.color || "#6C5CE7" }} 
+                    style={{ backgroundColor: cat.color || "#F43F5E" }} 
                   />
                   
                   <div className="flex flex-col gap-1 min-w-0 flex-1">

@@ -40,7 +40,7 @@ interface AssetData {
 const TYPE_COLORS: Record<string, string> = {
   Savings: "#00B894",      // Green
   Stocks: "#0984e3",       // Blue
-  "Mutual Funds": "#6C5CE7", // Purple
+  "Mutual Funds": "#F43F5E", // Rose/Coral
   FD: "#FFA000",           // Orange
   Gold: "#FDCB6E",         // Yellow
   Other: "#8A8D9F",        // Slate

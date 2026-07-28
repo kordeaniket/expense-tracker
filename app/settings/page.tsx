@@ -70,7 +70,7 @@ export default function SettingsPage() {
   
   const [catName, setCatName] = useState("");
   const [catType, setCatType] = useState<"expense" | "income">("expense");
-  const [catColor, setCatColor] = useState("#6C5CE7");
+  const [catColor, setCatColor] = useState("#F43F5E");
   const [subcatString, setSubcatString] = useState("");
 
   // Delete modal states
@@ -269,7 +269,7 @@ export default function SettingsPage() {
       // Reset Form states
       setCatName("");
       setCatType("expense");
-      setCatColor("#6C5CE7");
+      setCatColor("#F43F5E");
       setSubcatString("");
       setEditingCategory(null);
 
@@ -329,7 +329,7 @@ export default function SettingsPage() {
     setEditingCategory(null);
     setCatName("");
     setCatType("expense");
-    setCatColor("#6C5CE7");
+    setCatColor("#F43F5E");
     setSubcatString("");
   };
 

@@ -23,7 +23,7 @@ Colors are derived from the provided dashboard reference and defined as CSS vari
 
 | Token | Hex | Usage |
 |---|---|---|
-| `primary` | `#6C5CE7` | Buttons, active nav, sidebar highlight |
+| `primary` | `#F43F5E` | Buttons, active nav, sidebar highlight |
 | `success` | `#00B894` | Food & Grocery, positive values |
 | `warning` | `#FDCB6E` | Shopping, goal progress |
 | `danger` | `#FF6B81` | Expenses, negative deltas |

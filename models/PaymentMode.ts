@@ -19,7 +19,7 @@ const PaymentModeSchema = new Schema<IPaymentMode>(
       required: true,
       default: "UPI",
     },
-    color: { type: String, default: "#6C5CE7" },
+    color: { type: String, default: "#F43F5E" },
   },
   { timestamps: true }
 );

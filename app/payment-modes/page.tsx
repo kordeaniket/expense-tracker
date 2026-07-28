@@ -28,7 +28,7 @@ interface PaymentModeData {
 }
 
 const PRESET_COLORS = [
-  "#6C5CE7", // Purple (UPI)
+  "#F43F5E", // Rose/Coral (UPI)
   "#FDCB6E", // Yellow (Card)
   "#00B894", // Green (Cash)
   "#54A0FF", // Blue (Bank)
@@ -61,7 +61,7 @@ export default function PaymentModesPage() {
   // Form states
   const [name, setName] = useState("");
   const [type, setType] = useState<"UPI" | "Card" | "Cash" | "Bank" | "Other">("UPI");
-  const [color, setColor] = useState("#6C5CE7");
+  const [color, setColor] = useState("#F43F5E");
 
   const fetchPaymentModes = async () => {
     setIsLoading(true);
@@ -88,7 +88,7 @@ export default function PaymentModesPage() {
     setEditingMode(null);
     setName("");
     setType("UPI");
-    setColor("#6C5CE7");
+    setColor("#F43F5E");
     setShowModal(true);
   };
 
@@ -96,7 +96,7 @@ export default function PaymentModesPage() {
     setEditingMode(mode);
     setName(mode.name);
     setType(mode.type);
-    setColor(mode.color || "#6C5CE7");
+    setColor(mode.color || "#F43F5E");
     setShowModal(true);
   };
 
@@ -206,11 +206,11 @@ export default function PaymentModesPage() {
                   <div className="flex items-center gap-3 z-10 min-w-0">
                     <div 
                       className="shrink-0 h-10 w-1.5 rounded-full" 
-                      style={{ backgroundColor: mode.color || "#6C5CE7" }} 
+                      style={{ backgroundColor: mode.color || "#F43F5E" }} 
                     />
                     <div 
                       className="shrink-0 h-8 w-8 rounded-lg flex items-center justify-center text-white"
-                      style={{ backgroundColor: mode.color || "#6C5CE7" }}
+                      style={{ backgroundColor: mode.color || "#F43F5E" }}
                     >
                       <Icon className="h-4 w-4" />
                     </div>

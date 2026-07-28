@@ -176,7 +176,7 @@ export default function DashboardPage() {
   expenses.forEach((e) => {
     const catName = e.category;
     const catObj = categories.find((c) => c.name.toLowerCase() === catName.toLowerCase());
-    const color = catObj?.color || "#6C5CE7";
+    const color = catObj?.color || "#F43F5E";
     if (!categoryTotals[catName]) {
       categoryTotals[catName] = { name: catName, value: 0, color };
     }
@@ -384,7 +384,7 @@ export default function DashboardPage() {
                   />
                   <Bar
                     dataKey="amount"
-                    fill="#6C5CE7"
+                    fill="#F43F5E"
                     radius={[8, 8, 0, 0]}
                     maxBarSize={40}
                   />

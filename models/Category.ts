@@ -16,7 +16,7 @@ const CategorySchema = new Schema<ICategory>(
     user: { type: Schema.Types.ObjectId, ref: "User", required: true, index: true },
     name: { type: String, required: true },
     type: { type: String, enum: ["expense", "income"], default: "expense" },
-    color: { type: String, default: "#6C5CE7" },
+    color: { type: String, default: "#F43F5E" },
     icon: { type: String },
     subcategories: { type: [String], default: [] },
   },
